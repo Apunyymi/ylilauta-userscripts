@@ -1,21 +1,22 @@
 // ==UserScript==
-// @name Ylilauta 'Last own post'-button
+// @name Ylilauta.fi: Viimeisin oma postaus
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
 // @grant none
-// @version 0.1
+// @version 0.2
 // @locale en
-// @description Scroll to your last own post in the thread.
+// @description Skrollaa viimeisimpään omaan postaukseesi
 // ==/UserScript==
 
-const buttonsRight = document.querySelector('.buttons_right')
+const buttonsRight = document.querySelector('.buttons_right');
+
 if (buttonsRight) {
-  var btn = document.createElement('button')
-  btn.innerText = 'Last own post'
-  btn.className = 'linkbutton'
+  var btn = document.createElement('button');
+  btn.innerText = 'Last own post';
+  btn.className = 'linkbutton';
   btn.onclick = () => {
-    const posts = document.querySelectorAll('div.own_post')
-    posts[posts.length-1].scrollIntoView(true)
+    const posts = document.querySelectorAll('div.own_post');
+    posts[posts.length-1].scrollIntoView(true);
   }
-  buttonsRight.insertBefore(btn, buttonsRight.firstChild)
+  buttonsRight.insertBefore(btn, buttonsRight.firstChild);
 }
