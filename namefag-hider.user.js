@@ -1,34 +1,32 @@
 // ==UserScript==
-// @name Ylilauta Namefag-hider
+// @name Ylilauta.fi: Piilota kaikki nimipostaukset
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
 // @grant none
-// @version 0.1
+// @version 0.3
 // @locale en
-// @description Hide posts by all named users automatically
+// @description Piilottaa kaikki nimipostaukset
 // ==/UserScript==
 
-const shouldBeHidden = (div) => {
-  const postinfo = Array.from(div.childNodes).find(c => c.className === 'postinfo')
-  const tags = Array.from(postinfo.childNodes).find(c => c.className === 'tags')
-  const name = Array.from(tags.childNodes).find(c => c.className === 'postername').innerHTML
-  return name !== 'Anonyymi'
+function shouldBeHidden(div) {
+  const postinfo = Array.from(div.childNodes).find(c => c.className === 'postinfo');
+  const tags = Array.from(postinfo.childNodes).find(c => c.className === 'tags');
+  const name = Array.from(tags.childNodes).find(c => c.className === 'postername').innerHTML;
+  return name !== 'Anonyymi';
 }
 
-const hide = () => Array.from(document.querySelectorAll('div.op_post, div.answer'))
-  .filter(div => shouldBeHidden(div))
-  .map(div => div.hidden = true)
+function hide() {
+  Array.from(document.querySelectorAll('div.op_post, div.answer'))
+    .filter(div => shouldBeHidden(div))
+    .map(div => div.hidden = true);
+}
 
-hide()
+function newRepliesListener(callback) {
+  const observer = new MutationObserver(callback);
+  
+  observer.observe($('.answers')[0], { childList: true });
+}
 
-const targetDiv = document.querySelector('div.answers')
-const config = { childList: true }
-const observer = new MutationObserver(
-  (mutationsList) => {
-    if (Array.from(mutationsList).filter(
-      (mutation) => mutation.type === 'childList').length > 0) {
-      hide()
-    }
-  }
-)
-observer.observe(targetDiv, config)
+hide();
+
+newRepliesListener(() => hide());

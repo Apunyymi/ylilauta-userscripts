@@ -1,11 +1,11 @@
 // ==UserScript==
-// @name Ylilauta Tagpost-hider
+// @name Ylilauta.fi: Piilota tagipostaukset
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
 // @grant none
-// @version 0.1
+// @version 0.3
 // @locale en
-// @description Hide all posts with tags automatically
+// @description Piilottaa kaikki tagipostaukset
 // ==/UserScript==
 
 const allowedTags = [
@@ -13,31 +13,28 @@ const allowedTags = [
   'tag text postedbyop',
   'postnumber quotelink',
   'posttime'
-]
+];
 
-const shouldBeHidden = (div) => {
-  const postinfo = Array.from(div.childNodes).find(c => c.className === 'postinfo')
-  const tags = Array.from(postinfo.childNodes).find(c => c.className === 'tags')
+function shouldBeHidden(div) {
+  const postinfo = Array.from(div.childNodes).find(c => c.className === 'postinfo');
+  const tags = Array.from(postinfo.childNodes).find(c => c.className === 'tags');
   return Array.from(tags.childNodes)
     .map (t => t.className)
     .filter(t => t && !allowedTags.includes(t))
-    .length !== 0
+    .length !== 0;
 }
 
-const hide = () => Array.from(document.querySelectorAll('div.op_post, div.answer'))
-  .filter(div => shouldBeHidden(div))
-  .map(div => div.hidden = true)
+function hide() {
+  Array.from(document.querySelectorAll('div.op_post, div.answer'))
+    .filter(div => shouldBeHidden(div))
+    .map(div => div.hidden = true)
+} 
+
+function newRepliesListener(callback) {
+  const observer = new MutationObserver(callback);
+  
+  observer.observe($('.answers')[0], { childList: true });
+}
 
 hide()
-
-const targetDiv = document.querySelector('div.answers')
-const config = { childList: true }
-const observer = new MutationObserver(
-  (mutationsList) => {
-    if (Array.from(mutationsList).filter(
-      (mutation) => mutation.type === 'childList').length > 0) {
-      hide()
-    }
-  }
-)
-observer.observe(targetDiv, config)
+newRepliesListener(() => hide());
