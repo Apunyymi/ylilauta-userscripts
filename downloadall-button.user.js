@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name Ylilauta.fi: Lataa kaikki
+// @name Ylilauta: Lataa kaikki
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js

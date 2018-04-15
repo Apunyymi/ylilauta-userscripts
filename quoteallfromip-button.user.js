@@ -8,28 +8,18 @@
 
 function quoteAllIps(event) {
   const clickedMessage = $(event.target).parent();
-  clickedMessage.children('.postuid.ip').click();
-
   const clickedIp = clickedMessage.children('.postuid.ip').text();
 
-  const quotes = $('.postuid.ip')
-    .map(function() {
-      if ($(this).text() === clickedIp) {
-        const parent = $(this).parent();
-        const postId = parent
-          .parents('.answer')
-          .first()
-          .attr('data-msgid');
+  $('.postuid.ip').each(function() {
+    if ($(this).text() === clickedIp) {
+      $(this)
+        .parent()
+        .children('.quotelink')
+        .click();
+    }
+  });
 
-        if (postId) {
-          return '>>' + postId + '\n';
-        }
-      }
-    })
-    .get()
-    .join('');
-
-  $('#msg').insertAtCaret(quotes);
+  clickedMessage.children('.postuid.ip').click();
 }
 
 const quoteAllButton = $('<span />', {

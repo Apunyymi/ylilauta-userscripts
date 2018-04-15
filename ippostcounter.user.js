@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name Ylilauta.fi: IP Postauslaskuri
+// @name Ylilauta: IP Postauslaskuri
 // @namespace Violentmonkey Scripts
 // @include /^https?://ylilauta.org/.+/.+$/
 // @grant none
@@ -15,26 +15,26 @@ function newRepliesListener(callback) {
 
 function countPosts() {
   $('span.postcount').remove();
-  
-  const ips = {};
 
-  $('.postuid.ip').each(function() {
-    const ip = $(this).text();
-    
-    if(ips[ip]) {
-      ips[ip]++;
-    } else {
-      ips[ip] = 1;
+  const ipNodes = [...$('.postuid.ip')];
+  const ipCounter = ipNodes.reduce((accumulator, ipNode) => {
+    const ip = ipNode.innerText;
+
+    if (!accumulator[ip]++) {
+      accumulator[ip] = 1;
     }
-  });
-  
-  $('.postuid.ip').each(function() {
-    const numberOfPosts = ips[$(this).text()];
-    
-    $(this).append(
+
+    return accumulator;
+  }, {});
+
+  for (ipNode of ipNodes) {
+    const ip = ipNode.innerText;
+    const numberOfPosts = ipCounter[ip];
+
+    $(ipNode).append(
       `<span class="postcount" style="margin-left: 0.4em">(${numberOfPosts})</span>`
     );
-  });
+  }
 }
 
 countPosts();
