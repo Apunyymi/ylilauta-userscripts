@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name Ylilauta.fi: Lainaa kaikki viestit IP:ltä
+// @name Ylilauta: Lainaa kaikki viestit IP:ltä
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
 // @version 0.2
@@ -33,7 +33,7 @@ function quoteAllIps(event) {
 }
 
 const quoteAllButton = $('<span />', {
-  text: '>> Quote ips',
+  text: '>>',
   class: 'postuid',
   on: {
     click: quoteAllIps
