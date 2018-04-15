@@ -1,13 +1,19 @@
 # ylilauta-userscripts
 A collection of Userscripts made for Ylilauta image board. Sorry Sopsy, we hack your code as you expose it to us.
 
-Started at https://ylilauta.org/ohjelmointi/80863118, Ylilauta has now an unofficial community-driven Userscript repo. 
+Finnish only below this line.
 
-### Installation
+/ohjelmoinnin/ [langan](https://ylilauta.org/ohjelmointi/80863118) idean johdosta Yliksellä on nyt oma epävirallinen yhteisön pitämä Userscript-kirjasto.
 
-1. Install Violentmonkey (https://github.com/Violentmonkey/Violentmonkey)
-2. Choose the script file you want from that repo
-3. Select the raw button and proceed with installation
+### Asennus
 
-### Contributing
-You are free to either post your script to that thread and ping me there so I'd add your script there, or even make a pull request yourself.
+1. Asenna [Violentmonkey](https://github.com/Violentmonkey/Violentmonkey)
+2. Valitse haluamasi skriptin tiedosto ja klikkaa itsesi siihen
+3. Paina `Raw`-nappulaa, userscript-lisäosan pitäisi ponnauttaa asennusikkunansa auki
+
+### Kontribuointi
+Postaa tekeleesi joko ylläolevaan lankaan vastauksena minulle niin lisään skriptisi tänne tai tee itse vetopyyntö (PR).
+
+Jos haluat säilyttää nyymiteettisi seitsemän proxyn takana pull requa tehdessä, luo uusi tili Githubiin ja suorita nämä komennot komentorivillä ennen työntöä:
+`git config user.name uuden_tilin_nimi`
+`git config user.email uuden_tilin_email`
