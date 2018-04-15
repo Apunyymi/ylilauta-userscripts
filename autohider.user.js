@@ -1,42 +1,39 @@
 // ==UserScript==
-// @name Ylilauta autohider
+// @name Ylilauta.fi: Tiettyjen nimimerkkien postausten piilotus
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
 // @grant none
-// @version 0.2
+// @version 0.4
 // @locale en
-// @description Hide posts by some users automatically
+// @description Piilota määriteltyjen käyttäjien postaukset
 // ==/UserScript==
 
 /*
- * INSERT USERNAMES TO HIDE IN HERE
+ * Syötä käyttäjänimet tähän
  */
 const namesToHide = [
   'username1',
   'username2'
-]
+];
 
-const shouldBeHidden = (div) => {
-  const postinfo = Array.from(div.childNodes).find(c => c.className === 'postinfo')
-  const tags = Array.from(postinfo.childNodes).find(c => c.className === 'tags')
-  const name = Array.from(tags.childNodes).find(c => c.className === 'postername').innerHTML
-  return namesToHide.includes(name)
+function newRepliesListener(callback) {
+  const observer = new MutationObserver(callback);
+  
+  observer.observe($('.answers')[0], { childList: true });
 }
 
-const hide = () => Array.from(document.querySelectorAll('div.op_post, div.answer'))
-  .filter(div => shouldBeHidden(div))
-  .map(div => div.hidden = true)
+function shouldBeHidden(div) {
+  const postinfo = Array.from(div.childNodes).find(c => c.className === 'postinfo');
+  const tags = Array.from(postinfo.childNodes).find(c => c.className === 'tags');
+  const name = Array.from(tags.childNodes).find(c => c.className === 'postername').innerHTML;
+  return namesToHide.includes(name);
+}
 
-hide()
+function hide() {
+  Array.from(document.querySelectorAll('div.op_post, div.answer'))
+    .filter(div => shouldBeHidden(div))
+    .map(div => div.hidden = true);
+} 
 
-const targetDiv = document.querySelector('div.answers')
-const config = { childList: true }
-const observer = new MutationObserver(
-  (mutationsList) => {
-    if (Array.from(mutationsList).filter(
-      (mutation) => mutation.type === 'childList').length > 0) {
-      hide()
-    }
-  }
-)
-observer.observe(targetDiv, config)
+hide();
+newRepliesListener(() => hide());
