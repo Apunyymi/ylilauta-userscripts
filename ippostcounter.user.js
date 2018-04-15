@@ -3,7 +3,7 @@
 // @namespace Violentmonkey Scripts
 // @include /^https?://ylilauta.org/.+/.+$/
 // @grant none
-// @version 0.1
+// @version 0.2
 // @description Laskee postausten määrät per IP ja näyttää sen postauksen yläpuolella (Vain kultatili)
 // ==/UserScript==
 
@@ -15,11 +15,22 @@ function newRepliesListener(callback) {
 
 function countPosts() {
   $('span.postcount').remove();
+  
+  const ips = {};
 
   $('.postuid.ip').each(function() {
     const ip = $(this).text();
-    const numberOfPosts = $(`.postuid.ip:contains(${ip})`).length;
-
+    
+    if(ips[ip]) {
+      ips[ip]++;
+    } else {
+      ips[ip] = 1;
+    }
+  });
+  
+  $('.postuid.ip').each(function() {
+    const numberOfPosts = ips[$(this).text()];
+    
     $(this).append(
       `<span class="postcount" style="margin-left: 0.4em">(${numberOfPosts})</span>`
     );
