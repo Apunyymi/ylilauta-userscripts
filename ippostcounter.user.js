@@ -8,13 +8,11 @@
 // ==/UserScript==
 
 function newRepliesListener(callback) {
-  updateQuotes = (() => {
-    return () => {
-      callback();
+  updateQuotes = () => {
+    callback();
 
-      return updateQuotes;
-    };
-  })();
+    return updateQuotes;
+  };
 }
 
 function countPosts() {
