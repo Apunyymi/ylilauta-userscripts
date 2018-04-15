@@ -14,7 +14,7 @@ function newRepliesListener(callback) {
   updateQuotes = (() => {
     return () => {
       callback();
-    
+
       return updateQuotes;
     };
   })();
