@@ -11,11 +11,9 @@
 // ==/UserScript==
 
 function newRepliesListener(callback) {
-  updateQuotes = () => {
-    callback();
-
-    return updateQuotes;
-  };
+  const observer = new MutationObserver(callback);
+  
+  observer.observe($('.answers')[0], { childList: true });
 }
 
 function highlightCode() {
