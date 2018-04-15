@@ -11,12 +11,13 @@
 // ==/UserScript==
 
 function newRepliesListener(callback) {
-  const observer = new MutationObserver(callback);
-  
-  observer.observe(
-    $('.answers')[0], 
-    { childList: true }
-  );
+  updateQuotes = (() => {
+    return () => {
+      callback();
+    
+      return updateQuotes;
+    };
+  })();
 }
 
 function highlightCode() {
