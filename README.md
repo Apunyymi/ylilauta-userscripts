@@ -17,3 +17,4 @@ Postaa tekeleesi joko ylläolevaan lankaan vastauksena minulle niin lisään skr
 Jos haluat säilyttää nyymiteettisi seitsemän proxyn takana pull requa tehdessä, luo uusi tili Githubiin ja suorita nämä komennot komentorivillä ennen työntöä:
 `git config user.name uuden_tilin_nimi`
 `git config user.email uuden_tilin_email`
+Anonyymin sähköpostiosoitteen saat klikkaamalla Githubissa omaa profiilikuvaasi > Settings > Emails > Primary email address -otsikon alla olevassa tekstissä on osoite, joka näyttää jotakuinkin tältä: `12345678+käyttäjänimi@users.noreply.com`.
