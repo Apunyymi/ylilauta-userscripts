@@ -48,5 +48,7 @@ function isToggled(name) {
 
 if (isToggled("reverseImageSearchStorage")) {
   addSearchButtons();
-  newRepliesListener(() => addSearchButtons());
+  if ($('.answers').length > 0) {
+    newRepliesListener(() => addSearchButtons());
+  }
 }

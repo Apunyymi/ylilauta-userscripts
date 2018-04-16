@@ -15,8 +15,6 @@ function isToggled(name) {
   return !!storageVal ? JSON.parse(storageVal) : true;
 }
 
-var reverseImageSearch = isToggled("reverseImageSearchStorage");
-
 function reverseImageSearchInput() {
   const input = document.createElement('input')
   input.type = "checkbox"
