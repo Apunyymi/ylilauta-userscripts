@@ -8,32 +8,37 @@
 // @description Skrollaa automaattisesti uusimpaan postaukseen.
 // ==/UserScript==
 
-var scroll = false;
-
-const buttonsRight = document.querySelector('.buttons_right');
-
-if (buttonsRight) {
-  var btn = document.createElement('button');
-  btn.innerText = 'Autoscroll';
-  btn.className = 'linkbutton';
-  btn.disabled = scroll;
-  btn.onclick = () => {
-    scroll = !scroll;
-    btn.innerText = scroll ? 'Stop scrolling' : 'Autoscroll';
+(function () {
+  function scrollToButton() {
+    if (scroll) {
+      btn.scrollIntoView(false);
+    }
   }
-  buttonsRight.insertBefore(btn, buttonsRight.firstChild);
-}
 
-function scrollToButton() {
-  if (scroll) {
-    btn.scrollIntoView(false);
+  function newRepliesListener(callback) {
+    const observer = new MutationObserver(callback);
+    
+    observer.observe($('.answers')[0], { childList: true });
   }
-}
 
-function newRepliesListener(callback) {
-  const observer = new MutationObserver(callback);
-  
-  observer.observe($('.answers')[0], { childList: true });
-}
+  function isToggled(name) {
+    return localStorage.getItem(name) !== "false";
+  }
 
-newRepliesListener(() => scrollToButton());
+  var scroll = false;
+
+  const buttonsRight = document.querySelector('.buttons_right');
+
+  if (buttonsRight && isToggled("autoscrollStorage")) {
+    var btn = document.createElement('button');
+    btn.innerText = 'Autoscroll';
+    btn.className = 'linkbutton';
+    btn.disabled = scroll;
+    btn.onclick = () => {
+      scroll = !scroll;
+      btn.innerText = scroll ? 'Stop scrolling' : 'Autoscroll';
+    }
+    buttonsRight.insertBefore(btn, buttonsRight.firstChild);
+    newRepliesListener(() => scrollToButton());
+  }
+})();
