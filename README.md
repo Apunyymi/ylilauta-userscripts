@@ -1,4 +1,6 @@
 # ylilauta-userscripts
+
+[![Join the chat at https://gitter.im/ylilauta-userscripts/Lobby](https://badges.gitter.im/ylilauta-userscripts/Lobby.svg)](https://gitter.im/ylilauta-userscripts/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 A collection of Userscripts made for Ylilauta image board. Sorry Sopsy, we hack your code as you expose it to us.
 
 Finnish only below this line.
