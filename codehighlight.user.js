@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name Ylilauta.fi: Koodinväritys
+// @name Ylilauta: Koodinväritys
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
@@ -11,11 +11,9 @@
 // ==/UserScript==
 
 function newRepliesListener(callback) {
-  updateQuotes = () => {
-    callback();
+  const observer = new MutationObserver(callback);
 
-    return updateQuotes;
-  };
+  observer.observe($('.answers')[0], { childList: true });
 }
 
 function highlightCode() {
