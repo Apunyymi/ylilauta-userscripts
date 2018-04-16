@@ -40,6 +40,13 @@ function newRepliesListener(callback) {
   observer.observe($('.answers')[0], { childList: true });
 }
 
-addSearchButtons();
+function isToggled(name) {
+  const storageVal = localStorage.getItem(name);
+  if (storageVal === "undefined") return true;
+  return !!storageVal ? JSON.parse(storageVal) : true;
+}
 
-newRepliesListener(() => addSearchButtons());
+if (isToggled("reverseImageSearchStorage")) {
+  addSearchButtons();
+  newRepliesListener(() => addSearchButtons());
+}
