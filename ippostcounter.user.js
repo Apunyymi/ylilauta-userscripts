@@ -1,29 +1,40 @@
 // ==UserScript==
-// @name Ylilauta.fi: IP Postauslaskuri
+// @name Ylilauta: IP Postauslaskuri
 // @namespace Violentmonkey Scripts
 // @include /^https?://ylilauta.org/.+/.+$/
 // @grant none
-// @version 0.1
-// @description Laskee postausten määrät per ip
+// @version 0.2
+// @description Laskee postausten määrät per IP ja näyttää sen postauksen yläpuolella (Vain kultatili)
 // ==/UserScript==
 
 function newRepliesListener(callback) {
-  updateQuotes = () => {
-    callback();
+  const observer = new MutationObserver(callback);
 
-    return updateQuotes;
-  };
+  observer.observe($('.answers')[0], { childList: true });
 }
 
 function countPosts() {
   $('span.postcount').remove();
-  
-  $('.postuid.ip').each(function() {
-    const ip = $(this).text();
-    const numberOfPosts = $(`.postuid.ip:contains(${ip})`).length;
-    
-    $(this).append(`<span class="postcount" style="margin-left: 0.4em">(${numberOfPosts})</span>`);
-  });
+
+  const ipNodes = [...$('.postuid.ip')];
+  const ipCounter = ipNodes.reduce((accumulator, ipNode) => {
+    const ip = ipNode.innerText;
+
+    if (!accumulator[ip]++) {
+      accumulator[ip] = 1;
+    }
+
+    return accumulator;
+  }, {});
+
+  for (ipNode of ipNodes) {
+    const ip = ipNode.innerText;
+    const numberOfPosts = ipCounter[ip];
+
+    $(ipNode).append(
+      `<span class="postcount" style="margin-left: 0.4em">(${numberOfPosts})</span>`
+    );
+  }
 }
 
 countPosts();
