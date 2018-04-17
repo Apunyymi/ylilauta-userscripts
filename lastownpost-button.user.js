@@ -8,9 +8,13 @@
 // @description Skrollaa viimeisimpään omaan postaukseesi
 // ==/UserScript==
 
+function isToggled(name) {
+  return localStorage.getItem(name) !== "false";
+}
+
 const buttonsRight = document.querySelector('.buttons_right');
 
-if (buttonsRight) {
+if (buttonsRight && isToggled("lastOwnPostStorage")) {
   var btn = document.createElement('button');
   btn.innerText = 'Last own post';
   btn.className = 'linkbutton';
