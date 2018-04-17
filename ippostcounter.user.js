@@ -37,5 +37,13 @@ function countPosts() {
   }
 }
 
-countPosts();
-newRepliesListener(() => countPosts());
+function isToggled(name) {
+  return localStorage.getItem(name) !== "false";
+}
+
+if (isToggled("ipPostCounterStorage")) {
+  countPosts();
+  if ($('.answers').length > 0) {
+    newRepliesListener(() => countPosts());
+  }
+}
