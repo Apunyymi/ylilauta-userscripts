@@ -4,33 +4,43 @@
 // @include    /^https?://ylilauta.org/.+/.+$/
 // ==/UserScript==
 
-function sortReplies() {
-    stopReplyUpdate();
+(function () {
+  function sortReplies() {
+      stopReplyUpdate();
 
-    let replies = document.querySelectorAll('.answer');
-    replies = Array.prototype.slice.call(replies, 0);
+      let replies = document.querySelectorAll('.answer');
+      replies = Array.prototype.slice.call(replies, 0);
 
-    replies.sort(function(a, b) {
-        var aord = +a.querySelectorAll('.replies a').length;
-        var bord = +b.querySelectorAll('.replies a').length;
-        return aord - bord;
-    });
+      replies.sort(function(a, b) {
+          var aord = +a.querySelectorAll('.replies a').length;
+          var bord = +b.querySelectorAll('.replies a').length;
+          return aord - bord;
+      });
 
 
-    const answersNode = document.querySelector('.answers');
-    answersNode.innerHTML = '';
+      const answersNode = document.querySelector('.answers');
+      answersNode.innerHTML = '';
 
-    for(let i = 0; i < replies.length; i++) {
-        answersNode.appendChild(replies[i]);
-    }
-}
-
-const sortButton = $('<button />', {
-  text: 'Näytä vastatuimmat',
-  class: 'linkbutton',
-  on: {
-    click: () => sortReplies()
+      for(let i = 0; i < replies.length; i++) {
+          answersNode.appendChild(replies[i]);
+      }
   }
-});
 
-$('.buttons_right').prepend(sortButton);
+  function isToggled(name) {
+    return localStorage.getItem(name) !== "false";
+  }
+
+  const sortButton = $('<button />', {
+    text: 'Näytä vastatuimmat',
+    class: 'linkbutton',
+    on: {
+      click: () => sortReplies()
+    }
+  });
+
+  const buttonsRight = $('.buttons_right')
+
+  if (buttonsRight && isToggled("showMostAnsweredStorage")) {
+    buttonsRight.prepend(sortButton);
+  }
+})();

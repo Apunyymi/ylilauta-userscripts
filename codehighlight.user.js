@@ -10,20 +10,30 @@
 // @description Värittää [code]koodinpätkät[/code]
 // ==/UserScript==
 
-function newRepliesListener(callback) {
-  const observer = new MutationObserver(callback);
+(function () {
+  function newRepliesListener(callback) {
+    const observer = new MutationObserver(callback);
 
-  observer.observe($('.answers')[0], { childList: true });
-}
+    observer.observe($('.answers')[0], { childList: true });
+  }
 
-function highlightCode() {
-  $('pre.pre').each((i, block) => {
-    hljs.highlightBlock(block);
-  });
-}
+  function highlightCode() {
+    $('pre.pre').each((i, block) => {
+      hljs.highlightBlock(block);
+    });
+  }
 
-const highlightCSS = GM_getResourceText('highlightCSS');
-GM_addStyle(highlightCSS);
+  function isToggled(name) {
+    return localStorage.getItem(name) !== "false";
+  }
 
-highlightCode();
-newRepliesListener(() => highlightCode());
+  const highlightCSS = GM_getResourceText('highlightCSS');
+  GM_addStyle(highlightCSS);
+
+  if (isToggled("codeHighlighterStorage")) {
+    highlightCode();
+    if ($('.answers').length > 0) {
+      newRepliesListener(() => highlightCode());
+    }
+  }
+})();
