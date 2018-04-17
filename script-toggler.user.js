@@ -4,16 +4,16 @@
 // @match *://ylilauta.org/*
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/dea590d9b69cc9fa185e2ab19ec5171200308099/autoscroll-button.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/dea590d9b69cc9fa185e2ab19ec5171200308099/codehighlight.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/dea590d9b69cc9fa185e2ab19ec5171200308099/downloadall-button.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/dea590d9b69cc9fa185e2ab19ec5171200308099/ippostcounter.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/dea590d9b69cc9fa185e2ab19ec5171200308099/lastownpost-button.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/dea590d9b69cc9fa185e2ab19ec5171200308099/namefag-hider.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/dea590d9b69cc9fa185e2ab19ec5171200308099/quoteallfromip-button.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/dea590d9b69cc9fa185e2ab19ec5171200308099/reverse-image-search-button.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/dea590d9b69cc9fa185e2ab19ec5171200308099/show-most-answered.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/dea590d9b69cc9fa185e2ab19ec5171200308099/tagpost-hider.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/75ea8f3b8d83326baaf8080251bfe90b06b57209/autoscroll-button.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/75ea8f3b8d83326baaf8080251bfe90b06b57209/codehighlight.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/75ea8f3b8d83326baaf8080251bfe90b06b57209/downloadall-button.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/75ea8f3b8d83326baaf8080251bfe90b06b57209/ippostcounter.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/75ea8f3b8d83326baaf8080251bfe90b06b57209/lastownpost-button.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/75ea8f3b8d83326baaf8080251bfe90b06b57209/namefag-hider.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/75ea8f3b8d83326baaf8080251bfe90b06b57209/quoteallfromip-button.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/75ea8f3b8d83326baaf8080251bfe90b06b57209/reverse-image-search-button.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/75ea8f3b8d83326baaf8080251bfe90b06b57209/show-most-answered.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/75ea8f3b8d83326baaf8080251bfe90b06b57209/tagpost-hider.user.js
 // @resource highlightCSS https://gitcdn.xyz/repo/isagalaev/highlight.js/cf4b46e5b7acfe2626a07914e1d0d4ef269aed4a/src/styles/darcula.css
 // @grant GM_addStyle
 // @grant GM_getResourceText
@@ -21,7 +21,7 @@
 
 function isToggled(name) {
   const item = localStorage.getItem(name);
-  if (item === undefined || item === "undefined") {
+  if (item === undefined || item === null || item === "undefined") {
     localStorage.setItem(name, false);
     return false;
   }
