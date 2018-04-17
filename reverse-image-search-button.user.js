@@ -41,9 +41,7 @@ function newRepliesListener(callback) {
 }
 
 function isToggled(name) {
-  const storageVal = localStorage.getItem(name);
-  if (storageVal === "undefined") return true;
-  return !!storageVal ? JSON.parse(storageVal) : true;
+  return localStorage.getItem(name) !== "false";
 }
 
 if (isToggled("reverseImageSearchStorage")) {

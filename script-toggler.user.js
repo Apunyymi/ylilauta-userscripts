@@ -6,21 +6,17 @@
 // @grant none
 // ==/UserScript==
 
-/*
- * JSON.parse() is needed because localStorage saves everything as a String.
- */
+
 function isToggled(name) {
-  const storageVal = localStorage.getItem(name);
-  if (storageVal === "undefined") return true;
-  return !!storageVal ? JSON.parse(storageVal) : true;
+  return localStorage.getItem(name) === "true";
 }
 
-function reverseImageSearchInput() {
+function getInput(name) {
   const input = document.createElement('input')
   input.type = "checkbox"
-  input.checked = isToggled("reverseImageSearchStorage")
+  input.checked = isToggled(name)
   input.onchange = function() {
-    localStorage.setItem("reverseImageSearchStorage", this.checked)
+    localStorage.setItem(name, this.checked)
   }
   return input
 }
@@ -28,7 +24,7 @@ function reverseImageSearchInput() {
 if (window.location.href.indexOf("/preferences?site") > -1) {
   const preferencesDiv = $('#site');
   
-  preferencesDiv.prepend(reverseImageSearchInput(), " Käänteinen kuvahaku <br/>");
+  preferencesDiv.prepend(getInput("reverseImageSearchStorage"), " Käänteinen kuvahaku <br/>");
   
   const header = document.createElement('h3');
   header.innerText = "Skriptit"
