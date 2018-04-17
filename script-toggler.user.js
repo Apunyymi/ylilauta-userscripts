@@ -49,7 +49,6 @@ if (window.location.href.indexOf("/preferences?site") > -1) {
   $(scriptDiv).append(getInput("downloadAllStorage"), " Lataa kaikki -nappula <br/>");
   $(scriptDiv).append(getInput("ipPostCounterStorage"), " Näytä käyttäjän postausten määrä (vain kultatilillä) <br/>");
   $(scriptDiv).append(getInput("lastOwnPostStorage"), " Last own post -nappula <br/>");
-  $(scriptDiv).append(getInput("ipPostCounterStorage"), " Näytä käyttäjän postausten määrä (vain kultatilillä) <br/>");
   $(scriptDiv).append(getInput("namefagHiderStorage"), " Piilota nimipostaukset <br/>");
   $(scriptDiv).append(getInput("quoteAllFromIpStorage"), " Vastaa kaikkiin käyttäjän postauksiin -nappula <br/>");
   $(scriptDiv).append(getInput("reverseImageSearchStorage"), " Käänteinen kuvahaku <br/>");
