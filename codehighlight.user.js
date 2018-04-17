@@ -22,8 +22,16 @@ function highlightCode() {
   });
 }
 
+function isToggled(name) {
+  return localStorage.getItem(name) !== "false";
+}
+
 const highlightCSS = GM_getResourceText('highlightCSS');
 GM_addStyle(highlightCSS);
 
-highlightCode();
-newRepliesListener(() => highlightCode());
+if (isToggled("codeHighlighterStorage")) {
+  highlightCode();
+  if ($('.answers').length > 0) {
+    newRepliesListener(() => highlightCode());
+  }
+}
