@@ -50,6 +50,10 @@
     downloadContent(zipFile, threadId + '.zip');
   }
 
+  function isToggled(name) {
+    return localStorage.getItem(name) !== "false";
+  }
+
   const buttonsRight = $('.buttons_right')
 
   if (buttonsRight && isToggled("downloadAllButton")) {
