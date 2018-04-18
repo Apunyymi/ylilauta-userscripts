@@ -73,7 +73,7 @@ Skriptin lisääminen script-toggler.user.js:ään:
 
 - Lisää `@require`ksi skriptisi commit-kohtainen osoite, esim: 
 ```
-@require https://github.com/Apunyymi/ylilauta-userscripts/script-toggler/raw/COMMIT-ID/nyyminekauserscript.user.js
+@require https://github.com/Apunyymi/ylilauta-userscripts/raw/COMMIT-ID/script-toggler/nyyminekauserscript.user.js
 ```
 
 - Lisää skriptillesi checkbox on/off-kytkentää varten:
