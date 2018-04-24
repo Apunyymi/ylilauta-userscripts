@@ -91,7 +91,7 @@ if (/^\/preferences/.test(window.location.pathname)) {
 
   // Tähän väliin voit lisätä omien skriptien custom-asetuksia
 
-  const fagList = JSON.parse(localStorage.getItem('nameFagHiderList')).join('\n');
+  const fagList = JSON.parse(localStorage.getItem('nameFagHiderList') || '[]').join('\n');
 
   $(scriptDiv).append(
     '<h3>Nimihomojen piilotus</h3>' +
