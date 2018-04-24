@@ -48,6 +48,8 @@
 
   if (isToggled("wordBlackListStorage")) {
     hide();
-    newRepliesListener(() => hide());
+    if ($('.answers').length > 0) {
+      newRepliesListener(() => hide());
+    }
   }
 })();
