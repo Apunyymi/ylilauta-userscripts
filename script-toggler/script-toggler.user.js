@@ -19,41 +19,102 @@
 // @grant GM_getResourceText
 // ==/UserScript==
 
+// Lisää skriptisi LocalStorage-nimi sekä kuvaus tänne
+const userScripts = {  
+  autoscrollStorage: 'Autoscroll-nappula',
+  codeHighlighterStorage: '[code]-blokkien väritys',
+  downloadAllStorage: 'Lataa kaikki -nappula',
+  ipPostCounterStorage: 'Näytä käyttäjän postausten määrä (vain kultatilillä)',
+  lastOwnPostStorage: 'Viimeisin oma postaus -nappula',
+  namefagHiderStorage: 'Piilota nimihomot',
+  quoteAllFromIpStorage: 'Vastaa kaikkiin käyttäjän postauksiin -nappula',
+  reverseImageSearchStorage: 'Käänteinen kuvahaku',
+  showMostAnsweredStorage: 'Näytä vastatuimmat -nappula',
+  tagpostHiderStorage: 'Piilota tagipostaukset',
+}
+
 function isToggled(name) {
   const item = localStorage.getItem(name);
-  if (item === undefined || item === null || item === "undefined") {
-    localStorage.setItem(name, false);
+  if (item === undefined || item === null || item === 'undefined') {
+    localStorage.setItem(name, 'false');
     return false;
   }
-  return item !== "false";
+  return item !== 'false';
 }
 
-function getInput(name) {
+function getInput(name, description) {
   const input = document.createElement('input');
-  input.type = "checkbox";
+  input.type = 'checkbox';
   input.checked = isToggled(name);
-  input.onchange = function() {
-    localStorage.setItem(name, this.checked);
-  }
-  return input;
+  input.id = 'userscript-' + name;
+  input.onchange = (e) => localStorage.setItem(name, JSON.stringify(e.originalTarget.checked));
+
+  const label = document.createElement('label');
+  label.setAttribute('for', 'userscript-' + name);
+  label.innerHTML = description;
+
+  const spacer = document.createTextNode(' ');
+
+  const span = document.createElement('span');
+  span.classList.add('block');
+  
+  span.appendChild(input);
+  span.appendChild(spacer);
+  span.appendChild(label);
+
+  return span;
 }
 
-if (window.location.href.indexOf("/preferences?site") > -1) {
-  const preferencesDiv = $('#site');
+// Varmistetaan kaikkien LocalStorage-muuttujien alustus
+for (var key in userScripts) {
+  isToggled(key);
+}
+
+if (/^\/preferences/.test(window.location.pathname)) {
+  const tab = document.createElement('li');
+  tab.classList.add('tab');
+  tab.dataset['tabid'] = 'skripta';
+  tab.innerHTML = 'Userscript-hallinta';
+  tab.onclick = () => switch_preferences_tab('skripta', true);
+  $('li.tab[data-tabid="sessions"]').after(tab);
   
   const scriptDiv = document.createElement('div');
-  $(scriptDiv).append("<h3>Skriptit</h3>");
+  scriptDiv.id = 'skripta';
+  scriptDiv.classList.add('tab');
+  scriptDiv.style.display = 'none';
+
+  $(scriptDiv).append('<h3>Päällä olevat skriptit</h3>');
+
+  for (var key in userScripts) {
+    $(scriptDiv).append(getInput(key, userScripts[key]));
+  }
   
-  $(scriptDiv).append(getInput("autoscrollStorage"), " Autoscroll-nappula <br/>");
-  $(scriptDiv).append(getInput("codeHighlighterStorage"), " [code]Koodi[/code]-blokkien väritys <br/>");
-  $(scriptDiv).append(getInput("downloadAllStorage"), " Lataa kaikki -nappula <br/>");
-  $(scriptDiv).append(getInput("ipPostCounterStorage"), " Näytä käyttäjän postausten määrä (vain kultatilillä) <br/>");
-  $(scriptDiv).append(getInput("lastOwnPostStorage"), " Last own post -nappula <br/>");
-  $(scriptDiv).append(getInput("namefagHiderStorage"), " Piilota nimipostaukset <br/>");
-  $(scriptDiv).append(getInput("quoteAllFromIpStorage"), " Vastaa kaikkiin käyttäjän postauksiin -nappula <br/>");
-  $(scriptDiv).append(getInput("reverseImageSearchStorage"), " Käänteinen kuvahaku <br/>");
-  $(scriptDiv).append(getInput("showMostAnsweredStorage"), " Näytä vastatuimmat -nappula <br/>");
-  $(scriptDiv).append(getInput("tagpostHiderStorage"), " Piilota tagipostaukset <br/>");
-  
-  preferencesDiv.prepend(scriptDiv)
+  // Tähän väliin voit lisätä omien skriptien custom-asetuksia
+
+  $(scriptDiv).append(
+    '<h3>Nimihomojen piilotus</h3>' +
+    getInput('hideEveryNameFag', 'Piilota ihan kaikki nimihomot') +
+    `<span class="block">Piilotettavat nimihomot:</span>
+    <span class="block"><textarea id="userscript-nameFagHiderList" cols="35" rows="5" style="white-space: nowrap;"></textarea></span>`);
+
+  $('#userscript-nameFagHiderList')
+    .attr('disabled', $('#userscript-hideEveryNameFag').checked());
+    .change(() => {
+      // Siivotaan filtterillä tyhjät rivit pois
+      const fags = $(this).val().split('\n').filter((x) => return /\S/.test(x));
+
+      localStorage.setItem('nameFagHiderList', JSON.stringify(fags))
+    });
+
+  $('#userscript-hideEveryNameFag').change(() => {
+    $('#userscript-nameFagHiderList').attr('disabled', $(this).checked());
+  });
+
+  // Custom-asetukset päättyvät
+
+  $('#sessions').after(scriptDiv)
+
+  if (/\?skripta/.test(window.location.href)) {
+    switch_preferences_tab('skripta', true);
+  }
 }

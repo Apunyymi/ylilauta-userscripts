@@ -9,11 +9,20 @@
 // ==/UserScript==
 
 (function () {
+  // Settingsien asetus, || asettaa vara-arvon jos localStoragessa ei ole mitään
+  const hideAll = localStorage.getItem('hideEveryNameFag') || false;
+  const fags = JSON.parse(localStorage.getItem('nameFagHiderList')) || [];
+
   function shouldBeHidden(div) {
     const postinfo = Array.from(div.childNodes).find(c => c.className === 'postinfo');
     const tags = Array.from(postinfo.childNodes).find(c => c.className === 'tags');
     const name = Array.from(tags.childNodes).find(c => c.className === 'postername').innerHTML;
-    return name !== 'Anonyymi';
+    
+    if (hideAll) {
+      return name !== 'Anonyymi';
+    } else {
+      return fags.includes(name);
+    }
   }
 
   function hide() {
