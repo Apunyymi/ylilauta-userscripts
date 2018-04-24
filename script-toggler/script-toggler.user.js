@@ -20,7 +20,7 @@
 // ==/UserScript==
 
 // Lisää skriptisi LocalStorage-nimi sekä kuvaus tänne
-const userScripts = {  
+const userScripts = {
   autoscrollStorage: 'Autoscroll-nappula',
   codeHighlighterStorage: '[code]-blokkien väritys',
   downloadAllStorage: 'Lataa kaikki -nappula',
@@ -30,7 +30,7 @@ const userScripts = {
   quoteAllFromIpStorage: 'Vastaa kaikkiin käyttäjän postauksiin -nappula',
   reverseImageSearchStorage: 'Käänteinen kuvahaku',
   showMostAnsweredStorage: 'Näytä vastatuimmat -nappula',
-  tagpostHiderStorage: 'Piilota tagipostaukset',
+  tagpostHiderStorage: 'Piilota tagipostaukset'
 }
 
 function isToggled(name) {
@@ -57,7 +57,7 @@ function getInput(name, description) {
 
   const span = document.createElement('span');
   span.classList.add('block');
-  
+
   span.appendChild(input);
   span.appendChild(spacer);
   span.appendChild(label);
@@ -66,7 +66,7 @@ function getInput(name, description) {
 }
 
 // Varmistetaan kaikkien LocalStorage-muuttujien alustus
-for (var key in userScripts) {
+for (let key in userScripts) {
   isToggled(key);
 }
 
@@ -77,7 +77,7 @@ if (/^\/preferences/.test(window.location.pathname)) {
   tab.innerHTML = 'Userscript-hallinta';
   tab.onclick = () => switch_preferences_tab('skripta', true);
   $('li.tab[data-tabid="sessions"]').after(tab);
-  
+
   const scriptDiv = document.createElement('div');
   scriptDiv.id = 'skripta';
   scriptDiv.classList.add('tab');
@@ -85,10 +85,10 @@ if (/^\/preferences/.test(window.location.pathname)) {
 
   $(scriptDiv).append('<h3>Päällä olevat skriptit</h3>');
 
-  for (var key in userScripts) {
+  for (let key in userScripts) {
     $(scriptDiv).append(getInput(key, userScripts[key]));
   }
-  
+
   // Tähän väliin voit lisätä omien skriptien custom-asetuksia
 
   const fagList = JSON.parse(localStorage.getItem('nameFagHiderList')).join('\n');
