@@ -99,6 +99,13 @@ if (/^\/preferences/.test(window.location.pathname)) {
     `<span class="block">Piilotettavat nimihomot:</span>
     <span class="block"><textarea id="userscript-nameFagHiderList" cols="35" rows="5" style="white-space: nowrap;">` + fagList + `</textarea></span>`);
 
+
+  // Custom-asetukset päättyvät
+
+  $('#sessions').after(scriptDiv)
+
+  // Tähän väliin voit lisätä custom-asetusten testejä/automaattitäydennyksiä tms.
+
   $('#userscript-nameFagHiderList')
     .attr('disabled', $('#userscript-hideEveryNameFag')[0].checked)
     .change(() => {
@@ -112,9 +119,7 @@ if (/^\/preferences/.test(window.location.pathname)) {
     $('#userscript-nameFagHiderList').attr('disabled', $(this)[0].checked);
   });
 
-  // Custom-asetukset päättyvät
-
-  $('#sessions').after(scriptDiv)
+  // Testit yms. päättyvät
 
   if (/\?skripta/.test(window.location.href)) {
     switch_preferences_tab('skripta', true);
