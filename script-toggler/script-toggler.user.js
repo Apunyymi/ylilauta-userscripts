@@ -9,7 +9,7 @@
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/31a9e9c6a465bb68c12bc0d2361444be87c887c2/script-toggler/downloadall-button.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/31a9e9c6a465bb68c12bc0d2361444be87c887c2/script-toggler/ippostcounter.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/31a9e9c6a465bb68c12bc0d2361444be87c887c2/script-toggler/lastownpost-button.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/31a9e9c6a465bb68c12bc0d2361444be87c887c2/script-toggler/namefag-hider.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c42ade327a44afd8bd86c659746051eacb593bea/script-toggler/namefag-hider.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/31a9e9c6a465bb68c12bc0d2361444be87c887c2/script-toggler/quoteallfromip-button.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/31a9e9c6a465bb68c12bc0d2361444be87c887c2/script-toggler/reverse-image-search-button.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/31a9e9c6a465bb68c12bc0d2361444be87c887c2/script-toggler/show-most-answered.user.js
