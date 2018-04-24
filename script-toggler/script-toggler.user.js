@@ -91,7 +91,7 @@ if (/^\/preferences/.test(window.location.pathname)) {
 
   // Tähän väliin voit lisätä omien skriptien custom-asetuksia
 
-  const fagList = JSON.parse(localStorage.getItem('nameFagHiderList')).join('\n');
+  const fagList = JSON.parse(localStorage.getItem('nameFagHiderList') || '[]').join('\n');
 
   $(scriptDiv).append(
     '<h3>Nimihomojen piilotus</h3>' +
@@ -100,7 +100,7 @@ if (/^\/preferences/.test(window.location.pathname)) {
     <span class="block"><textarea id="userscript-nameFagHiderList" cols="35" rows="5" style="white-space: nowrap;">` + fagList + `</textarea></span>`);
 
   $('#userscript-nameFagHiderList')
-    .attr('disabled', $('#userscript-hideEveryNameFag').checked())
+    .attr('disabled', $('#userscript-hideEveryNameFag')[0].checked)
     .change(() => {
       // Siivotaan filtterillä tyhjät rivit pois
       const fags = $(this).val().split('\n').filter((x) => /\S/.test(x));
@@ -109,7 +109,7 @@ if (/^\/preferences/.test(window.location.pathname)) {
     });
 
   $('#userscript-hideEveryNameFag').change(() => {
-    $('#userscript-nameFagHiderList').attr('disabled', $(this).checked());
+    $('#userscript-nameFagHiderList').attr('disabled', $(this)[0].checked);
   });
 
   // Custom-asetukset päättyvät

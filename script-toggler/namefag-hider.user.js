@@ -11,7 +11,7 @@
 (function () {
   // Settingsien asetus, || asettaa vara-arvon jos localStoragessa ei ole mitään
   const hideAll = localStorage.getItem('hideEveryNameFag') || false;
-  const fags = JSON.parse(localStorage.getItem('nameFagHiderList')) || [];
+  const fags = JSON.parse(localStorage.getItem('nameFagHiderList') || '[]');
 
   function shouldBeHidden(div) {
     const postinfo = Array.from(div.childNodes).find(c => c.className === 'postinfo');
