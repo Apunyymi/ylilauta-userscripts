@@ -91,11 +91,13 @@ if (/^\/preferences/.test(window.location.pathname)) {
   
   // Tähän väliin voit lisätä omien skriptien custom-asetuksia
 
+  const fagList = JSON.parse(localStorage.getItem('nameFagHiderList')).join('\n');
+
   $(scriptDiv).append(
     '<h3>Nimihomojen piilotus</h3>' +
     getInput('hideEveryNameFag', 'Piilota ihan kaikki nimihomot') +
     `<span class="block">Piilotettavat nimihomot:</span>
-    <span class="block"><textarea id="userscript-nameFagHiderList" cols="35" rows="5" style="white-space: nowrap;"></textarea></span>`);
+    <span class="block"><textarea id="userscript-nameFagHiderList" cols="35" rows="5" style="white-space: nowrap;">` + fagList + `</textarea></span>`);
 
   $('#userscript-nameFagHiderList')
     .attr('disabled', $('#userscript-hideEveryNameFag').checked())
