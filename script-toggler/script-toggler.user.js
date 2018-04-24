@@ -35,7 +35,7 @@ const userScripts = {
 
 function isToggled(name) {
   const item = localStorage.getItem(name);
-  if (item === undefined || item === null || item === 'undefined') {
+  if (item === undefined || item === null || item === 'undefined') {
     localStorage.setItem(name, 'false');
     return false;
   }
@@ -91,13 +91,12 @@ if (/^\/preferences/.test(window.location.pathname)) {
 
   // Tähän väliin voit lisätä omien skriptien custom-asetuksia
 
-  const fagList = JSON.parse(localStorage.getItem('nameFagHiderList') || '[]').join('\n');
+  const fagList = JSON.parse(localStorage.getItem('nameFagHiderList') || '[]').join('\n');
 
-  $(scriptDiv).append(
-    '<h3>Nimihomojen piilotus</h3>' +
-    getInput('hideEveryNameFag', 'Piilota ihan kaikki nimihomot') +
-    `<span class="block">Piilotettavat nimihomot:</span>
-    <span class="block"><textarea id="userscript-nameFagHiderList" cols="35" rows="5" style="white-space: nowrap;">` + fagList + `</textarea></span>`);
+  $(scriptDiv).append('<h3>Nimihomojen piilotus</h3>');
+  $(scriptDiv).append(getInput('hideEveryNameFag', 'Piilota ihan kaikki nimihomot'));
+  $(scriptDiv).append(`<span class="block">Piilotettavat nimihomot: (tallentuu kun menet pois tekstikentästä)</span>
+    <span class="block"><textarea id="userscript-nameFagHiderList" cols="35" rows="5">` + fagList + `</textarea></span>`);
 
 
   // Custom-asetukset päättyvät
@@ -108,15 +107,15 @@ if (/^\/preferences/.test(window.location.pathname)) {
 
   $('#userscript-nameFagHiderList')
     .attr('disabled', $('#userscript-hideEveryNameFag')[0].checked)
-    .change(() => {
+    .change((e) => {
       // Siivotaan filtterillä tyhjät rivit pois
-      const fags = $(this).val().split('\n').filter((x) => /\S/.test(x));
+      const fags = e.target.value.split('\n').filter((x) => /\S/.test(x));
 
       localStorage.setItem('nameFagHiderList', JSON.stringify(fags))
     });
 
-  $('#userscript-hideEveryNameFag').change(() => {
-    $('#userscript-nameFagHiderList').attr('disabled', $(this)[0].checked);
+  $('#userscript-hideEveryNameFag').change((e) => {
+    $('#userscript-nameFagHiderList').attr('disabled', e.target.checked);
   });
 
   // Testit yms. päättyvät
