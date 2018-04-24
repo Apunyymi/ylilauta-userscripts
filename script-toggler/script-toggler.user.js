@@ -98,10 +98,10 @@ if (/^\/preferences/.test(window.location.pathname)) {
     <span class="block"><textarea id="userscript-nameFagHiderList" cols="35" rows="5" style="white-space: nowrap;"></textarea></span>`);
 
   $('#userscript-nameFagHiderList')
-    .attr('disabled', $('#userscript-hideEveryNameFag').checked());
+    .attr('disabled', $('#userscript-hideEveryNameFag').checked())
     .change(() => {
       // Siivotaan filtterillä tyhjät rivit pois
-      const fags = $(this).val().split('\n').filter((x) => return /\S/.test(x));
+      const fags = $(this).val().split('\n').filter((x) => /\S/.test(x));
 
       localStorage.setItem('nameFagHiderList', JSON.stringify(fags))
     });
