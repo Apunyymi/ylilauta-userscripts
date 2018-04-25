@@ -6,7 +6,7 @@
 // @locale       en
 // @author       Apunyymi
 // @match        *://ylilauta.org/*
-// @grant        none
+// @grant        GM_addStyle
 // ==/UserScript==
 
 (function() {
@@ -47,6 +47,9 @@
       
       observer.observe($('.answers')[0], { childList: true });
     }
+
+    // Add some styling to poster ids
+    GM_addStyle('#right .threads .thread .postuid {text-shadow: white 0px 0px 5px;}');
 
     // Colorize poster ids and do it also when new messages are added to page
     colorize();
