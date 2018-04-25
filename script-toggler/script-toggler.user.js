@@ -4,17 +4,21 @@
 // @match *://ylilauta.org/*
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/31a9e9c6a465bb68c12bc0d2361444be87c887c2/script-toggler/autoscroll-button.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/31a9e9c6a465bb68c12bc0d2361444be87c887c2/script-toggler/codehighlight.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/31a9e9c6a465bb68c12bc0d2361444be87c887c2/script-toggler/downloadall-button.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/31a9e9c6a465bb68c12bc0d2361444be87c887c2/script-toggler/ippostcounter.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/31a9e9c6a465bb68c12bc0d2361444be87c887c2/script-toggler/lastownpost-button.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/c42ade327a44afd8bd86c659746051eacb593bea/script-toggler/namefag-hider.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/31a9e9c6a465bb68c12bc0d2361444be87c887c2/script-toggler/quoteallfromip-button.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/31a9e9c6a465bb68c12bc0d2361444be87c887c2/script-toggler/reverse-image-search-button.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/31a9e9c6a465bb68c12bc0d2361444be87c887c2/script-toggler/show-most-answered.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/31a9e9c6a465bb68c12bc0d2361444be87c887c2/script-toggler/tagpost-hider.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/autoscroll-button.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/codehighlight.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/downloadall-button.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/ippostcounter.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/lastownpost-button.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/namefag-hider.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/86016bcf0c704c07998e2122b42a36af4c73513d/script-toggler/quoteallfromip-button.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/reverse-image-search-button.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/show-most-answered.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/tagpost-hider.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/544a9f9a026a16b06e961b974f41f918b9823f83/script-toggler/wordhider.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/86016bcf0c704c07998e2122b42a36af4c73513d/script-toggler/taa-bot.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/colorize-poster-ids.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/dffc0c049204940357458b253c458fdcdbd83e3d/script-toggler/update-onhover-newestid-activitypoint.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/button-hider.user.js
 // @resource highlightCSS https://gitcdn.xyz/repo/isagalaev/highlight.js/cf4b46e5b7acfe2626a07914e1d0d4ef269aed4a/src/styles/darcula.css
 // @grant GM_addStyle
 // @grant GM_getResourceText
@@ -32,7 +36,11 @@ const userScripts = {
   reverseImageSearchStorage: 'Käänteinen kuvahaku',
   showMostAnsweredStorage: 'Näytä vastatuimmat -nappula',
   tagpostHiderStorage: 'Piilota tagipostaukset',
-  wordBlackListStorage: 'Sanafiltteri'
+  wordBlackListStorage: 'Sanafiltteri',
+  taaBotStorage: 'Tää :D -botti',
+  colorizePosterIdsStorage: 'Postaajaväritin',
+  updateOnhoverStorage: 'Newestid- ja aktiivisuuspistepäivitin',
+  buttonHiderStorage: 'Postauksen nappien piilotus'
 }
 
 function isToggled(name) {
@@ -91,10 +99,26 @@ if (/^\/preferences/.test(window.location.pathname)) {
     $(scriptDiv).append(getInput(key, userScripts[key]));
   }
 
+  // Lisää tähän omat tyylitietueesi skriptejä varten. Nämä ovat käytössä vain asetussivulla.
+
+  GM_addStyle(`.userscript-button {
+  line-height: 1em;
+  font-size: 1em;
+  padding: 2px;
+  background-color: #133b5e;
+  border-radius: 3px;
+  margin-left: 0.2em;
+  color: #fff;
+}`);
+
   // Tähän väliin voit lisätä omien skriptien custom-asetuksia
 
   const fagList = JSON.parse(localStorage.getItem('nameFagHiderList') || '[]').join('\n');
   const wordList = JSON.parse(localStorage.getItem('wordBlackListList') || '[]').join('\n');
+  
+  const allButtons = JSON.parse(localStorage.getItem('buttonHiderAllButtons') || '[]');
+  const allDescriptions = JSON.parse(localStorage.getItem('buttonHiderAllDescriptions') || '[]');
+  const hiddenButtonsList = JSON.parse(localStorage.getItem('buttonHiderList') || '[]');
 
   $(scriptDiv).append('<h3>Nimihomojen piilotus</h3>');
   $(scriptDiv).append(getInput('hideEveryNameFag', 'Piilota ihan kaikki nimihomot'));
@@ -106,6 +130,55 @@ if (/^\/preferences/.test(window.location.pathname)) {
   $(scriptDiv).append(getInput('wordBlackListRegex', 'Käytä sanojen sijaan regexejä'));
   $(scriptDiv).append(`<span class="block">Piilotettavat sanat:</span>
     <span class="block"><textarea id="userscript-wordBlackListList" cols="35" rows="5">` + wordList + `</textarea></span>`);
+
+  $(scriptDiv).append('<h3>Postausnappien piilotus</h3>');
+
+  for (var i = 0; i < allButtons.length; i++) {
+    allButtons[i]
+    let input = document.createElement('input');
+    input.type = 'checkbox';
+    input.checked = hiddenButtonsList.includes(allButtons[i]);
+    input.id = 'userscript-hidebutton-' + allButtons[i];
+    input.dataset.button = allButtons[i];
+    input.onchange = (e) => {
+      let a = e.originalTarget.dataset.button;
+
+      console.log(a);
+
+      if (e.originalTarget.checked) {
+        if (!hiddenButtonsList.includes(a)) {
+          hiddenButtonsList.push(a);
+        }
+      } else {
+        if (hiddenButtonsList.includes(a)) {
+          hiddenButtonsList.splice(hiddenButtonsList.indexOf(a), 1);
+        }
+      }
+
+      localStorage.setItem('buttonHiderList', JSON.stringify(hiddenButtonsList));
+    };
+
+    let button = document.createElement('span');
+    button.classList.add('userscript-button');
+    button.classList.add(allButtons[i]);
+
+    let label = document.createElement('label');
+    label.setAttribute('for', 'userscript-hidebutton-' + allButtons[i]);
+    label.innerHTML = allDescriptions[i];
+
+    let spacer = document.createTextNode(' ');
+
+    let span = document.createElement('span');
+    span.classList.add('block');
+
+    span.appendChild(input);
+    span.appendChild(spacer);
+    span.appendChild(button);
+    span.appendChild(spacer);
+    span.appendChild(label);
+
+    $(scriptDiv).append(span);
+  };
 
   // Custom-asetukset päättyvät
 
