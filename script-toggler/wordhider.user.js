@@ -33,7 +33,13 @@
   function hide() {
     Array.from(document.querySelectorAll('div.op_post, div.answer'))
       .filter(div => shouldBeHidden(div))
-      .map(div => div.hidden = true);
+      .map(div => {
+        div.hidden = true;
+        
+        if (div.parentElement.classList.contains('thread')) {
+          div.parentElement.style.display = 'none';
+        }
+      });
   }
 
   function newRepliesListener(callback) {

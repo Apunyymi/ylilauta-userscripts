@@ -14,6 +14,7 @@
       Array.from(document.querySelectorAll('div.op_post, div.answer'))
         .map(div => {
           const post = Array.from(div.childNodes).find(n => n.className === 'post');
+          if (post === undefined) return;
 
           const filecontainer = Array.from(post.childNodes).find(
             n => n.className && n.className.indexOf('filecontainer thumbnail file') !== -1
