@@ -9,12 +9,12 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/downloadall-button.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/ippostcounter.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/lastownpost-button.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/namefag-hider.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/e0244bffac2100ab94673eb9eec66b6aed9531ea/script-toggler/namefag-hider.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/86016bcf0c704c07998e2122b42a36af4c73513d/script-toggler/quoteallfromip-button.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/reverse-image-search-button.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/e0244bffac2100ab94673eb9eec66b6aed9531ea/script-toggler/reverse-image-search-button.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/show-most-answered.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/tagpost-hider.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/544a9f9a026a16b06e961b974f41f918b9823f83/script-toggler/wordhider.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/e0244bffac2100ab94673eb9eec66b6aed9531ea/script-toggler/wordhider.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/86016bcf0c704c07998e2122b42a36af4c73513d/script-toggler/taa-bot.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/colorize-poster-ids.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/dffc0c049204940357458b253c458fdcdbd83e3d/script-toggler/update-onhover-newestid-activitypoint.user.js
@@ -122,7 +122,7 @@ if (/^\/preferences/.test(window.location.pathname)) {
 
   $(scriptDiv).append('<h3>Nimihomojen piilotus</h3>');
   $(scriptDiv).append(getInput('hideEveryNameFag', 'Piilota ihan kaikki nimihomot'));
-  $(scriptDiv).append(`<span class="block">Piilotettavat nimihomot: (tallentuu kun menet pois tekstikentästä)</span>
+  $(scriptDiv).append(`<span class="block">Piilotettavat nimihomot: (tekstikentät tallentuvat kun menet pois niistä)</span>
     <span class="block"><textarea id="userscript-nameFagHiderList" cols="35" rows="5">` + fagList + `</textarea></span>`);
 
   $(scriptDiv).append('<h3>Sanafiltteri</h3>');
@@ -133,6 +133,9 @@ if (/^\/preferences/.test(window.location.pathname)) {
 
   $(scriptDiv).append('<h3>Postausnappien piilotus</h3>');
 
+  if (allButtons.length === 0) {
+    $(scriptDiv).append('<span class="block">Käy ensin jollain lautasivulla, niin skripti löytää piilotettavat napit</span')
+  }
   for (var i = 0; i < allButtons.length; i++) {
     allButtons[i]
     let input = document.createElement('input');
