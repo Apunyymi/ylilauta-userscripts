@@ -11,7 +11,7 @@
 
 (function () {
   // Don't even run any code if this module is not enabled
-  if (localStorage.getItem('taaBotStorage') === 'true';) {
+  if (localStorage.getItem('taaBotStorage') === 'true') {
     // Initialize all these global vars
     const runTaaVar = false, // is the Tää :D bot running
       taamsgids = [], // shows which msgids have been already tää :D'd
