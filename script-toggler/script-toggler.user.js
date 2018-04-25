@@ -16,9 +16,10 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/tagpost-hider.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/e0244bffac2100ab94673eb9eec66b6aed9531ea/script-toggler/wordhider.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/86016bcf0c704c07998e2122b42a36af4c73513d/script-toggler/taa-bot.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/colorize-poster-ids.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/b9d0025ff6e95f6d29af01bfd913a47b15f1f232/script-toggler/colorize-poster-ids.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/dffc0c049204940357458b253c458fdcdbd83e3d/script-toggler/update-onhover-newestid-activitypoint.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/button-hider.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/b9d0025ff6e95f6d29af01bfd913a47b15f1f232/script-toggler/remove-ads.user.js
 // @resource highlightCSS https://gitcdn.xyz/repo/isagalaev/highlight.js/cf4b46e5b7acfe2626a07914e1d0d4ef269aed4a/src/styles/darcula.css
 // @grant GM_addStyle
 // @grant GM_getResourceText
@@ -40,7 +41,8 @@ const userScripts = {
   taaBotStorage: 'Tää :D -botti',
   colorizePosterIdsStorage: 'Postaajaväritin',
   updateOnhoverStorage: 'Newestid- ja aktiivisuuspistepäivitin',
-  buttonHiderStorage: 'Postauksen nappien piilotus'
+  buttonHiderStorage: 'Postauksen nappien piilotus',
+  removeAdsStorage: 'Piilota (((mainokset)))'
 }
 
 function isToggled(name) {
