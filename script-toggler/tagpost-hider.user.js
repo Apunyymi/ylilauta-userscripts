@@ -13,6 +13,7 @@
     const allowedTags = [
       'postername',
       'tag text postedbyop',
+      'tag text sage',
       'postnumber quotelink',
       'posttime'
     ];
