@@ -15,6 +15,7 @@
 
   function shouldBeHidden(div) {
     const post = Array.from(div.childNodes).find(c => c.className === 'post');
+    if (post === undefined) return;
     
     const postcontent = Array.from(post.childNodes).find(c => c.className === 'postcontent').innerText;
     
