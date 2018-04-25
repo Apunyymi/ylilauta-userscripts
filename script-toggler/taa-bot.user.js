@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Ylilauta: TaaBot
-// @namespace    *://ylilauta.org/
+// @namespace    *://ylilauta.org/*
 // @version      1.0
 // @description  Extract from YlisToolchain, trying to Tää :D over the Ylis!
 // @locale       en

@@ -5,7 +5,12 @@
 // ==/UserScript==
 
 (function () {
-  function sortReplies() {
+  const buttonsRight = $('.buttons_right')
+
+  if (localStorage.getItem('showMostAnsweredStorage') === 'true'
+    && buttonsRight) {
+
+    function sortReplies() {
       stopReplyUpdate();
 
       let replies = document.querySelectorAll('.answer');
@@ -24,23 +29,16 @@
       for(let i = 0; i < replies.length; i++) {
           answersNode.appendChild(replies[i]);
       }
-  }
-
-  function isToggled(name) {
-    return localStorage.getItem(name) !== "false";
-  }
-
-  const sortButton = $('<button />', {
-    text: 'Näytä vastatuimmat',
-    class: 'linkbutton',
-    on: {
-      click: () => sortReplies()
     }
-  });
 
-  const buttonsRight = $('.buttons_right')
+    const sortButton = $('<button />', {
+      text: 'Näytä vastatuimmat',
+      class: 'linkbutton',
+      on: {
+        click: () => sortReplies()
+      }
+    });
 
-  if (buttonsRight && isToggled("showMostAnsweredStorage")) {
     buttonsRight.prepend(sortButton);
   }
 })();

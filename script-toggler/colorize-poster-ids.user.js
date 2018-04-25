@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Ylilauta: Postaajaväritin
-// @namespace    *://ylilauta.org/
+// @namespace    *://ylilauta.org/*
 // @version      1.0
 // @description  Extract from YlisToolchain, colorizes poster ids
 // @locale       en

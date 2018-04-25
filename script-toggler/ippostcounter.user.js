@@ -8,42 +8,39 @@
 // ==/UserScript==
 
 (function () {
-  function newRepliesListener(callback) {
-    const observer = new MutationObserver(callback);
+  if (localStorage.getItem('ipPostCounterStorage') === 'true') {
+    function newRepliesListener(callback) {
+      const observer = new MutationObserver(callback);
 
-    observer.observe($('.answers')[0], { childList: true });
-  }
-
-  function countPosts() {
-    $('span.postcount').remove();
-
-    const ipNodes = [...$('.postuid.ip')];
-    const ipCounter = ipNodes.reduce((accumulator, ipNode) => {
-      const ip = ipNode.innerText;
-
-      if (!accumulator[ip]++) {
-        accumulator[ip] = 1;
-      }
-
-      return accumulator;
-    }, {});
-
-    for (ipNode of ipNodes) {
-      const ip = ipNode.innerText;
-      const numberOfPosts = ipCounter[ip];
-
-      $(ipNode).append(
-        `<span class="postcount" style="margin-left: 0.4em">(${numberOfPosts})</span>`
-      );
+      observer.observe($('.answers')[0], { childList: true });
     }
-  }
 
-  function isToggled(name) {
-    return localStorage.getItem(name) !== "false";
-  }
+    function countPosts() {
+      $('span.postcount').remove();
 
-  if (isToggled("ipPostCounterStorage")) {
+      const ipNodes = [...$('.postuid.ip')];
+      const ipCounter = ipNodes.reduce((accumulator, ipNode) => {
+        const ip = ipNode.innerText;
+
+        if (!accumulator[ip]++) {
+          accumulator[ip] = 1;
+        }
+
+        return accumulator;
+      }, {});
+
+      for (ipNode of ipNodes) {
+        const ip = ipNode.innerText;
+        const numberOfPosts = ipCounter[ip];
+
+        $(ipNode).append(
+          `<span class="postcount" style="margin-left: 0.4em">(${numberOfPosts})</span>`
+        );
+      }
+    }
+
     countPosts();
+
     if ($('.answers').length > 0) {
       newRepliesListener(() => countPosts());
     }

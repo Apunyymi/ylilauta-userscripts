@@ -9,20 +9,19 @@
 // ==/UserScript==
 
 (function () {
-  function isToggled(name) {
-    return localStorage.getItem(name) !== "false";
-  }
-
   const buttonsRight = document.querySelector('.buttons_right');
 
-  if (buttonsRight && isToggled("lastOwnPostStorage")) {
-    var btn = document.createElement('button');
+  if (localStorage.getItem('lastOwnPostStorage') === 'true' 
+    && buttonsRight) {
+
+    const btn = document.createElement('button');
     btn.innerText = 'Last own post';
     btn.className = 'linkbutton';
     btn.onclick = () => {
       const posts = document.querySelectorAll('div.own_post');
       posts[posts.length-1].scrollIntoView(true);
-    }
+    };
+
     buttonsRight.insertBefore(btn, buttonsRight.firstChild);
   }
 })();

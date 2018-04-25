@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Ylilauta: Newestid- ja aktiivisuuspistepäivitin
-// @namespace    *://ylilauta.org/
+// @namespace    *://ylilauta.org/*
 // @version      1.0
 // @description  Extract from YlisToolchain, updates some values on hover
 // @locale       en

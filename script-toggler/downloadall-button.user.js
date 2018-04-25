@@ -8,55 +8,53 @@
 // @description Lataa kaikki mediatiedostot langasta
 // ==/UserScript==
 (function() {
-  function afterLastSlash(text) {
-    const parts = text.split('/');
-    return parts[parts.length - 1];
-  }
-
-  function downloadContent(content, filename) {
-    const href = window.URL.createObjectURL(content);
-    const link = $('<a />', {
-      href,
-      download: filename
-    })[0];
-
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(href);
-  }
-
-  async function downloadAll() {
-    const domMediaUris = $('figcaption').map(
-      (i, container) => container.firstChild.href
-    );
-    const mediaUris = [...domMediaUris];
-    const filteredMediaUris = mediaUris.filter(uri => !uri.match(/youtube.com/));
-
-    const zip = new JSZip();
-
-    for (uri of filteredMediaUris) {
-      const response = await fetch(uri);
-      const blob = await response.blob();
-
-      const filename = afterLastSlash(response.url);
-
-      zip.file(filename, blob);
-    }
-
-    const zipFile = await zip.generateAsync({ type: 'blob' });
-    const threadId = afterLastSlash(window.location.href);
-
-    downloadContent(zipFile, threadId + '.zip');
-  }
-
-  function isToggled(name) {
-    return localStorage.getItem(name) !== "false";
-  }
-
   const buttonsRight = $('.buttons_right')
 
-  if (buttonsRight && isToggled("downloadAllButton")) {
+  if (localStorage.getItem('downloadAllButton') === 'true'
+    && buttonsRight) {
+
+    function afterLastSlash(text) {
+      const parts = text.split('/');
+      return parts[parts.length - 1];
+    }
+
+    function downloadContent(content, filename) {
+      const href = window.URL.createObjectURL(content);
+      const link = $('<a />', {
+        href,
+        download: filename
+      })[0];
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(href);
+    }
+
+    async function downloadAll() {
+      const domMediaUris = $('figcaption').map(
+        (i, container) => container.firstChild.href
+      );
+      const mediaUris = [...domMediaUris];
+      const filteredMediaUris = mediaUris.filter(uri => !uri.match(/youtube.com/));
+
+      const zip = new JSZip();
+
+      for (uri of filteredMediaUris) {
+        const response = await fetch(uri);
+        const blob = await response.blob();
+
+        const filename = afterLastSlash(response.url);
+
+        zip.file(filename, blob);
+      }
+
+      const zipFile = await zip.generateAsync({ type: 'blob' });
+      const threadId = afterLastSlash(window.location.href);
+
+      downloadContent(zipFile, threadId + '.zip');
+    }
+
     const downloadAllButton = $('<button />', {
       text: 'Lataa kaikki',
       class: 'linkbutton',

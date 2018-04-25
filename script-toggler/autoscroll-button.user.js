@@ -9,35 +9,35 @@
 // ==/UserScript==
 
 (function () {
-  function scrollToButton() {
-    if (scroll) {
-      btn.scrollIntoView(false);
-    }
-  }
-
-  function newRepliesListener(callback) {
-    const observer = new MutationObserver(callback);
-    
-    observer.observe($('.answers')[0], { childList: true });
-  }
-
-  function isToggled(name) {
-    return localStorage.getItem(name) !== "false";
-  }
-
-  var scroll = false;
-
   const buttonsRight = document.querySelector('.buttons_right');
 
-  if (buttonsRight && isToggled("autoscrollStorage")) {
-    var btn = document.createElement('button');
+  // Run full code only if needed
+  if (localStorage.getItem('autoscrollStorage') === 'true'
+    && buttonsRight) {
+
+    function scrollToButton() {
+      if (scroll) {
+        btn.scrollIntoView(false);
+      }
+    }
+
+    function newRepliesListener(callback) {
+      const observer = new MutationObserver(callback);
+      
+      observer.observe($('.answers')[0], { childList: true });
+    }
+
+    var scroll = false;
+
+    const btn = document.createElement('button');
     btn.innerText = 'Autoscroll';
     btn.className = 'linkbutton';
     btn.disabled = scroll;
     btn.onclick = () => {
       scroll = !scroll;
-      btn.innerText = scroll ? 'Stop scrolling' : 'Autoscroll';
+      btn.innerText = scroll ? 'Lopeta vieritys' : 'Autovieritys';
     }
+
     buttonsRight.insertBefore(btn, buttonsRight.firstChild);
     newRepliesListener(() => scrollToButton());
   }

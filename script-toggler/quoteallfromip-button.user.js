@@ -7,35 +7,30 @@
 // ==/UserScript==
 
 (function() {
-  function quoteAllIps(event) {
-    const clickedMessage = $(event.target).parent();
-    const clickedIp = clickedMessage.children('.postuid.ip').text();
+  if (localStorage.getItem('quoteAllFromIpStorage') === 'true') {
+    function quoteAllIps(event) {
+      const clickedMessage = $(event.target).parent();
+      const clickedIp = clickedMessage.children('.postuid.ip').text();
 
-    $('.postuid.ip').each(function() {
-      if ($(this).text() === clickedIp) {
-        $(this)
-          .parent()
-          .children('.quotelink')
-          .click();
+      $('.postuid.ip').each(function() {
+        if ($(this).text() === clickedIp) {
+          $(this)
+            .parent()
+            .children('.quotelink')
+            .click();
+        }
+      });
+
+      clickedMessage.children('.postuid.ip').click();
+    }
+
+    const quoteAllButton = $('<span />', {
+      text: '>>',
+      class: 'postuid',
+      on: {
+        click: quoteAllIps
       }
     });
-
-    clickedMessage.children('.postuid.ip').click();
-  }
-
-  function isToggled(name) {
-    return localStorage.getItem(name) !== "false";
-  }
-
-  const quoteAllButton = $('<span />', {
-    text: '>>',
-    class: 'postuid',
-    on: {
-      click: quoteAllIps
-    }
-  });
   
-  if (isToggled("quoteAllFromIpStorage")){
     $('.postuid.id').after(quoteAllButton);
-  }
 })();
