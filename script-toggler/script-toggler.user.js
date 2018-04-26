@@ -2,7 +2,7 @@
 // @name Ylilauta: Script toggler
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @version 1.1.0
+// @version 1.1.1
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
 // @require https://static.ylilauta.org/js/jquery-3.3.1.min.js
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
@@ -17,7 +17,7 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/show-most-answered.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/ef752100db78d5e69f197e6f7972dafd2185908d/script-toggler/tagpost-hider.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/c73c4487a53cacd66f207addb5c9a1d23d2f09ae/script-toggler/wordhider.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/86016bcf0c704c07998e2122b42a36af4c73513d/script-toggler/taa-bot.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/ccf6df773aec58a9dae8486fab8e56c6a7cbf51b/script-toggler/taa-bot.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/b9d0025ff6e95f6d29af01bfd913a47b15f1f232/script-toggler/colorize-poster-ids.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/dffc0c049204940357458b253c458fdcdbd83e3d/script-toggler/update-onhover-newestid-activitypoint.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/button-hider.user.js
