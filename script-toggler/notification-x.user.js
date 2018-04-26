@@ -9,7 +9,7 @@
 // ==/UserScript==
 
 (function() {
-	if (localStorage.getItem('notificationXStorage')) {
+	if (localStorage.getItem('notificationXStorage') === 'true') {
 		$('#left a[href="javascript:get_notifications()"]').click(() => {
 			let t = setInterval(() => {
 				if ($('#notifications .unread').length > 0) {
