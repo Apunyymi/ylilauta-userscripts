@@ -4,13 +4,13 @@
 // @match *://ylilauta.org/*
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
 // @grant none
-// @version 0.1
+// @version 0.2
 // @description Lataa kaikki mediatiedostot langasta
 // ==/UserScript==
 (function() {
   const buttonsRight = $('.buttons_right')
 
-  if (localStorage.getItem('downloadAllButton') === 'true'
+  if (localStorage.getItem('downloadAllStorage') === 'true'
     && buttonsRight) {
 
     function afterLastSlash(text) {
