@@ -21,7 +21,7 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/dffc0c049204940357458b253c458fdcdbd83e3d/script-toggler/update-onhover-newestid-activitypoint.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/button-hider.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/b9d0025ff6e95f6d29af01bfd913a47b15f1f232/script-toggler/remove-ads.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/4a42423e085d716f38b3b273b037aaa2fba9e5a8/script-toggler/country-post-hider.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/bd75ffae137e76939a59e41c5dd123a7216aab9e/script-toggler/country-post-hider.user.js
 // @resource highlightCSS https://gitcdn.xyz/repo/isagalaev/highlight.js/cf4b46e5b7acfe2626a07914e1d0d4ef269aed4a/src/styles/darcula.css
 // @grant GM_addStyle
 // @grant GM_getResourceText
