@@ -2,7 +2,7 @@
 // @name Ylilauta: Script toggler
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @version 1.0.4
+// @version 1.0.5
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/autoscroll-button.user.js
@@ -21,6 +21,7 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/dffc0c049204940357458b253c458fdcdbd83e3d/script-toggler/update-onhover-newestid-activitypoint.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/button-hider.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/b9d0025ff6e95f6d29af01bfd913a47b15f1f232/script-toggler/remove-ads.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/4a42423e085d716f38b3b273b037aaa2fba9e5a8/script-toggler/country-post-hider.user.js
 // @resource highlightCSS https://gitcdn.xyz/repo/isagalaev/highlight.js/cf4b46e5b7acfe2626a07914e1d0d4ef269aed4a/src/styles/darcula.css
 // @grant GM_addStyle
 // @grant GM_getResourceText
@@ -43,7 +44,8 @@ const userScripts = {
   colorizePosterIdsStorage: 'Postaajaväritin',
   updateOnhoverStorage: 'Newestid- ja aktiivisuuspistepäivitin',
   buttonHiderStorage: 'Postauksen nappien piilotus',
-  removeAdsStorage: 'Piilota (((mainokset)))'
+  removeAdsStorage: 'Piilota (((mainokset)))',
+  countryPostHiderStorage: 'Piilota postaukset tietyistä maista (jos maa näkyy)'
 }
 
 function isToggled(name) {
@@ -123,6 +125,9 @@ if (/^\/preferences/.test(window.location.pathname)) {
   const allDescriptions = JSON.parse(localStorage.getItem('buttonHiderAllDescriptions') || '[]');
   const hiddenButtonsList = JSON.parse(localStorage.getItem('buttonHiderList') || '[]');
 
+  const allCountries = JSON.parse(localStorage.getItem('countryPostHiderAllCountries') || '[]');
+  const hiddenCountries = JSON.parse(localStorage.getItem('countryPostHiderList') || '[]');
+
   $(scriptDiv).append('<h3>Nimihomojen piilotus</h3>');
   $(scriptDiv).append(getInput('hideEveryNameFag', 'Piilota ihan kaikki nimihomot'));
   $(scriptDiv).append(`<span class="block">Piilotettavat nimihomot: (tekstikentät tallentuvat kun menet pois niistä)</span>
@@ -139,8 +144,7 @@ if (/^\/preferences/.test(window.location.pathname)) {
   if (allButtons.length === 0) {
     $(scriptDiv).append('<span class="block">Käy ensin jollain lautasivulla, niin skripti löytää piilotettavat napit</span')
   }
-  for (var i = 0; i < allButtons.length; i++) {
-    allButtons[i]
+  for (let i = 0; i < allButtons.length; i++) {
     let input = document.createElement('input');
     input.type = 'checkbox';
     input.checked = hiddenButtonsList.includes(allButtons[i]);
@@ -148,8 +152,6 @@ if (/^\/preferences/.test(window.location.pathname)) {
     input.dataset.button = allButtons[i];
     input.onchange = (e) => {
       let a = e.target.dataset.button;
-
-      console.log(a);
 
       if (e.target.checked) {
         if (!hiddenButtonsList.includes(a)) {
@@ -180,6 +182,56 @@ if (/^\/preferences/.test(window.location.pathname)) {
     span.appendChild(input);
     span.appendChild(spacer);
     span.appendChild(button);
+    span.appendChild(spacer);
+    span.appendChild(label);
+
+    $(scriptDiv).append(span);
+  };
+
+  $(scriptDiv).append('<h3>Tiettyjen maiden postauksien piilotus</h3>');
+
+  if (allCountries.length === 0) {
+    $(scriptDiv).append('<span class="block">Käy ensin esimerkiksi <a href="/matkailu/">/coco/</a>ssa, niin skripti löytää piilotettavat maat</span')
+  }
+  for (let i = 0; i < allCountries.length; i++) {
+    let countryCode = /\(([A-Z]+)\)/.exec(allCountries[i])[1].toLowerCase();
+
+    let input = document.createElement('input');
+    input.type = 'checkbox';
+    input.checked = hiddenCountries.includes(allCountries[i]);
+    input.id = 'userscript-hidecountry-' + countryCode;
+    input.dataset.country = allCountries[i];
+    input.onchange = (e) => {
+      let a = e.target.dataset.country;
+
+      if (e.target.checked) {
+        if (!hiddenCountries.includes(a)) {
+          hiddenCountries.push(a);
+        }
+      } else {
+        if (hiddenCountries.includes(a)) {
+          hiddenCountries.splice(hiddenCountries.indexOf(a), 1);
+        }
+      }
+
+      localStorage.setItem('countryPostHiderList', JSON.stringify(hiddenCountries));
+    };
+
+    let img = document.createElement('img');
+    img.src = staticUrl + '/img/flags/' + countryCode + '.png';
+
+    let label = document.createElement('label');
+    label.setAttribute('for', 'userscript-hidecountry-' + countryCode);
+    label.innerHTML = allCountries[i];
+
+    let spacer = document.createTextNode(' ');
+
+    let span = document.createElement('span');
+    span.classList.add('block');
+
+    span.appendChild(input);
+    span.appendChild(spacer);
+    span.appendChild(img);
     span.appendChild(spacer);
     span.appendChild(label);
 
