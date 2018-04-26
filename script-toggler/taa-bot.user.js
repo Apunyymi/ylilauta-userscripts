@@ -13,9 +13,9 @@
   // Don't even run any code if this module is not enabled
   if (localStorage.getItem('taaBotStorage') === 'true') {
     // Initialize all these global vars
-    const runTaaVar = false, // is the Tää :D bot running
-      taamsgids = [], // shows which msgids have been already tää :D'd
-      taatimer = false, // used in Tää :D bot
+    var runTaaVar = false, // is the Tää :D bot running
+      taatimer = false; // used in Tää :D bot
+    const taamsgids = [], // shows which msgids have been already tää :D'd
       alertFunc = window.alert; // holds window.alert closure when it's replaced with no-op
 
     // Init LocalStorage
@@ -40,7 +40,7 @@
       if (!isTaaRunning() && $('#left nav.user .taabot input')[0].checked && +($('#left nav.user .activitypoint')[0].innerText.match(/(\d+)/g).join("")) > 9000) {
         // plz note that the msgs var is different from the more global one, which is used in miner and bump bot
         // this msgs is just a placeholder to get all post elements, msgids is a shuffled array of all message ids
-        const msgids = [],
+        let msgids = [],
           msgs = document.querySelectorAll("div[data-msgid]");
 
         for (let i = 0; i < msgs.length; i++) {
@@ -80,7 +80,7 @@
 
         taamsgids.push(msgids[i]);
 
-        const enoughaps = $('#left nav.user .taabot input')[0].checked && +($('#left nav.user .activitypoint')[0].innerText.match(/(\d+)/g).join("")) > 9000;
+        let enoughaps = $('#left nav.user .taabot input')[0].checked && +($('#left nav.user .activitypoint')[0].innerText.match(/(\d+)/g).join("")) > 9000;
 
         if (--i > 0 && enoughaps) {
           taatimer = setTimeout(function () {
@@ -95,7 +95,7 @@
     }
 
     function taaBlinker(status = false, count = 0) {
-      const e = $('#left .taabot-blinker'),
+      let e = $('#left .taabot-blinker'),
         title = "";
 
       if (status) {
