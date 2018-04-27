@@ -2,7 +2,7 @@
 // @name Ylilauta: Script toggler
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @version 1.1.5
+// @version 1.1.6
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
 // @require https://static.ylilauta.org/js/jquery-3.3.1.min.js
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
@@ -24,7 +24,7 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/b9d0025ff6e95f6d29af01bfd913a47b15f1f232/script-toggler/remove-ads.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/bd75ffae137e76939a59e41c5dd123a7216aab9e/script-toggler/country-post-hider.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/408fc137f00e1af34a7eb7f53ded4758ea0b4c62/script-toggler/notification-x.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/a6d41e248b8ccd54218cde648445ae9da12b624d/script-toggler/spam-hider.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/b499d7a66cd3fdbcd237ec7742bbbe0ee2fcb0c5/script-toggler/spam-hider.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/97a6369736006daf5706738aac6f0ef4b9ee3c0f/script-toggler/show-notificationbar.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/97a6369736006daf5706738aac6f0ef4b9ee3c0f/script-toggler/hide-sharebutton.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/97a6369736006daf5706738aac6f0ef4b9ee3c0f/script-toggler/sort-boardlist.user.js
