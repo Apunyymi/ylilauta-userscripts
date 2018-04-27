@@ -24,6 +24,7 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/b9d0025ff6e95f6d29af01bfd913a47b15f1f232/script-toggler/remove-ads.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/bd75ffae137e76939a59e41c5dd123a7216aab9e/script-toggler/country-post-hider.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/408fc137f00e1af34a7eb7f53ded4758ea0b4c62/script-toggler/notification-x.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/a6d41e248b8ccd54218cde648445ae9da12b624d/script-toggler/spam-hider.user.js
 // @resource highlightCSS https://gitcdn.xyz/repo/isagalaev/highlight.js/cf4b46e5b7acfe2626a07914e1d0d4ef269aed4a/src/styles/darcula.css
 // @grant GM_addStyle
 // @grant GM_getResourceText
@@ -48,7 +49,9 @@ const userScripts = {
   buttonHiderStorage: 'Postauksen nappien piilotus',
   removeAdsStorage: 'Piilota (((mainokset)))',
   countryPostHiderStorage: 'Piilota postaukset tietyistä maista (jos maa näkyy)',
-  notificationXStorage: 'Lisää luettu-ruksi ilmoituksiin'
+  notificationXStorage: 'Lisää luettu-ruksi ilmoituksiin',
+  hideDuplicateThreadsStorage: 'Piilota duplikaattilangat',
+  hideDuplicateAnswersStorage: 'Piilota duplikaattivastaukset',
 }
 
 function isToggled(name) {
@@ -83,6 +86,32 @@ function getInput(name, description) {
   return span;
 }
 
+function getSelect(start, end, description, propertyName) {
+  let select = document.createElement('select')
+  let options = ''
+  let parsed = JSON.parse(localStorage.getItem(propertyName)) || 0;
+  for (let i=start; i<=end; i++) {
+    if (parsed === i.toString()) {
+      options += '<option value="'+i+'" selected="selected">'+i+'</option>';
+    } else {
+      options += '<option value="'+i+'">'+i+'</option>';
+    }
+  }
+  select.innerHTML = options;
+
+  select.onclick = (e) => {
+    if (!e.target.value) return;
+    localStorage.setItem(propertyName, JSON.stringify(e.target.value));
+  }
+
+  const span = document.createElement('span');
+  const label = document.createElement('label');
+  label.innerHTML = ' ' + description;
+  span.appendChild(select);
+  span.appendChild(label);
+  return span;
+}
+
 // Varmistetaan kaikkien LocalStorage-muuttujien alustus
 for (let key in userScripts) {
   isToggled(key);
@@ -110,14 +139,14 @@ if (/^\/preferences/.test(window.location.pathname)) {
   // Lisää tähän omat tyylitietueesi skriptejä varten. Nämä ovat käytössä vain asetussivulla.
 
   GM_addStyle(`.userscript-button {
-  line-height: 1em;
-  font-size: 1em;
-  padding: 2px;
-  background-color: #133b5e;
-  border-radius: 3px;
-  margin-left: 0.2em;
-  color: #fff;
-}`);
+    line-height: 1em;
+    font-size: 1em;
+    padding: 2px;
+    background-color: #133b5e;
+    border-radius: 3px;
+    margin-left: 0.2em;
+    color: #fff;
+  }`);
 
   // Tähän väliin voit lisätä omien skriptien custom-asetuksia
 
@@ -130,6 +159,9 @@ if (/^\/preferences/.test(window.location.pathname)) {
 
   const allCountries = JSON.parse(localStorage.getItem('countryPostHiderAllCountries') || '[]');
   const hiddenCountries = JSON.parse(localStorage.getItem('countryPostHiderList') || '[]');
+
+  $(scriptDiv).append('<h3>Piilota viestit joissa on vähemmän kuin:</h3>');
+  $(scriptDiv).append(getSelect(0, 100, 'prosenttia uniikkeja sanoja (0 asettaa skriptin pois päältä)', 'hideAnswersByRatioStorage'))
 
   $(scriptDiv).append('<h3>Nimihomojen piilotus</h3>');
   $(scriptDiv).append(getInput('hideEveryNameFag', 'Piilota ihan kaikki nimihomot'));
