@@ -3,7 +3,7 @@
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
 // @grant none
-// @version 0.5
+// @version 0.6
 // @locale en
 // @description Piilota postaukset jotka sisältävät mustalistattuja sanoja
 // ==/UserScript==
@@ -15,6 +15,8 @@
     const regex = JSON.parse(localStorage.getItem('wordBlackListRegex') || 'false');
 
     function shouldBeHidden(div) {
+      if (div.classList.contains('own_post')) return;
+      
       const post = Array.from(div.childNodes).find(c => c.className === 'post');
       if (post === undefined) return;
       
