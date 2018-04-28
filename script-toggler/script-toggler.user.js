@@ -2,7 +2,7 @@
 // @name Ylilauta: Script toggler
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @version 1.1.5
+// @version 1.1.6
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
 // @require https://static.ylilauta.org/js/jquery-3.3.1.min.js
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
@@ -25,6 +25,9 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/bd75ffae137e76939a59e41c5dd123a7216aab9e/script-toggler/country-post-hider.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/408fc137f00e1af34a7eb7f53ded4758ea0b4c62/script-toggler/notification-x.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/5a78a3c1e3c253ca672dd0af222ef6966884cb3b/script-toggler/spam-hider.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/97a6369736006daf5706738aac6f0ef4b9ee3c0f/script-toggler/show-notificationbar.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/97a6369736006daf5706738aac6f0ef4b9ee3c0f/script-toggler/hide-sharebutton.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/97a6369736006daf5706738aac6f0ef4b9ee3c0f/script-toggler/sort-boardlist.user.js
 // @resource highlightCSS https://gitcdn.xyz/repo/isagalaev/highlight.js/cf4b46e5b7acfe2626a07914e1d0d4ef269aed4a/src/styles/darcula.css
 // @grant GM_addStyle
 // @grant GM_getResourceText
@@ -52,6 +55,9 @@ const userScripts = {
   notificationXStorage: 'Lisää luettu-ruksi ilmoituksiin',
   hideDuplicateThreadsStorage: 'Piilota duplikaattilangat',
   hideDuplicateAnswersStorage: 'Piilota duplikaattivastaukset',
+  showNotificationBarStorage: 'Näytä ilmoituspalkki lankaa selattaessa',
+  hideShareButtonStorage: 'Piilota jakonappula',
+  sortBoardListStorage: 'Järjestä lautaluettelo lyhenteen mukaan'
 }
 
 function isToggled(name) {
