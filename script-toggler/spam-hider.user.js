@@ -22,7 +22,7 @@
   function hideThreads() {
     const threadMap = {};
 
-    $('.postcontent').each(function () {
+    $('.thread').each(function () {
       const text = this.innerText;
 
       if (threadMap[text] === undefined) {
