@@ -5,10 +5,11 @@
 // @description  Piilottaa halutut napit viesteistä
 // @locale       en
 // @match        *://ylilauta.org/*
+// @require      https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/5cdc110388e1efdb6685951cc273577eadc4ee4f/script-toggler/runsafely.js
 // @grant        GM_addStyle
 // ==/UserScript==
 
-(function() {
+runSafely(function() {
 	if (localStorage.getItem('buttonHiderStorage') === 'true') {
 
 		// These are used to get info about what buttons even are here
@@ -44,4 +45,4 @@
 			GM_addStyle(elems.join(',') + '{display: none;}')
 		}
 	}
-})();
+});

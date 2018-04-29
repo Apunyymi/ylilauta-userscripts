@@ -2,13 +2,14 @@
 // @name Ylilauta.fi: Skrollaa uudet postaukset näkyville
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/5cdc110388e1efdb6685951cc273577eadc4ee4f/script-toggler/runsafely.js
 // @grant none
 // @version 0.3
 // @locale en
 // @description Skrollaa automaattisesti uusimpaan postaukseen.
 // ==/UserScript==
 
-(function () {
+runSafely(function () {
   const buttonsRight = document.querySelector('.buttons_right');
 
   // Sopsy is homo :D Removing elements we stand on
@@ -51,4 +52,4 @@
     buttonsRight.insertBefore(btn, buttonsRight.firstChild);
     newRepliesListener(() => scrollToButton());
   }
-})();
+});

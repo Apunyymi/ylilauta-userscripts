@@ -2,13 +2,14 @@
 // @name Ylilauta.fi: Käänteinen kuvahaku
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/5cdc110388e1efdb6685951cc273577eadc4ee4f/script-toggler/runsafely.js
 // @grant none
 // @version 0.6
 // @locale en
 // @description Lisää nappulan käänteiselle kuvahaulle
 // ==/UserScript==
 
-(function () {
+runSafely(function () {
   if (localStorage.getItem('reverseImageSearchStorage') === 'true') {
     function addSearchButtons() {
       Array.from(document.querySelectorAll('div.op_post, div.answer'))
@@ -54,4 +55,4 @@
       newRepliesListener(() => addSearchButtons());
     }
   }
-})();
+});

@@ -2,13 +2,14 @@
 // @name Ylilauta.fi: Piilota kaikki nimipostaukset
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/5cdc110388e1efdb6685951cc273577eadc4ee4f/script-toggler/runsafely.js
 // @grant none
 // @version 0.3
 // @locale en
 // @description Piilottaa kaikki nimipostaukset
 // ==/UserScript==
 
-(function () {
+runSafely(function () {
   if (localStorage.getItem('namefagHiderStorage') === 'true') {
     // Settingsien asetus, || asettaa vara-arvon jos localStoragessa ei ole mitään
     const hideAll = localStorage.getItem('hideEveryNameFag') || false;
@@ -53,4 +54,4 @@
       newRepliesListener(() => hide());
     }
   }
-})();
+});

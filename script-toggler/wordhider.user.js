@@ -2,13 +2,14 @@
 // @name Ylilauta.fi: Piilota postaukset jotka sisältävät blacklistattuja sanoja
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/5cdc110388e1efdb6685951cc273577eadc4ee4f/script-toggler/runsafely.js
 // @grant none
 // @version 0.6
 // @locale en
 // @description Piilota postaukset jotka sisältävät mustalistattuja sanoja
 // ==/UserScript==
 
-(function () {
+runSafely(function () {
   if (localStorage.getItem('wordBlackListStorage') === 'true') {
     const blacklist = JSON.parse(localStorage.getItem('wordBlackListList') || '[]');
     const caseless = JSON.parse(localStorage.getItem('wordBlackListCaseless') || 'false');
@@ -61,4 +62,4 @@
       newRepliesListener(() => hide());
     }
   }
-})();
+});

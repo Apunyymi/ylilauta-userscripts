@@ -6,13 +6,14 @@
 // @locale       en
 // @author       Apunyymi
 // @match        *://ylilauta.org/*
+// @require      https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/5cdc110388e1efdb6685951cc273577eadc4ee4f/script-toggler/runsafely.js
 // @grant        GM_addStyle
 // ==/UserScript==
 
-(function() {
+runSafely(function() {
   // Don't even run any code if this module is not enabled
   if (localStorage.getItem('removeAdsStorage') === 'true') {
     GM_addStyle(`#blocking-notification,
 .threads > div[style] {display: none !important}`);
   }
-})();
+});

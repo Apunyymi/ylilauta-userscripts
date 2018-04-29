@@ -2,11 +2,12 @@
 // @name Näytä ilmoituspalkki lankaa selatessa.
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/5cdc110388e1efdb6685951cc273577eadc4ee4f/script-toggler/runsafely.js
 // @grant GM_addStyle
 // @grant GM_getResourceText
 // ==/UserScript==
 
-(function() {
+runSafely(function() {
   if (localStorage.getItem('showNotificationBarStorage') === 'true') {
     const body = $('body')[0];
     const bodybg = window.getComputedStyle(body).backgroundColor;
@@ -60,4 +61,4 @@
         }
     });
   }
-})();
+});
