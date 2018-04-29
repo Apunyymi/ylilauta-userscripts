@@ -2,11 +2,11 @@
 // @name Ylilauta: Script toggler
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @version 1.1.6
+// @version 1.1.7
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
 // @require https://static.ylilauta.org/js/jquery-3.3.1.min.js
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/d951d60837852530460c6226810f8328cca10ba2/script-toggler/runsafely.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/5cdc110388e1efdb6685951cc273577eadc4ee4f/script-toggler/runsafely.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/d951d60837852530460c6226810f8328cca10ba2/script-toggler/autoscroll-button.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/codehighlight.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/d951d60837852530460c6226810f8328cca10ba2/script-toggler/downloadall-button.user.js
