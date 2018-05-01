@@ -2,7 +2,7 @@
 // @name Ylilauta: Script toggler
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @version 1.1.6
+// @version 1.1.7
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
 // @require https://static.ylilauta.org/js/jquery-3.3.1.min.js
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
@@ -28,7 +28,7 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/97a6369736006daf5706738aac6f0ef4b9ee3c0f/script-toggler/show-notificationbar.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/97a6369736006daf5706738aac6f0ef4b9ee3c0f/script-toggler/hide-sharebutton.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/97a6369736006daf5706738aac6f0ef4b9ee3c0f/script-toggler/sort-boardlist.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/b44ff958449e5c873ff500a4ea3a27c794219a52/script-toggler/delete-all-posts.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/52af125a6d2c116ddc5be79c04511c3998543a33/script-toggler/delete-all-posts.user.js
 // @resource highlightCSS https://gitcdn.xyz/repo/isagalaev/highlight.js/cf4b46e5b7acfe2626a07914e1d0d4ef269aed4a/src/styles/darcula.css
 // @grant GM_addStyle
 // @grant GM_getResourceText
@@ -59,7 +59,7 @@ const userScripts = {
   showNotificationBarStorage: 'Näytä ilmoituspalkki lankaa selattaessa',
   hideShareButtonStorage: 'Piilota jakonappula',
   sortBoardListStorage: 'Järjestä lautaluettelo lyhenteen mukaan',
-  deleteAllPostsStorage: 'Lisää kaikkien postausten poistonappulat <a href="https://ylilauta.org/ownposts.php">ownposts.php</a>-sivulle.'
+  deleteAllPostsStorage: 'Lisää kaikkien postausten poistonappula <a href="https://ylilauta.org/ownposts.php">ownposts.php</a>-sivulle.'
 }
 
 function isToggled(name) {
