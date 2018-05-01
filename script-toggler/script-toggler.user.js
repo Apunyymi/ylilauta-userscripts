@@ -28,6 +28,7 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/97a6369736006daf5706738aac6f0ef4b9ee3c0f/script-toggler/show-notificationbar.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/97a6369736006daf5706738aac6f0ef4b9ee3c0f/script-toggler/hide-sharebutton.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/97a6369736006daf5706738aac6f0ef4b9ee3c0f/script-toggler/sort-boardlist.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/b44ff958449e5c873ff500a4ea3a27c794219a52/script-toggler/delete-all-posts.user.js
 // @resource highlightCSS https://gitcdn.xyz/repo/isagalaev/highlight.js/cf4b46e5b7acfe2626a07914e1d0d4ef269aed4a/src/styles/darcula.css
 // @grant GM_addStyle
 // @grant GM_getResourceText
@@ -57,7 +58,8 @@ const userScripts = {
   hideDuplicateAnswersStorage: 'Piilota duplikaattivastaukset',
   showNotificationBarStorage: 'Näytä ilmoituspalkki lankaa selattaessa',
   hideShareButtonStorage: 'Piilota jakonappula',
-  sortBoardListStorage: 'Järjestä lautaluettelo lyhenteen mukaan'
+  sortBoardListStorage: 'Järjestä lautaluettelo lyhenteen mukaan',
+  deleteAllPostsStorage: 'Lisää kaikkien postausten poistonappulat <a href="https://ylilauta.org/ownposts.php">ownposts.php</a>-sivulle.'
 }
 
 function isToggled(name) {
