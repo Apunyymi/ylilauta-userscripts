@@ -18,7 +18,7 @@ if (!window.runJQueryCallbacks) {
 }
 
 // This is registered straight into the requiring scripts namespace
-async function runSafely(callback) {
+function runSafely(callback) {
   if (window.jQuery) {
     callback();
   } else {
@@ -30,7 +30,7 @@ async function runSafely(callback) {
       window.runJQueryChecker = true;
 
       // setTimeout() this so it does not block execution
-      setTimeout(() => {
+      setTimeout(async function() {
         const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
         while (!window.jQuery) await sleep(50);
