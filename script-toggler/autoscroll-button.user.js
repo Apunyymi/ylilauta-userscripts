@@ -13,7 +13,7 @@ runSafely(function () {
   const buttonsRight = document.querySelector('.buttons_right');
 
   // Sopsy is homo :D Removing elements we stand on
-  if (!buttonsRight) {
+  if (!document.querySelector('.buttons_right')) {
     let buttons = document.querySelector('.threadbuttons');
     if (buttons) {
       let div = document.createElement('div');
@@ -21,6 +21,8 @@ runSafely(function () {
       buttons.appendChild(div);
     }
   }
+
+  const buttonsRight = document.querySelector('.buttons_right');
 
   // Run full code only if needed
   if (localStorage.getItem('autoscrollStorage') === 'true'

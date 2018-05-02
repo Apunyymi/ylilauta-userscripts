@@ -3,7 +3,7 @@
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/5cdc110388e1efdb6685951cc273577eadc4ee4f/script-toggler/runsafely.js
-// @grant none
+// @grant GM_addStyle
 // @version 0.1
 // @locale en
 // @description Lisää ilmoituksiin ruksin, josta voi klikata ilmoituksen luetuksi avaamatta sitä
@@ -11,6 +11,17 @@
 
 runSafely(function() {
 	if (localStorage.getItem('notificationXStorage') === 'true') {
+		
+		GM_addStyle(`
+#notifications .unread p:first-of-type {
+	padding-right: 2em;
+}
+#notifications .unread .linkbutton {
+	float: right;
+	margin-top: -2em;
+	opacity: 0.99;
+}`);
+
 		$('#left a[href="javascript:get_notifications()"]').click(() => {
 			let t = setInterval(() => {
 				if ($('#notifications .unread').length > 0) {
@@ -22,9 +33,6 @@ runSafely(function() {
 						let a = document.createElement('a');
 						a.classList.add('linkbutton');
 						a.innerHTML = '&times;';
-						a.style.float = 'right';
-						a.style.marginTop = '-2em';
-						a.style.opacity = '0.99';
 						a.onclick = (e) => {
 							let el = $(e.target).closest('div.notification');
 							$.get(el.find('a.reflink')[0].href, (r) => {
