@@ -4,12 +4,12 @@
 // @match *://ylilauta.org/ownposts.php
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/7ca6c42677a4a203e82493c51a071891eeee7184/script-toggler/runsafely.user.js
 // @grant none
-// @version 0.4
+// @version 0.5
 // ==/UserScript==
 
-runSafely(function() {
-  if (/^\/ownposts.php/.test(window.location.pathname)
-     && localStorage.getItem('deleteAllPostsStorage') === 'true') {
+if (/^\/ownposts.php/.test(window.location.pathname)
+   && localStorage.getItem('deleteAllPostsStorage') === 'true') {
+    runSafely(function() {
     
     function deletePosts(confirm=false) {
       if (!confirm) {
@@ -58,5 +58,5 @@ runSafely(function() {
     deleteButton.onclick = () => deletePosts();
 
     target.insertBefore(deleteButton, target.firstChild);
-  }
-})();
+  })();
+}
