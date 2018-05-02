@@ -2,7 +2,7 @@
 // @name Ylilauta: Script toggler
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @version 1.2.0
+// @version 1.2.1
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
 // @require https://static.ylilauta.org/js/jquery-3.3.1.min.js
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
@@ -35,93 +35,93 @@
 // @grant GM_getResourceText
 // ==/UserScript==
 
-runSafely(function() {
-  // Lisää skriptisi LocalStorage-nimi sekä kuvaus tänne
-  const userScripts = {
-    autoscrollStorage: 'Autoscroll-nappula',
-    codeHighlighterStorage: '[code]-blokkien väritys',
-    downloadAllStorage: 'Lataa kaikki -nappula',
-    ipPostCounterStorage: 'Näytä käyttäjän postausten määrä (vain kultatilillä)',
-    lastOwnPostStorage: 'Viimeisin oma postaus -nappula',
-    namefagHiderStorage: 'Piilota nimihomot',
-    quoteAllFromIpStorage: 'Vastaa kaikkiin käyttäjän postauksiin -nappula',
-    reverseImageSearchStorage: 'Käänteinen kuvahaku',
-    showMostAnsweredStorage: 'Näytä vastatuimmat -nappula',
-    tagpostHiderStorage: 'Piilota tagipostaukset',
-    wordBlackListStorage: 'Sanafiltteri',
-    taaBotStorage: 'Tää :D -botti',
-    colorizePosterIdsStorage: 'Postaajaväritin',
-    updateOnhoverStorage: 'Newestid- ja aktiivisuuspistepäivitin',
-    buttonHiderStorage: 'Postauksen nappien piilotus',
-    removeAdsStorage: 'Piilota (((mainokset)))',
-    countryPostHiderStorage: 'Piilota postaukset tietyistä maista (jos maa näkyy)',
-    notificationXStorage: 'Lisää luettu-ruksi ilmoituksiin',
-    hideDuplicateThreadsStorage: 'Piilota duplikaattilangat',
-    hideDuplicateAnswersStorage: 'Piilota duplikaattivastaukset',
-    showNotificationBarStorage: 'Näytä ilmoituspalkki lankaa selattaessa',
-    hideShareButtonStorage: 'Piilota jakonappula',
-    sortBoardListStorage: 'Järjestä lautaluettelo lyhenteen mukaan'
-    deleteAllPostsStorage: 'Lisää kaikkien postausten poistonappula <a href="https://ylilauta.org/ownposts.php">ownposts.php</a>-sivulle.'
-  }
+// Lisää skriptisi LocalStorage-nimi sekä kuvaus tänne
+const userScripts = {
+  autoscrollStorage: 'Autoscroll-nappula',
+  codeHighlighterStorage: '[code]-blokkien väritys',
+  downloadAllStorage: 'Lataa kaikki -nappula',
+  ipPostCounterStorage: 'Näytä käyttäjän postausten määrä (vain kultatilillä)',
+  lastOwnPostStorage: 'Viimeisin oma postaus -nappula',
+  namefagHiderStorage: 'Piilota nimihomot',
+  quoteAllFromIpStorage: 'Vastaa kaikkiin käyttäjän postauksiin -nappula',
+  reverseImageSearchStorage: 'Käänteinen kuvahaku',
+  showMostAnsweredStorage: 'Näytä vastatuimmat -nappula',
+  tagpostHiderStorage: 'Piilota tagipostaukset',
+  wordBlackListStorage: 'Sanafiltteri',
+  taaBotStorage: 'Tää :D -botti',
+  colorizePosterIdsStorage: 'Postaajaväritin',
+  updateOnhoverStorage: 'Newestid- ja aktiivisuuspistepäivitin',
+  buttonHiderStorage: 'Postauksen nappien piilotus',
+  removeAdsStorage: 'Piilota (((mainokset)))',
+  countryPostHiderStorage: 'Piilota postaukset tietyistä maista (jos maa näkyy)',
+  notificationXStorage: 'Lisää luettu-ruksi ilmoituksiin',
+  hideDuplicateThreadsStorage: 'Piilota duplikaattilangat',
+  hideDuplicateAnswersStorage: 'Piilota duplikaattivastaukset',
+  showNotificationBarStorage: 'Näytä ilmoituspalkki lankaa selattaessa',
+  hideShareButtonStorage: 'Piilota jakonappula',
+  sortBoardListStorage: 'Järjestä lautaluettelo lyhenteen mukaan',
+  deleteAllPostsStorage: 'Lisää kaikkien postausten poistonappula <a href="https://ylilauta.org/ownposts.php">ownposts.php</a>-sivulle.'
+};
 
-  function isToggled(name) {
-    const item = localStorage.getItem(name);
-    if (item === undefined || item === null || item === 'undefined') {
-      localStorage.setItem(name, 'false');
-      return false;
+function isToggled(name) {
+  const item = localStorage.getItem(name);
+  if (item === undefined || item === null || item === 'undefined') {
+    localStorage.setItem(name, 'false');
+    return false;
+  }
+  return item !== 'false';
+}
+
+function getInput(name, description) {
+  const input = document.createElement('input');
+  input.type = 'checkbox';
+  input.checked = isToggled(name);
+  input.id = 'userscript-' + name;
+  input.onchange = (e) => localStorage.setItem(name, JSON.stringify(e.target.checked));
+
+  const label = document.createElement('label');
+  label.setAttribute('for', 'userscript-' + name);
+  label.innerHTML = description;
+
+  const spacer = document.createTextNode(' ');
+
+  const span = document.createElement('span');
+  span.classList.add('block');
+
+  span.appendChild(input);
+  span.appendChild(spacer);
+  span.appendChild(label);
+
+  return span;
+}
+
+function getSelect(start, end, description, propertyName) {
+  let select = document.createElement('select');
+  let options = '';
+  let parsed = JSON.parse(localStorage.getItem(propertyName)) || 0;
+  for (let i=start; i<=end; i++) {
+    if (parsed === i.toString()) {
+      options += '<option value="'+i+'" selected="selected">'+i+'</option>';
+    } else {
+      options += '<option value="'+i+'">'+i+'</option>';
     }
-    return item !== 'false';
+  }
+  select.innerHTML = options;
+
+  select.onclick = (e) => {
+    if (!e.target.value) return;
+    localStorage.setItem(propertyName, JSON.stringify(e.target.value));
   }
 
-  function getInput(name, description) {
-    const input = document.createElement('input');
-    input.type = 'checkbox';
-    input.checked = isToggled(name);
-    input.id = 'userscript-' + name;
-    input.onchange = (e) => localStorage.setItem(name, JSON.stringify(e.target.checked));
+  const span = document.createElement('span');
+  const label = document.createElement('label');
+  label.innerHTML = ' ' + description;
+  span.appendChild(select);
+  span.appendChild(label);
+  return span;
+}
 
-    const label = document.createElement('label');
-    label.setAttribute('for', 'userscript-' + name);
-    label.innerHTML = description;
-
-    const spacer = document.createTextNode(' ');
-
-    const span = document.createElement('span');
-    span.classList.add('block');
-
-    span.appendChild(input);
-    span.appendChild(spacer);
-    span.appendChild(label);
-
-    return span;
-  }
-
-  function getSelect(start, end, description, propertyName) {
-    let select = document.createElement('select')
-    let options = ''
-    let parsed = JSON.parse(localStorage.getItem(propertyName)) || 0;
-    for (let i=start; i<=end; i++) {
-      if (parsed === i.toString()) {
-        options += '<option value="'+i+'" selected="selected">'+i+'</option>';
-      } else {
-        options += '<option value="'+i+'">'+i+'</option>';
-      }
-    }
-    select.innerHTML = options;
-
-    select.onclick = (e) => {
-      if (!e.target.value) return;
-      localStorage.setItem(propertyName, JSON.stringify(e.target.value));
-    }
-
-    const span = document.createElement('span');
-    const label = document.createElement('label');
-    label.innerHTML = ' ' + description;
-    span.appendChild(select);
-    span.appendChild(label);
-    return span;
-  }
-
+runSafely(() => {
   // Varmistetaan kaikkien LocalStorage-muuttujien alustus
   for (let key in userScripts) {
     isToggled(key);
