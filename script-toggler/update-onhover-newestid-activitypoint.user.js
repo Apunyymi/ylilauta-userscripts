@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         Ylilauta: Newestid- ja aktiivisuuspistepäivitin
 // @namespace    *://ylilauta.org/*
-// @version      1.1
+// @version      1.2
 // @description  Extract from YlisToolchain, updates some values on hover
 // @locale       en
 // @author       Apunyymi
 // @match        *://ylilauta.org/*
-// @require      https://github.com/Apunyymi/ylilauta-userscripts/raw/fbfb77e836c8fdaef38d7ce2c4e2a4e3b77f0bba/script-toggler/runsafely.user.js
+// @require      https://github.com/Apunyymi/ylilauta-userscripts/raw/7ca6c42677a4a203e82493c51a071891eeee7184/script-toggler/runsafely.user.js
 // @grant        none
 // ==/UserScript==
 

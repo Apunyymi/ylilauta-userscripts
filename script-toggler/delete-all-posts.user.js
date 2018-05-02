@@ -2,10 +2,12 @@
 // @name Lisää nappi koko viestihistorian poistamiseen
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/ownposts.php
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/7ca6c42677a4a203e82493c51a071891eeee7184/script-toggler/runsafely.user.js
 // @grant none
-// @version 0.2
+// @version 0.4
 // ==/UserScript==
-(function() {
+
+runSafely(function() {
   if (/^\/ownposts.php/.test(window.location.pathname)
      && localStorage.getItem('deleteAllPostsStorage') === 'true') {
     

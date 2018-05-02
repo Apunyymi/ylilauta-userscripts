@@ -2,10 +2,10 @@
 // @name Duplikaattien ja toistoa sisältävien vastausten piilotus
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/fbfb77e836c8fdaef38d7ce2c4e2a4e3b77f0bba/script-toggler/runsafely.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/7ca6c42677a4a203e82493c51a071891eeee7184/script-toggler/runsafely.user.js
 // @grant none
 // @description Duplikaattilankojen ja viestien piilotus, sekä paljon toistoa sisältävien viestien piilotus.
-// @version 0.2
+// @version 0.3
 // ==/UserScript==
 runSafely(function () {
   function isToggled(name) {
