@@ -2,17 +2,18 @@
 // @name Ylilauta.fi: Skrollaa uudet postaukset näkyville
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/5cdc110388e1efdb6685951cc273577eadc4ee4f/script-toggler/runsafely.js
 // @grant none
 // @version 0.3
 // @locale en
 // @description Skrollaa automaattisesti uusimpaan postaukseen.
 // ==/UserScript==
 
-(function () {
+runSafely(function () {
   const buttonsRight = document.querySelector('.buttons_right');
 
   // Sopsy is homo :D Removing elements we stand on
-  if (!buttonsRight) {
+  if (!document.querySelector('.buttons_right')) {
     let buttons = document.querySelector('.threadbuttons');
     if (buttons) {
       let div = document.createElement('div');
@@ -20,6 +21,8 @@
       buttons.appendChild(div);
     }
   }
+
+  const buttonsRight = document.querySelector('.buttons_right');
 
   // Run full code only if needed
   if (localStorage.getItem('autoscrollStorage') === 'true'
@@ -51,4 +54,4 @@
     buttonsRight.insertBefore(btn, buttonsRight.firstChild);
     newRepliesListener(() => scrollToButton());
   }
-})();
+});

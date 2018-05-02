@@ -3,11 +3,12 @@
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/5cdc110388e1efdb6685951cc273577eadc4ee4f/script-toggler/runsafely.js
 // @grant none
 // @version 0.2
 // @description Lataa kaikki mediatiedostot langasta
 // ==/UserScript==
-(function() {
+runSafely(function() {
   const buttonsRight = $('.buttons_right')
 
   if (localStorage.getItem('downloadAllStorage') === 'true'
@@ -65,4 +66,4 @@
 
     buttonsRight.prepend(downloadAllButton);
   }
-})();
+});
