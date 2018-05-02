@@ -2,10 +2,11 @@
 // @name Ylilauta: Script toggler
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @version 1.1.7
+// @version 1.1.8
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
 // @require https://static.ylilauta.org/js/jquery-3.3.1.min.js
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/runsafely.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/d951d60837852530460c6226810f8328cca10ba2/script-toggler/autoscroll-button.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/codehighlight.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/d951d60837852530460c6226810f8328cca10ba2/script-toggler/downloadall-button.user.js
@@ -34,281 +35,283 @@
 // @grant GM_getResourceText
 // ==/UserScript==
 
-// Lisää skriptisi LocalStorage-nimi sekä kuvaus tänne
-const userScripts = {
-  autoscrollStorage: 'Autoscroll-nappula',
-  codeHighlighterStorage: '[code]-blokkien väritys',
-  downloadAllStorage: 'Lataa kaikki -nappula',
-  ipPostCounterStorage: 'Näytä käyttäjän postausten määrä (vain kultatilillä)',
-  lastOwnPostStorage: 'Viimeisin oma postaus -nappula',
-  namefagHiderStorage: 'Piilota nimihomot',
-  quoteAllFromIpStorage: 'Vastaa kaikkiin käyttäjän postauksiin -nappula',
-  reverseImageSearchStorage: 'Käänteinen kuvahaku',
-  showMostAnsweredStorage: 'Näytä vastatuimmat -nappula',
-  tagpostHiderStorage: 'Piilota tagipostaukset',
-  wordBlackListStorage: 'Sanafiltteri',
-  taaBotStorage: 'Tää :D -botti',
-  colorizePosterIdsStorage: 'Postaajaväritin',
-  updateOnhoverStorage: 'Newestid- ja aktiivisuuspistepäivitin',
-  buttonHiderStorage: 'Postauksen nappien piilotus',
-  removeAdsStorage: 'Piilota (((mainokset)))',
-  countryPostHiderStorage: 'Piilota postaukset tietyistä maista (jos maa näkyy)',
-  notificationXStorage: 'Lisää luettu-ruksi ilmoituksiin',
-  hideDuplicateThreadsStorage: 'Piilota duplikaattilangat',
-  hideDuplicateAnswersStorage: 'Piilota duplikaattivastaukset',
-  showNotificationBarStorage: 'Näytä ilmoituspalkki lankaa selattaessa',
-  hideShareButtonStorage: 'Piilota jakonappula',
-  sortBoardListStorage: 'Järjestä lautaluettelo lyhenteen mukaan',
-  deleteAllPostsStorage: 'Lisää kaikkien postausten poistonappula <a href="https://ylilauta.org/ownposts.php">ownposts.php</a>-sivulle.'
-}
-
-function isToggled(name) {
-  const item = localStorage.getItem(name);
-  if (item === undefined || item === null || item === 'undefined') {
-    localStorage.setItem(name, 'false');
-    return false;
+runSafely(function() {
+  // Lisää skriptisi LocalStorage-nimi sekä kuvaus tänne
+  const userScripts = {
+    autoscrollStorage: 'Autoscroll-nappula',
+    codeHighlighterStorage: '[code]-blokkien väritys',
+    downloadAllStorage: 'Lataa kaikki -nappula',
+    ipPostCounterStorage: 'Näytä käyttäjän postausten määrä (vain kultatilillä)',
+    lastOwnPostStorage: 'Viimeisin oma postaus -nappula',
+    namefagHiderStorage: 'Piilota nimihomot',
+    quoteAllFromIpStorage: 'Vastaa kaikkiin käyttäjän postauksiin -nappula',
+    reverseImageSearchStorage: 'Käänteinen kuvahaku',
+    showMostAnsweredStorage: 'Näytä vastatuimmat -nappula',
+    tagpostHiderStorage: 'Piilota tagipostaukset',
+    wordBlackListStorage: 'Sanafiltteri',
+    taaBotStorage: 'Tää :D -botti',
+    colorizePosterIdsStorage: 'Postaajaväritin',
+    updateOnhoverStorage: 'Newestid- ja aktiivisuuspistepäivitin',
+    buttonHiderStorage: 'Postauksen nappien piilotus',
+    removeAdsStorage: 'Piilota (((mainokset)))',
+    countryPostHiderStorage: 'Piilota postaukset tietyistä maista (jos maa näkyy)',
+    notificationXStorage: 'Lisää luettu-ruksi ilmoituksiin',
+    hideDuplicateThreadsStorage: 'Piilota duplikaattilangat',
+    hideDuplicateAnswersStorage: 'Piilota duplikaattivastaukset',
+    showNotificationBarStorage: 'Näytä ilmoituspalkki lankaa selattaessa',
+    hideShareButtonStorage: 'Piilota jakonappula',
+    sortBoardListStorage: 'Järjestä lautaluettelo lyhenteen mukaan'
+    deleteAllPostsStorage: 'Lisää kaikkien postausten poistonappula <a href="https://ylilauta.org/ownposts.php">ownposts.php</a>-sivulle.'
   }
-  return item !== 'false';
-}
 
-function getInput(name, description) {
-  const input = document.createElement('input');
-  input.type = 'checkbox';
-  input.checked = isToggled(name);
-  input.id = 'userscript-' + name;
-  input.onchange = (e) => localStorage.setItem(name, JSON.stringify(e.target.checked));
-
-  const label = document.createElement('label');
-  label.setAttribute('for', 'userscript-' + name);
-  label.innerHTML = description;
-
-  const spacer = document.createTextNode(' ');
-
-  const span = document.createElement('span');
-  span.classList.add('block');
-
-  span.appendChild(input);
-  span.appendChild(spacer);
-  span.appendChild(label);
-
-  return span;
-}
-
-function getSelect(start, end, description, propertyName) {
-  let select = document.createElement('select')
-  let options = ''
-  let parsed = JSON.parse(localStorage.getItem(propertyName)) || 0;
-  for (let i=start; i<=end; i++) {
-    if (parsed === i.toString()) {
-      options += '<option value="'+i+'" selected="selected">'+i+'</option>';
-    } else {
-      options += '<option value="'+i+'">'+i+'</option>';
+  function isToggled(name) {
+    const item = localStorage.getItem(name);
+    if (item === undefined || item === null || item === 'undefined') {
+      localStorage.setItem(name, 'false');
+      return false;
     }
-  }
-  select.innerHTML = options;
-
-  select.onclick = (e) => {
-    if (!e.target.value) return;
-    localStorage.setItem(propertyName, JSON.stringify(e.target.value));
+    return item !== 'false';
   }
 
-  const span = document.createElement('span');
-  const label = document.createElement('label');
-  label.innerHTML = ' ' + description;
-  span.appendChild(select);
-  span.appendChild(label);
-  return span;
-}
+  function getInput(name, description) {
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.checked = isToggled(name);
+    input.id = 'userscript-' + name;
+    input.onchange = (e) => localStorage.setItem(name, JSON.stringify(e.target.checked));
 
-// Varmistetaan kaikkien LocalStorage-muuttujien alustus
-for (let key in userScripts) {
-  isToggled(key);
-}
+    const label = document.createElement('label');
+    label.setAttribute('for', 'userscript-' + name);
+    label.innerHTML = description;
 
-if (/^\/preferences/.test(window.location.pathname)) {
-  const tab = document.createElement('li');
-  tab.classList.add('tab');
-  tab.dataset['tabid'] = 'skripta';
-  tab.innerHTML = 'Userscript-hallinta';
-  tab.onclick = () => switch_preferences_tab('skripta', true);
-  $('li.tab[data-tabid="sessions"]').after(tab);
+    const spacer = document.createTextNode(' ');
 
-  const scriptDiv = document.createElement('div');
-  scriptDiv.id = 'skripta';
-  scriptDiv.classList.add('tab');
-  scriptDiv.style.display = 'none';
+    const span = document.createElement('span');
+    span.classList.add('block');
 
-  $(scriptDiv).append('<h3>Päällä olevat skriptit</h3>');
+    span.appendChild(input);
+    span.appendChild(spacer);
+    span.appendChild(label);
 
+    return span;
+  }
+
+  function getSelect(start, end, description, propertyName) {
+    let select = document.createElement('select')
+    let options = ''
+    let parsed = JSON.parse(localStorage.getItem(propertyName)) || 0;
+    for (let i=start; i<=end; i++) {
+      if (parsed === i.toString()) {
+        options += '<option value="'+i+'" selected="selected">'+i+'</option>';
+      } else {
+        options += '<option value="'+i+'">'+i+'</option>';
+      }
+    }
+    select.innerHTML = options;
+
+    select.onclick = (e) => {
+      if (!e.target.value) return;
+      localStorage.setItem(propertyName, JSON.stringify(e.target.value));
+    }
+
+    const span = document.createElement('span');
+    const label = document.createElement('label');
+    label.innerHTML = ' ' + description;
+    span.appendChild(select);
+    span.appendChild(label);
+    return span;
+  }
+
+  // Varmistetaan kaikkien LocalStorage-muuttujien alustus
   for (let key in userScripts) {
-    $(scriptDiv).append(getInput(key, userScripts[key]));
+    isToggled(key);
   }
 
-  // Lisää tähän omat tyylitietueesi skriptejä varten. Nämä ovat käytössä vain asetussivulla.
+  if (/^\/preferences/.test(window.location.pathname)) {
+    const tab = document.createElement('li');
+    tab.classList.add('tab');
+    tab.dataset['tabid'] = 'skripta';
+    tab.innerHTML = 'Userscript-hallinta';
+    tab.onclick = () => switch_preferences_tab('skripta', true);
+    $('li.tab[data-tabid="sessions"]').after(tab);
 
-  GM_addStyle(`.userscript-button {
-    line-height: 1em;
-    font-size: 1em;
-    padding: 2px;
-    background-color: #133b5e;
-    border-radius: 3px;
-    margin-left: 0.2em;
-    color: #fff;
-  }`);
+    const scriptDiv = document.createElement('div');
+    scriptDiv.id = 'skripta';
+    scriptDiv.classList.add('tab');
+    scriptDiv.style.display = 'none';
 
-  // Tähän väliin voit lisätä omien skriptien custom-asetuksia
+    $(scriptDiv).append('<h3>Päällä olevat skriptit</h3>');
 
-  const fagList = JSON.parse(localStorage.getItem('nameFagHiderList') || '[]').join('\n');
-  const wordList = JSON.parse(localStorage.getItem('wordBlackListList') || '[]').join('\n');
-  
-  const allButtons = JSON.parse(localStorage.getItem('buttonHiderAllButtons') || '[]');
-  const allDescriptions = JSON.parse(localStorage.getItem('buttonHiderAllDescriptions') || '[]');
-  const hiddenButtonsList = JSON.parse(localStorage.getItem('buttonHiderList') || '[]');
+    for (let key in userScripts) {
+      $(scriptDiv).append(getInput(key, userScripts[key]));
+    }
 
-  const allCountries = JSON.parse(localStorage.getItem('countryPostHiderAllCountries') || '[]');
-  const hiddenCountries = JSON.parse(localStorage.getItem('countryPostHiderList') || '[]');
+    // Lisää tähän omat tyylitietueesi skriptejä varten. Nämä ovat käytössä vain asetussivulla.
 
-  $(scriptDiv).append('<h3>Piilota viestit joissa on vähemmän kuin:</h3>');
-  $(scriptDiv).append(getSelect(0, 100, 'prosenttia uniikkeja sanoja (0 asettaa skriptin pois päältä)', 'hideAnswersByRatioStorage'))
+    GM_addStyle(`.userscript-button {
+      line-height: 1em;
+      font-size: 1em;
+      padding: 2px;
+      background-color: #133b5e;
+      border-radius: 3px;
+      margin-left: 0.2em;
+      color: #fff;
+    }`);
 
-  $(scriptDiv).append('<h3>Nimihomojen piilotus</h3>');
-  $(scriptDiv).append(getInput('hideEveryNameFag', 'Piilota ihan kaikki nimihomot'));
-  $(scriptDiv).append(`<span class="block">Piilotettavat nimihomot: (tekstikentät tallentuvat kun menet pois niistä)</span>
-    <span class="block"><textarea id="userscript-nameFagHiderList" cols="35" rows="5">` + fagList + `</textarea></span>`);
+    // Tähän väliin voit lisätä omien skriptien custom-asetuksia
 
-  $(scriptDiv).append('<h3>Sanafiltteri</h3>');
-  $(scriptDiv).append(getInput('wordBlackListCaseless', 'Älä välitä sanojen kirjainkoosta'));
-  $(scriptDiv).append(getInput('wordBlackListRegex', 'Käytä sanojen sijaan regexejä'));
-  $(scriptDiv).append(`<span class="block">Piilotettavat sanat:</span>
-    <span class="block"><textarea id="userscript-wordBlackListList" cols="35" rows="5">` + wordList + `</textarea></span>`);
+    const fagList = JSON.parse(localStorage.getItem('nameFagHiderList') || '[]').join('\n');
+    const wordList = JSON.parse(localStorage.getItem('wordBlackListList') || '[]').join('\n');
 
-  $(scriptDiv).append('<h3>Postausnappien piilotus</h3>');
+    const allButtons = JSON.parse(localStorage.getItem('buttonHiderAllButtons') || '[]');
+    const allDescriptions = JSON.parse(localStorage.getItem('buttonHiderAllDescriptions') || '[]');
+    const hiddenButtonsList = JSON.parse(localStorage.getItem('buttonHiderList') || '[]');
 
-  if (allButtons.length === 0) {
-    $(scriptDiv).append('<span class="block">Käy ensin jollain lautasivulla, niin skripti löytää piilotettavat napit</span')
-  }
-  for (let i = 0; i < allButtons.length; i++) {
-    let input = document.createElement('input');
-    input.type = 'checkbox';
-    input.checked = hiddenButtonsList.includes(allButtons[i]);
-    input.id = 'userscript-hidebutton-' + allButtons[i];
-    input.dataset.button = allButtons[i];
-    input.onchange = (e) => {
-      let a = e.target.dataset.button;
+    const allCountries = JSON.parse(localStorage.getItem('countryPostHiderAllCountries') || '[]');
+    const hiddenCountries = JSON.parse(localStorage.getItem('countryPostHiderList') || '[]');
 
-      if (e.target.checked) {
-        if (!hiddenButtonsList.includes(a)) {
-          hiddenButtonsList.push(a);
+    $(scriptDiv).append('<h3>Piilota viestit joissa on vähemmän kuin:</h3>');
+    $(scriptDiv).append(getSelect(0, 100, 'prosenttia uniikkeja sanoja (0 asettaa skriptin pois päältä)', 'hideAnswersByRatioStorage'))
+
+    $(scriptDiv).append('<h3>Nimihomojen piilotus</h3>');
+    $(scriptDiv).append(getInput('hideEveryNameFag', 'Piilota ihan kaikki nimihomot'));
+    $(scriptDiv).append(`<span class="block">Piilotettavat nimihomot: (tekstikentät tallentuvat kun menet pois niistä)</span>
+      <span class="block"><textarea id="userscript-nameFagHiderList" cols="35" rows="5">` + fagList + `</textarea></span>`);
+
+    $(scriptDiv).append('<h3>Sanafiltteri</h3>');
+    $(scriptDiv).append(getInput('wordBlackListCaseless', 'Älä välitä sanojen kirjainkoosta'));
+    $(scriptDiv).append(getInput('wordBlackListRegex', 'Käytä sanojen sijaan regexejä'));
+    $(scriptDiv).append(`<span class="block">Piilotettavat sanat:</span>
+      <span class="block"><textarea id="userscript-wordBlackListList" cols="35" rows="5">` + wordList + `</textarea></span>`);
+
+    $(scriptDiv).append('<h3>Postausnappien piilotus</h3>');
+
+    if (allButtons.length === 0) {
+      $(scriptDiv).append('<span class="block">Käy ensin jollain lautasivulla, niin skripti löytää piilotettavat napit</span')
+    }
+    for (let i = 0; i < allButtons.length; i++) {
+      let input = document.createElement('input');
+      input.type = 'checkbox';
+      input.checked = hiddenButtonsList.includes(allButtons[i]);
+      input.id = 'userscript-hidebutton-' + allButtons[i];
+      input.dataset.button = allButtons[i];
+      input.onchange = (e) => {
+        let a = e.target.dataset.button;
+
+        if (e.target.checked) {
+          if (!hiddenButtonsList.includes(a)) {
+            hiddenButtonsList.push(a);
+          }
+        } else {
+          if (hiddenButtonsList.includes(a)) {
+            hiddenButtonsList.splice(hiddenButtonsList.indexOf(a), 1);
+          }
         }
-      } else {
-        if (hiddenButtonsList.includes(a)) {
-          hiddenButtonsList.splice(hiddenButtonsList.indexOf(a), 1);
-        }
-      }
 
-      localStorage.setItem('buttonHiderList', JSON.stringify(hiddenButtonsList));
+        localStorage.setItem('buttonHiderList', JSON.stringify(hiddenButtonsList));
+      };
+
+      let button = document.createElement('span');
+      button.classList.add('userscript-button');
+      button.classList.add(allButtons[i]);
+
+      let label = document.createElement('label');
+      label.setAttribute('for', 'userscript-hidebutton-' + allButtons[i]);
+      label.innerHTML = allDescriptions[i];
+
+      let spacer = document.createTextNode(' ');
+
+      let span = document.createElement('span');
+      span.classList.add('block');
+
+      span.appendChild(input);
+      span.appendChild(spacer);
+      span.appendChild(button);
+      span.appendChild(spacer);
+      span.appendChild(label);
+
+      $(scriptDiv).append(span);
     };
 
-    let button = document.createElement('span');
-    button.classList.add('userscript-button');
-    button.classList.add(allButtons[i]);
+    $(scriptDiv).append('<h3>Tiettyjen maiden postauksien piilotus</h3>');
 
-    let label = document.createElement('label');
-    label.setAttribute('for', 'userscript-hidebutton-' + allButtons[i]);
-    label.innerHTML = allDescriptions[i];
+    if (allCountries.length === 0) {
+      $(scriptDiv).append('<span class="block">Käy ensin esimerkiksi <a href="/matkailu/">/coco/</a>ssa, niin skripti löytää piilotettavat maat</span')
+    }
+    for (let i = 0; i < allCountries.length; i++) {
+      let countryCode = /\(([A-Z]+)\)/.exec(allCountries[i])[1].toLowerCase();
 
-    let spacer = document.createTextNode(' ');
+      let input = document.createElement('input');
+      input.type = 'checkbox';
+      input.checked = hiddenCountries.includes(allCountries[i]);
+      input.id = 'userscript-hidecountry-' + countryCode;
+      input.dataset.country = countryCode.toUpperCase();
+      input.onchange = (e) => {
+        let a = e.target.dataset.country;
 
-    let span = document.createElement('span');
-    span.classList.add('block');
-
-    span.appendChild(input);
-    span.appendChild(spacer);
-    span.appendChild(button);
-    span.appendChild(spacer);
-    span.appendChild(label);
-
-    $(scriptDiv).append(span);
-  };
-
-  $(scriptDiv).append('<h3>Tiettyjen maiden postauksien piilotus</h3>');
-
-  if (allCountries.length === 0) {
-    $(scriptDiv).append('<span class="block">Käy ensin esimerkiksi <a href="/matkailu/">/coco/</a>ssa, niin skripti löytää piilotettavat maat</span')
-  }
-  for (let i = 0; i < allCountries.length; i++) {
-    let countryCode = /\(([A-Z]+)\)/.exec(allCountries[i])[1].toLowerCase();
-
-    let input = document.createElement('input');
-    input.type = 'checkbox';
-    input.checked = hiddenCountries.includes(allCountries[i]);
-    input.id = 'userscript-hidecountry-' + countryCode;
-    input.dataset.country = countryCode.toUpperCase();
-    input.onchange = (e) => {
-      let a = e.target.dataset.country;
-
-      if (e.target.checked) {
-        if (!hiddenCountries.includes(a)) {
-          hiddenCountries.push(a);
+        if (e.target.checked) {
+          if (!hiddenCountries.includes(a)) {
+            hiddenCountries.push(a);
+          }
+        } else {
+          if (hiddenCountries.includes(a)) {
+            hiddenCountries.splice(hiddenCountries.indexOf(a), 1);
+          }
         }
-      } else {
-        if (hiddenCountries.includes(a)) {
-          hiddenCountries.splice(hiddenCountries.indexOf(a), 1);
-        }
-      }
 
-      localStorage.setItem('countryPostHiderList', JSON.stringify(hiddenCountries));
+        localStorage.setItem('countryPostHiderList', JSON.stringify(hiddenCountries));
+      };
+
+      let img = document.createElement('img');
+      img.src = staticUrl + '/img/flags/' + countryCode + '.png';
+
+      let label = document.createElement('label');
+      label.setAttribute('for', 'userscript-hidecountry-' + countryCode);
+      label.innerHTML = allCountries[i];
+
+      let spacer = document.createTextNode(' ');
+
+      let span = document.createElement('span');
+      span.classList.add('block');
+
+      span.appendChild(input);
+      span.appendChild(spacer);
+      span.appendChild(img);
+      span.appendChild(spacer);
+      span.appendChild(label);
+
+      $(scriptDiv).append(span);
     };
 
-    let img = document.createElement('img');
-    img.src = staticUrl + '/img/flags/' + countryCode + '.png';
+    // Custom-asetukset päättyvät
 
-    let label = document.createElement('label');
-    label.setAttribute('for', 'userscript-hidecountry-' + countryCode);
-    label.innerHTML = allCountries[i];
+    $('#sessions').after(scriptDiv)
 
-    let spacer = document.createTextNode(' ');
+    // Tähän väliin voit lisätä custom-asetusten testejä/automaattitäydennyksiä tms.
 
-    let span = document.createElement('span');
-    span.classList.add('block');
+    $('#userscript-nameFagHiderList')
+      .attr('disabled', $('#userscript-hideEveryNameFag')[0].checked)
+      .change((e) => {
+        // Siivotaan filtterillä tyhjät rivit pois
+        const fags = e.target.value.split('\n').filter((x) => /\S/.test(x));
 
-    span.appendChild(input);
-    span.appendChild(spacer);
-    span.appendChild(img);
-    span.appendChild(spacer);
-    span.appendChild(label);
+        localStorage.setItem('nameFagHiderList', JSON.stringify(fags));
+      });
 
-    $(scriptDiv).append(span);
-  };
-
-  // Custom-asetukset päättyvät
-
-  $('#sessions').after(scriptDiv)
-
-  // Tähän väliin voit lisätä custom-asetusten testejä/automaattitäydennyksiä tms.
-
-  $('#userscript-nameFagHiderList')
-    .attr('disabled', $('#userscript-hideEveryNameFag')[0].checked)
-    .change((e) => {
-      // Siivotaan filtterillä tyhjät rivit pois
-      const fags = e.target.value.split('\n').filter((x) => /\S/.test(x));
-
-      localStorage.setItem('nameFagHiderList', JSON.stringify(fags));
+    $('#userscript-hideEveryNameFag').change((e) => {
+      $('#userscript-nameFagHiderList').attr('disabled', e.target.checked);
     });
 
-  $('#userscript-hideEveryNameFag').change((e) => {
-    $('#userscript-nameFagHiderList').attr('disabled', e.target.checked);
-  });
+    $('#userscript-wordBlackListList').change((e) => {
+      const words = e.target.value.split('\n').filter((x) => /\S/.test(x));
 
-  $('#userscript-wordBlackListList').change((e) => {
-    const words = e.target.value.split('\n').filter((x) => /\S/.test(x));
+      localStorage.setItem('wordBlackListList', JSON.stringify(words));
+    });
 
-    localStorage.setItem('wordBlackListList', JSON.stringify(words));
-  });
+    // Testit yms. päättyvät
 
-  // Testit yms. päättyvät
-
-  if (/\?skripta/.test(window.location.href)) {
-    switch_preferences_tab('skripta', true);
+    if (/\?skripta/.test(window.location.href)) {
+      switch_preferences_tab('skripta', true);
+    }
   }
-}
+});

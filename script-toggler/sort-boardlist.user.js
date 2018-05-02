@@ -2,9 +2,10 @@
 // @name Järjestä lautaluettelo lyhenteen mukaan
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/5cdc110388e1efdb6685951cc273577eadc4ee4f/script-toggler/runsafely.js
 // @grant none
 // ==/UserScript==
-(function () {
+runSafely(function () {
   if (localStorage.getItem('sortBoardListStorage') === 'true') {
     const boardlist = $('.boardlist')[0];
     const originalNodes = Array.from(boardlist.children);
@@ -18,4 +19,4 @@
       boardlist.appendChild(node);
     }  
   }
-})();
+});

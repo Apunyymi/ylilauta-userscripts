@@ -2,13 +2,14 @@
 // @name Ylilauta.fi: Piilota tietyn maan postaukset
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/5cdc110388e1efdb6685951cc273577eadc4ee4f/script-toggler/runsafely.js
 // @grant none
 // @version 0.3
 // @locale en
 // @description Piilottaa tietyn maan postaukset /coco/ssa
 // ==/UserScript==
 
-(function() {
+runSafely(function() {
   if (localStorage.getItem('countryPostHiderStorage') === 'true') {
     const countries = JSON.parse(localStorage.getItem('countryPostHiderList') || '[]');
 
@@ -62,4 +63,4 @@
       localStorage.setItem('countryPostHiderAllCountries', JSON.stringify(allCountries));
     }
   }
-})();
+});
