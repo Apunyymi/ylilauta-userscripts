@@ -2,33 +2,34 @@
 // @name Ylilauta: Script toggler
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @version 1.1.7
+// @version 1.1.8
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
 // @require https://static.ylilauta.org/js/jquery-3.3.1.min.js
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/runsafely.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/autoscroll-button.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/codehighlight.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/downloadall-button.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/ippostcounter.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/lastownpost-button.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/namefag-hider.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/quoteallfromip-button.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/reverse-image-search-button.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/show-most-answered.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/tagpost-hider.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/wordhider.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/taa-bot.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/colorize-poster-ids.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/update-onhover-newestid-activitypoint.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/button-hider.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/remove-ads.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/country-post-hider.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/notification-x.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/spam-hider.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/show-notificationbar.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/hide-sharebutton.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/sort-boardlist.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/c0eea31f315e100c434e5ed2d01c827bbed64a1c/script-toggler/runsafely.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/d951d60837852530460c6226810f8328cca10ba2/script-toggler/autoscroll-button.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/codehighlight.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/d951d60837852530460c6226810f8328cca10ba2/script-toggler/downloadall-button.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/ippostcounter.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/lastownpost-button.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/e0244bffac2100ab94673eb9eec66b6aed9531ea/script-toggler/namefag-hider.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/86016bcf0c704c07998e2122b42a36af4c73513d/script-toggler/quoteallfromip-button.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/e0244bffac2100ab94673eb9eec66b6aed9531ea/script-toggler/reverse-image-search-button.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/show-most-answered.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/ef752100db78d5e69f197e6f7972dafd2185908d/script-toggler/tagpost-hider.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/b5e75f5c1ef8447d6a9784fd4f2cac02462c0ffd/script-toggler/wordhider.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/ccf6df773aec58a9dae8486fab8e56c6a7cbf51b/script-toggler/taa-bot.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/b9d0025ff6e95f6d29af01bfd913a47b15f1f232/script-toggler/colorize-poster-ids.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/dffc0c049204940357458b253c458fdcdbd83e3d/script-toggler/update-onhover-newestid-activitypoint.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/8047abf99eca0f1848f164a3bb6977112fda2797/script-toggler/button-hider.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/b9d0025ff6e95f6d29af01bfd913a47b15f1f232/script-toggler/remove-ads.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/bd75ffae137e76939a59e41c5dd123a7216aab9e/script-toggler/country-post-hider.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/408fc137f00e1af34a7eb7f53ded4758ea0b4c62/script-toggler/notification-x.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/5199f01bc08d973548509ce424d83125bd9e602f/script-toggler/spam-hider.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/97a6369736006daf5706738aac6f0ef4b9ee3c0f/script-toggler/show-notificationbar.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/97a6369736006daf5706738aac6f0ef4b9ee3c0f/script-toggler/hide-sharebutton.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/97a6369736006daf5706738aac6f0ef4b9ee3c0f/script-toggler/sort-boardlist.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/52af125a6d2c116ddc5be79c04511c3998543a33/script-toggler/delete-all-posts.user.js
 // @resource highlightCSS https://gitcdn.xyz/repo/isagalaev/highlight.js/cf4b46e5b7acfe2626a07914e1d0d4ef269aed4a/src/styles/darcula.css
 // @grant GM_addStyle
 // @grant GM_getResourceText
@@ -60,6 +61,7 @@ runSafely(function() {
     showNotificationBarStorage: 'Näytä ilmoituspalkki lankaa selattaessa',
     hideShareButtonStorage: 'Piilota jakonappula',
     sortBoardListStorage: 'Järjestä lautaluettelo lyhenteen mukaan'
+    deleteAllPostsStorage: 'Lisää kaikkien postausten poistonappula <a href="https://ylilauta.org/ownposts.php">ownposts.php</a>-sivulle.'
   }
 
   function isToggled(name) {

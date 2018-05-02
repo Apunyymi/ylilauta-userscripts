@@ -2,7 +2,7 @@
 // @name       Ylilauta.fi: Näytä vastatuimmat
 // @namespace  Violentmonkey Scripts
 // @include    /^https?://ylilauta.org/.+/.+$/
-// @require    https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/5cdc110388e1efdb6685951cc273577eadc4ee4f/script-toggler/runsafely.js
+// @require    https://github.com/Apunyymi/ylilauta-userscripts/raw/5cdc110388e1efdb6685951cc273577eadc4ee4f/script-toggler/runsafely.js
 // ==/UserScript==
 
 runSafely(function () {
