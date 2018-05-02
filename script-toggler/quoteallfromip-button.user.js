@@ -2,8 +2,8 @@
 // @name Ylilauta: Lainaa kaikki viestit IP:ltä
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/5cdc110388e1efdb6685951cc273577eadc4ee4f/script-toggler/runsafely.js
-// @version 0.2
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/fbfb77e836c8fdaef38d7ce2c4e2a4e3b77f0bba/script-toggler/runsafely.user.js
+// @version 0.3
 // @description Lainaa kaikki viestit samalta IP:ltä (vaatii Kultatilin)
 // ==/UserScript==
 

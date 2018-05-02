@@ -3,6 +3,7 @@
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/ownposts.php
 // @grant none
+// @version 0.2
 // ==/UserScript==
 (function() {
   if (/^\/ownposts.php/.test(window.location.pathname)
