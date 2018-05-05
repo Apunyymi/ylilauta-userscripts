@@ -25,7 +25,7 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/a07d1aa3eedb0c5b3e212b96c084fecdaf2f68c0/script-toggler/hide-sharebutton.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/a07d1aa3eedb0c5b3e212b96c084fecdaf2f68c0/script-toggler/sort-boardlist.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/bb2e85a91f71db1255b2acbdaca696fd9af09681/script-toggler/delete-all-posts.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/72046cd6b0566cf76e86f0c4a6cac7565f3eb972/script-toggler/spamhider.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/50969f08204df41c5c74ca17c6e93deec1fac1b2/script-toggler/spamhider.user.js
 // @resource highlightCSS https://gitcdn.xyz/repo/isagalaev/highlight.js/cf4b46e5b7acfe2626a07914e1d0d4ef269aed4a/src/styles/darcula.css
 // @grant GM_addStyle
 // @grant GM_getResourceText
@@ -54,6 +54,35 @@ const userScripts = {
   showMostAnsweredStorage: 'Näytä vastatuimmat -nappi',
   reverseImageSearchStorage: 'Käänteinen kuvahaku -nappi',
   notificationXStorage: 'Lisää luettu-ruksi ilmoituksiin'
+};
+
+// Laita tänne default-arvoja asioille jotka sellaisia tarvitsevat (eli joita ei muualla aseteta)
+const moreSettings = {
+  buttonHiderAllButtons: [],
+  buttonHiderAllDescriptions: [],
+  buttonHiderList: [],
+  countryPostHiderAllCountries: [],
+  countryPostHiderList: [],
+  spamHiderActions: [],
+  spamHiderDebug: false,
+  wordBlackListCaseless: true,
+  wordBlackListRegex: false,
+  hideEveryNameFag: false,
+  nameFagHiderList: [],
+  hideActions: ['invisible', 'grayrefs'],
+  namefagHiderStorage: false,
+  countryPostHiderStorage: false,
+  hideDuplicatesStorage: false,
+  tagpostHiderStorage: false,
+  wordBlackListStorage: false,
+  hideAnswersByRatioStorage: false,
+  hideTagPostTagList: [
+    'postername',
+    'tag text postedbyop',
+    'tag text sage',
+    'postnumber quotelink',
+    'posttime'
+  ]
 };
 
 function isToggled(name) {
@@ -152,6 +181,12 @@ runSafely(() => {
   // Varmistetaan kaikkien LocalStorage-muuttujien alustus
   for (let key in userScripts) {
     isToggled(key);
+  }
+
+  for (let key in moreSettings) {
+    if (localStorage.getItem(key) === null) {
+      localStorage.setItem(key, JSON.stringify(moreSettings[key]));
+    }
   }
 
   // Tähän voit lisätä yleisesti hyödyllisiä tyyliohjeita, joista voisi olla muillekin hyötyä
