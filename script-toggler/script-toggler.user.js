@@ -2,7 +2,7 @@
 // @name Ylilauta: Script toggler
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @version 1.3.3
+// @version 1.3.4
 // @require https://static.ylilauta.org/js/jquery-3.3.1.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
@@ -236,7 +236,9 @@ runSafely(() => {
     div.classList.add('tab');
     div.style.display = 'none';
 
-    const scriptDiv = $(div);
+    $('#sessions').after(div);
+
+    const scriptDiv = $('#skripta');
 
     scriptDiv.append('<h3>Päällä olevat skriptit</h3>');
 
@@ -322,7 +324,7 @@ runSafely(() => {
       scriptDiv.append(getBlock('Käy ensin esimerkiksi <a href="/matkailu/">/coco/</a>ssa, niin skripti löytää piilotettavat maat'));
 
     } else {
-      elems = [];
+      let elems = [];
 
       for (let i = 0; i < allCountries.length; i++) {
         let countryCode = /\(([A-Z]+)\)/.exec(allCountries[i])[1].toLowerCase();
@@ -403,7 +405,7 @@ runSafely(() => {
       scriptDiv.append(getBlock('Käy ensin jollain lautasivulla, niin skripti löytää piilotettavat napit'));
 
     } else {
-      elems = [];
+      let elems = [];
 
       for (let i = 0; i < allButtons.length; i++) {
         let input = document.createElement('input');
@@ -453,7 +455,6 @@ runSafely(() => {
 
     // Custom-asetukset päättyvät
 
-    $('#sessions').after(scriptDiv)
 
     // Tähän väliin voit lisätä custom-asetusten testejä/automaattitäydennyksiä tms.
 
