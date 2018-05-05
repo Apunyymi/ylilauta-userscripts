@@ -2,7 +2,7 @@
 // @name Ylilauta: Script toggler
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @version 1.3.2
+// @version 1.3.3
 // @require https://static.ylilauta.org/js/jquery-3.3.1.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
@@ -134,12 +134,12 @@ function getBlock(innie) {
 
   if (typeof innie === 'object' && innie.length) {
     for (let i = 0; i < innie.length; i++) {
-      span.appendChild(innie[i]);
+      span.append(innie[i]);
     }
   } else if (typeof innie === 'string') {
     span.innerHTML = innie;
   } else {
-    span.appendChild(innie);
+    span.append(innie);
   }
 
   return span;
@@ -166,12 +166,12 @@ function getContainer(innie) {
 
   if (typeof innie === 'object' && innie.length) {
     for (let i = 0; i < innie.length; i++) {
-      div.appendChild(innie[i]);
+      div.append(innie[i]);
     }
   } else if (typeof innie === 'string') {
     div.innerHTML = innie;
   } else {
-    div.appendChild(innie);
+    div.append(innie);
   }
 
   return div;
