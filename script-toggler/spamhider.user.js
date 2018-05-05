@@ -5,7 +5,7 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/7ca6c42677a4a203e82493c51a071891eeee7184/script-toggler/runsafely.user.js
 // @grant none
 // @description Duplikaattipostausten piilotus, sekä paljon toistoa sisältävien viestien piilotus.
-// @version 0.1
+// @version 0.2
 // ==/UserScript==
 
 runSafely(() => {
@@ -192,12 +192,9 @@ runSafely(() => {
     }
 
     function hide(isThreadPage = true) {
-      let query = '';
-      if (processedPosts.length > 0) {
-        query = $('#no' + processedPosts[processedPosts.length-1]).nextAll();
-      } else {
-        query = '#right div.' + (isThreadPage ? 'answer' : 'op_post');
-      }
+      let query = processedPosts.length > 0 ?
+        $('#no' + processedPosts[processedPosts.length-1]).nextAll() :
+        $('#right div.' + (isThreadPage ? 'answer' : 'op_post'));
 
       query.each((i, el) => {
         if (shouldBeHidden(el)) {
