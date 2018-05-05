@@ -25,6 +25,7 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/a07d1aa3eedb0c5b3e212b96c084fecdaf2f68c0/script-toggler/hide-sharebutton.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/a07d1aa3eedb0c5b3e212b96c084fecdaf2f68c0/script-toggler/sort-boardlist.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/bb2e85a91f71db1255b2acbdaca696fd9af09681/script-toggler/delete-all-posts.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/4b954a749c4e588ec53926bf141e1e87679a66e0/script-toggler/spamhider.js
 // @resource highlightCSS https://gitcdn.xyz/repo/isagalaev/highlight.js/cf4b46e5b7acfe2626a07914e1d0d4ef269aed4a/src/styles/darcula.css
 // @grant GM_addStyle
 // @grant GM_getResourceText
