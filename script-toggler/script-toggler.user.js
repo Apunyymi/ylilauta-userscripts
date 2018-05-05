@@ -2,7 +2,7 @@
 // @name Ylilauta: Script toggler
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @version 1.3.0
+// @version 1.3.1
 // @require https://static.ylilauta.org/js/jquery-3.3.1.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
@@ -25,7 +25,7 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/a07d1aa3eedb0c5b3e212b96c084fecdaf2f68c0/script-toggler/hide-sharebutton.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/a07d1aa3eedb0c5b3e212b96c084fecdaf2f68c0/script-toggler/sort-boardlist.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/bb2e85a91f71db1255b2acbdaca696fd9af09681/script-toggler/delete-all-posts.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/4b954a749c4e588ec53926bf141e1e87679a66e0/script-toggler/spamhider.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/4b954a749c4e588ec53926bf141e1e87679a66e0/script-toggler/spamhider.user.js
 // @resource highlightCSS https://gitcdn.xyz/repo/isagalaev/highlight.js/cf4b46e5b7acfe2626a07914e1d0d4ef269aed4a/src/styles/darcula.css
 // @grant GM_addStyle
 // @grant GM_getResourceText
@@ -84,6 +84,7 @@ function getInput(name, description) {
 function getNumber(start, end, description, propertyName) {
   const input = document.createElement('input');
   input.value = JSON.parse(localStorage.getItem(propertyName)) || 0;
+  input.type = 'number';
   input.min = start;
   input.max = end;
 
@@ -267,7 +268,7 @@ runSafely(() => {
       getInput('wordBlackListCaseless', 'Älä välitä sanojen kirjainkoosta'),
       getInput('wordBlackListRegex', 'Käytä sanojen sijaan regexejä <sup><a href="https://regex101.com/>(?)</a></sup>'),
       getBlock('Piilotettavat sanat:'),
-      getTextarea(wordBlackListList),
+      getTextarea('wordBlackListList'),
 
       '<h4>Tiettyjen maiden postauksien piilotus (/coco/)</h4>',
       getInput('countryPostHiderStorage', 'Käytä maalaisten piilotusta')
@@ -277,7 +278,7 @@ runSafely(() => {
       scriptDiv.append(getBlock('Käy ensin esimerkiksi <a href="/matkailu/">/coco/</a>ssa, niin skripti löytää piilotettavat maat'));
     }
 
-    let elems = [];
+    elems = [];
 
     for (let i = 0; i < allCountries.length; i++) {
       let countryCode = /\(([A-Z]+)\)/.exec(allCountries[i])[1].toLowerCase();
@@ -324,7 +325,6 @@ runSafely(() => {
     scriptDiv.append('<h4>Mitä tehdään kun viesti pitää hidettää</h4>');
 
     for (let i = 0; i < allSpamHiderActions.length; i++) {
-      scriptDiv.append(getInput(allSpamHiderActions[i]
       let input = document.createElement('input');
       input.type = 'checkbox';
       input.checked = spamHiderActions.includes(i);
@@ -358,7 +358,7 @@ runSafely(() => {
       scriptDiv.append(getBlock('Käy ensin jollain lautasivulla, niin skripti löytää piilotettavat napit'));
     }
 
-    let elems = [];
+    elems = [];
 
     for (let i = 0; i < allButtons.length; i++) {
       let input = document.createElement('input');
