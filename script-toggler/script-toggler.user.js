@@ -2,7 +2,7 @@
 // @name Ylilauta: Script toggler
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @version 1.2.8
+// @version 1.3.0
 // @require https://static.ylilauta.org/js/jquery-3.3.1.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
@@ -249,7 +249,7 @@ runSafely(() => {
 
       '<h4>Piilota viestit joissa on vähemmän kuin:</h4>',
       getInput('hideDuplicatesStorage', 'Käytä duplikaattipiilotinta'),
-      getNumber(0, 100, 'prosenttia uniikkeja sanoja', 'hideAnswersByRatioStorage',
+      getNumber(0, 100, 'prosenttia uniikkeja sanoja', 'hideAnswersByRatioStorage'),
 
       '<h4>Nimihomojen piilotus</h4>',
       getInput('namefagHiderStorage', 'Käytä nimihomojen piilotusta'),
