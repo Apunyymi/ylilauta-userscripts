@@ -25,7 +25,7 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/a07d1aa3eedb0c5b3e212b96c084fecdaf2f68c0/script-toggler/hide-sharebutton.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/a07d1aa3eedb0c5b3e212b96c084fecdaf2f68c0/script-toggler/sort-boardlist.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/bb2e85a91f71db1255b2acbdaca696fd9af09681/script-toggler/delete-all-posts.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/4b954a749c4e588ec53926bf141e1e87679a66e0/script-toggler/spamhider.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/72046cd6b0566cf76e86f0c4a6cac7565f3eb972/script-toggler/spamhider.user.js
 // @resource highlightCSS https://gitcdn.xyz/repo/isagalaev/highlight.js/cf4b46e5b7acfe2626a07914e1d0d4ef269aed4a/src/styles/darcula.css
 // @grant GM_addStyle
 // @grant GM_getResourceText
@@ -221,11 +221,11 @@ runSafely(() => {
   margin-left: 0.2em;
   color: #fff;
 }
-.usersript-scrollcontainer {
+.userscript-scrollcontainer {
   display: inline-block;
   padding-right: 2em;
   max-height: 50vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 }`);
 
     // Tähän väliin voit lisätä omien skriptien custom-asetuksia
@@ -332,7 +332,7 @@ runSafely(() => {
 
     scriptDiv.append('<h4>Mitä tehdään kun viesti pitää hidettää</h4>');
 
-    for (let i = 0; i < allSpamHiderActions.length; i++) {
+    for (let i in allSpamHiderActions) {
       let input = document.createElement('input');
       input.type = 'checkbox';
       input.checked = spamHiderActions.includes(i);
