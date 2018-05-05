@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         Ylilauta: TaaBot
 // @namespace    *://ylilauta.org/*
-// @version      1.2
+// @version      1.3
 // @description  Extract from YlisToolchain, trying to Tää :D over the Ylis!
 // @locale       en
 // @author       Apunyymi
 // @match        *://ylilauta.org/*
 // @require      https://github.com/Apunyymi/ylilauta-userscripts/raw/7ca6c42677a4a203e82493c51a071891eeee7184/script-toggler/runsafely.user.js
-// @grant        GM_addStyle
+// @grant        none
 // ==/UserScript==
 
 runSafely(function () {
@@ -113,15 +113,6 @@ runSafely(function () {
 
       e.attr('title', title);
     }
-
-    // Add styles for Tää :D blinker
-    GM_addStyle(`.taabot-blinker {border-radius: 1em; padding: 3px; background: lightgray;}
-.taabot-blinker.active {background: lightgreen; animation: taa 2s infinite;}
-@keyframes taa {
-0% {opacity: 0;}
-50% {opacity: 1;}
-100% {opacity: 0;}
-}`);
 
     // Make the activity point thing a bit more obvious and efficient
     if ($('#left .activitypoint').length === 0) {
