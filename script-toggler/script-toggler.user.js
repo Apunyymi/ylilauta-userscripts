@@ -320,51 +320,52 @@ runSafely(() => {
 
     if (allCountries.length === 0) {
       scriptDiv.append(getBlock('Käy ensin esimerkiksi <a href="/matkailu/">/coco/</a>ssa, niin skripti löytää piilotettavat maat'));
-    }
 
-    elems = [];
+    } else {
+      elems = [];
 
-    for (let i = 0; i < allCountries.length; i++) {
-      let countryCode = /\(([A-Z]+)\)/.exec(allCountries[i])[1].toLowerCase();
+      for (let i = 0; i < allCountries.length; i++) {
+        let countryCode = /\(([A-Z]+)\)/.exec(allCountries[i])[1].toLowerCase();
 
-      let input = document.createElement('input');
-      input.type = 'checkbox';
-      input.checked = hiddenCountries.includes(allCountries[i]);
-      input.id = 'userscript-hidecountry-' + countryCode;
-      input.dataset.country = countryCode.toUpperCase();
-      input.onchange = (e) => {
-        let a = e.target.dataset.country;
+        let input = document.createElement('input');
+        input.type = 'checkbox';
+        input.checked = hiddenCountries.includes(allCountries[i]);
+        input.id = 'userscript-hidecountry-' + countryCode;
+        input.dataset.country = countryCode.toUpperCase();
+        input.onchange = (e) => {
+          let a = e.target.dataset.country;
 
-        if (e.target.checked) {
-          if (!hiddenCountries.includes(a)) {
-            hiddenCountries.push(a);
+          if (e.target.checked) {
+            if (!hiddenCountries.includes(a)) {
+              hiddenCountries.push(a);
+            }
+          } else {
+            if (hiddenCountries.includes(a)) {
+              hiddenCountries.splice(hiddenCountries.indexOf(a), 1);
+            }
           }
-        } else {
-          if (hiddenCountries.includes(a)) {
-            hiddenCountries.splice(hiddenCountries.indexOf(a), 1);
-          }
-        }
 
-        localStorage.setItem('countryPostHiderList', JSON.stringify(hiddenCountries));
+          localStorage.setItem('countryPostHiderList', JSON.stringify(hiddenCountries));
+        };
+
+        let img = document.createElement('img');
+        img.src = staticUrl + '/img/flags/' + countryCode + '.png';
+
+        let label = document.createElement('label');
+        label.setAttribute('for', 'userscript-hidecountry-' + countryCode);
+        label.innerHTML = allCountries[i];
+
+        elems.push(getBlock([
+          input,
+          document.createTextNode(' '),
+          img,
+          document.createTextNode(' '),
+          label
+        ]));
       };
 
-      let img = document.createElement('img');
-      img.src = staticUrl + '/img/flags/' + countryCode + '.png';
-
-      let label = document.createElement('label');
-      label.setAttribute('for', 'userscript-hidecountry-' + countryCode);
-      label.innerHTML = allCountries[i];
-
-      elems.push(getBlock([
-        input,
-        document.createTextNode(' '),
-        img,
-        document.createTextNode(' '),
-        label
-      ]));
-    };
-
-    scriptDiv.append(getContainer(elems));
+      scriptDiv.append(getContainer(elems));
+    }
 
     scriptDiv.append('<h4>Mitä tehdään kun viesti pitää hidettää</h4>');
 
@@ -400,54 +401,55 @@ runSafely(() => {
 
     if (allButtons.length === 0) {
       scriptDiv.append(getBlock('Käy ensin jollain lautasivulla, niin skripti löytää piilotettavat napit'));
-    }
 
-    elems = [];
+    } else {
+      elems = [];
 
-    for (let i = 0; i < allButtons.length; i++) {
-      let input = document.createElement('input');
-      input.type = 'checkbox';
-      input.checked = hiddenButtonsList.includes(allButtons[i]);
-      input.id = 'userscript-hidebutton-' + allButtons[i];
-      input.dataset.button = allButtons[i];
-      input.onchange = (e) => {
-        let a = e.target.dataset.button;
+      for (let i = 0; i < allButtons.length; i++) {
+        let input = document.createElement('input');
+        input.type = 'checkbox';
+        input.checked = hiddenButtonsList.includes(allButtons[i]);
+        input.id = 'userscript-hidebutton-' + allButtons[i];
+        input.dataset.button = allButtons[i];
+        input.onchange = (e) => {
+          let a = e.target.dataset.button;
 
-        if (e.target.checked) {
-          if (!hiddenButtonsList.includes(a)) {
-            hiddenButtonsList.push(a);
+          if (e.target.checked) {
+            if (!hiddenButtonsList.includes(a)) {
+              hiddenButtonsList.push(a);
+            }
+          } else {
+            if (hiddenButtonsList.includes(a)) {
+              hiddenButtonsList.splice(hiddenButtonsList.indexOf(a), 1);
+            }
           }
-        } else {
-          if (hiddenButtonsList.includes(a)) {
-            hiddenButtonsList.splice(hiddenButtonsList.indexOf(a), 1);
-          }
-        }
 
-        localStorage.setItem('buttonHiderList', JSON.stringify(hiddenButtonsList));
+          localStorage.setItem('buttonHiderList', JSON.stringify(hiddenButtonsList));
+        };
+
+        let button = document.createElement('span');
+        button.classList.add('userscript-button');
+        button.classList.add(allButtons[i]);
+
+        let label = document.createElement('label');
+        label.setAttribute('for', 'userscript-hidebutton-' + allButtons[i]);
+        label.innerHTML = allDescriptions[i];
+
+        let span = document.createElement('span');
+        span.classList.add('block');
+
+
+        elems.push(getBlock([
+          input,
+          document.createTextNode(' '),
+          button,
+          document.createTextNode(' '),
+          label
+        ]));
       };
 
-      let button = document.createElement('span');
-      button.classList.add('userscript-button');
-      button.classList.add(allButtons[i]);
-
-      let label = document.createElement('label');
-      label.setAttribute('for', 'userscript-hidebutton-' + allButtons[i]);
-      label.innerHTML = allDescriptions[i];
-
-      let span = document.createElement('span');
-      span.classList.add('block');
-
-
-      elems.push(getBlock([
-        input,
-        document.createTextNode(' '),
-        button,
-        document.createTextNode(' '),
-        label
-      ]));
-    };
-
-    scriptDiv.append(getContainer(elems));
+      scriptDiv.append(getContainer(elems));
+    }
 
     // Custom-asetukset päättyvät
 
