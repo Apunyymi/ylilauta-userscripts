@@ -255,6 +255,7 @@ runSafely(() => {
 
     [
       '<h3>Antispämmiasetukset</h3>',
+      getInput('spamHiderDebug', 'Tulosta postausten piilotussyyt konsoliin'),
 
       '<h4>Piilota viestit joissa on vähemmän kuin:</h4>',
       getInput('hideDuplicatesStorage', 'Käytä duplikaattipiilotinta'),

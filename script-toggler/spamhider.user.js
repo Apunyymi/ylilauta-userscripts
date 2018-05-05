@@ -9,6 +9,7 @@
 // ==/UserScript==
 
 runSafely(() => {
+
   // First run check due to migration from all the other scripts
   let isEnabled = localStorage.getItem('spamHiderStorage');
 
@@ -55,6 +56,9 @@ runSafely(() => {
   }
 
   if (isEnabled === 'true') {
+    // Set this to true to know in console why specific posts get flagged as spam
+    const debug = localStorage.getItem('spamHiderDebug') === 'true';
+
     // General
     const answers = $('.answers');
     const processedPosts = [];
@@ -104,29 +108,42 @@ runSafely(() => {
 
       // Once a post is processed, there is no coming back
       if (processedPosts.includes(el.data('msgid'))) {
+        console.log('SpamHider debug: #no' +el.data('msgid')+ ' has been already decided');
         return false;
       }
 
       processedPosts.push(el.data('msgid'));
 
       // Ensure we don't hide our own posts or OP in thread
-      if (el.hasClass('own_post') || ($('#right.thread').length && el.hasClass('op_post'))) return false;
+      if (el.hasClass('own_post') || ($('#right.thread').length && el.hasClass('op_post'))) {
+        console.log('SpamHider debug: #no' +el.data('msgid')+ ' is own post or OP in thread page');
+        return false;
+      }
 
       // Then start checks
       if (namefagHiderOn) {
         let name = el.find('.postinfo .tags .postername').text()
 
         if (hideAllNameFags) {
-          if (name !== 'Anonyymi') return true;
+          if (name !== 'Anonyymi') {
+            console.log('SpamHider debug: #no' +el.data('msgid')+ ' is some namefag');
+            return true;
+          }
         } else {
-          if (fags.includes(name)) return true;
+          if (fags.includes(name)) {
+            console.log('SpamHider debug: #no' +el.data('msgid')+ ' is specific namefag (' +name+ ')');
+            return true;
+          }
         }
       }
 
       if (countryPostHiderOn) {
         let country = el.find('.tags:has(img+.postername)>img:first-child');
 
-        if (country.length && countries.includes(/\(([A-Z]+)\)/.exec(country[0].title)[1])) return true;
+        if (country.length && countries.includes(/\(([A-Z]+)\)/.exec(country[0].title)[1])) {
+          console.log('SpamHider debug: #no' +el.data('msgid')+ ' is in specific country');
+          return true;
+        }
       }
 
       if (hideDuplicatesOn) {
@@ -144,6 +161,7 @@ runSafely(() => {
             postMap[el.text()] = 1;
           } else {
             postMap[el.text()]++;
+            console.log('SpamHider debug: #no' +el.data('msgid')+ ' is a duplicate post: "' +el.text().substr(0,20)+ '..."');
             return true;
           }
 
@@ -151,12 +169,14 @@ runSafely(() => {
           if (threshold > 0.0) {
             let ratio = 1.0 * (new Set(words).size) / words.length;
             if (ratio < threshold) {
+              console.log('SpamHider debug: #no' +el.data('msgid')+ ' has too few unique words (' +(ratio*100).toPrecision(2)+ '%): "' +el.text().substr(0,20)+ '..."');
               return true;
             }
           }
 
           // Then check for pattern repetition without spaces
-          if (/(.+)(?=\1+)/.test(el.text())) {
+          if (/(.+)(?=\4+)/.test(el.text())) {
+            console.log('SpamHider debug: #no' +el.data('msgid')+ ' is repetitive: "' +el.text().substr(0,20)+ '..."');
             return true;
           }
         }
@@ -166,7 +186,8 @@ runSafely(() => {
         let headers = el.find('.postinfo .tags span');
 
         for (var i = headers.length - 1; i >= 0; i--) {
-          if (!allowedTags.includes(headers[i])) {
+          if (!allowedTags.includes(headers[i].className)) {
+            console.log('SpamHider debug: #no' +el.data('msgid')+ ' has a forbidden tag: ' +headers[i].className);
             return true;
           }
         }
@@ -179,9 +200,12 @@ runSafely(() => {
             kkontent = kkontent.toLowerCase();
           }
 
+          let entry = '';
+
           // This first tests for regexes (if applicable) and then goes full strpos
-          if ((regex && blacklist.some(reg => new RegExp(reg).test(kkontent)))
-            || blacklist.some(word => postcontent.indexOf(word) !== -1)) {
+          if ((regex && blacklist.some(reg => new RegExp(reg).test(kkontent) && (entry = reg)))
+            || blacklist.some(word => (kkontent.indexOf(word) !== -1) && (entry = word))) {
+            console.log('SpamHider debug: #no' +el.data('msgid')+ ' is blacklisted: ' +entry);
             return true;
           }
         }
