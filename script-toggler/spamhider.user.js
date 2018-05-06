@@ -5,7 +5,7 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/7ca6c42677a4a203e82493c51a071891eeee7184/script-toggler/runsafely.user.js
 // @grant none
 // @description Duplikaattipostausten piilotus, sekä paljon toistoa sisältävien viestien piilotus.
-// @version 0.2
+// @version 0.3
 // ==/UserScript==
 
 runSafely(() => {
@@ -59,6 +59,11 @@ runSafely(() => {
     // Set this to true to know in console why specific posts get flagged as spam
     const debug = localStorage.getItem('spamHiderDebug') === 'true';
 
+    // Apparently this can be undefined, and it breaks the hidePost-function.
+    if (!hiddenPosts) {
+      hiddenPosts = JSON.parse(localStorage.getItem('hiddenPosts')) || [];
+    }
+    
     // General
     const answers = $('.answers');
     const processedPosts = [];
