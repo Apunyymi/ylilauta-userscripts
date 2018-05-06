@@ -105,6 +105,7 @@ runSafely(() => {
 
     function shouldBeHidden(div) {
       let el = $(div);
+      let kkontent = el.find('.postcontent').text();
 
       // Once a post is processed, there is no coming back
       if (processedPosts.includes(el.data('msgid'))) {
@@ -148,7 +149,7 @@ runSafely(() => {
 
       if (hideDuplicatesOn) {
         // Split by non-word characters.
-        let words = el.text().split(/\W+/g).filter(word =>
+        let words = kkontent.split(/\W+/g).filter(word =>
           !word.includes('>>') &&
           !word.includes('(AP)') &&
           !word.includes('(Sinä)')
@@ -157,11 +158,11 @@ runSafely(() => {
         // Don't test there is only a reflink/no post
         if (words.length !== 0) {
           // If there is another post with same kkontent
-          if (postMap[el.text()] === undefined) {
-            postMap[el.text()] = 1;
+          if (postMap[kkontent] === undefined) {
+            postMap[kkontent] = 1;
           } else {
-            postMap[el.text()]++;
-            console.log('SpamHider debug: #no' +el.data('msgid')+ ' is a duplicate post: "' +el.text().substr(0,20)+ '..."');
+            postMap[kkontent]++;
+            console.log('SpamHider debug: #no' +el.data('msgid')+ ' is a duplicate post: "' +kkontent.substr(0,20)+ '..."');
             return true;
           }
 
@@ -169,14 +170,14 @@ runSafely(() => {
           if (threshold > 0.0) {
             let ratio = 1.0 * (new Set(words).size) / words.length;
             if (ratio < threshold) {
-              console.log('SpamHider debug: #no' +el.data('msgid')+ ' has too few unique words (' +(ratio*100).toPrecision(2)+ '%): "' +el.text().substr(0,20)+ '..."');
+              console.log('SpamHider debug: #no' +el.data('msgid')+ ' has too few unique words (' +(ratio*100).toPrecision(2)+ '%): "' +kkontent.substr(0,20)+ '..."');
               return true;
             }
           }
 
           // Then check for pattern repetition without spaces
-          if (/(.+)(?=\4+)/.test(el.text())) {
-            console.log('SpamHider debug: #no' +el.data('msgid')+ ' is repetitive: "' +el.text().substr(0,20)+ '..."');
+          if (/(.+)(?=\4+)/.test(kkontent)) {
+            console.log('SpamHider debug: #no' +el.data('msgid')+ ' is repetitive: "' +kkontent.substr(0,20)+ '..."');
             return true;
           }
         }
@@ -194,7 +195,6 @@ runSafely(() => {
       }
 
       if (wordBlackListOn) {
-        let kkontent = el.find('.postcontent').text();
         if (kkontent) {
           if (caseless) {
             kkontent = kkontent.toLowerCase();
