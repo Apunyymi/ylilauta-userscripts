@@ -207,11 +207,22 @@ runSafely(() => {
 
           let entry = '';
 
-          // This first tests for regexes (if applicable) and then goes full strpos
-          if ((regex && blacklist.some(reg => new RegExp(reg).test(kkontent) && (entry = reg)))
-            || blacklist.some(word => (kkontent.indexOf(word) !== -1) && (entry = word))) {
-            console.log('SpamHider debug: #no' +el.data('msgid')+ ' is blacklisted: ' +entry);
-            return true;
+          // First test for regexes (if applicable)
+          if (regex) {
+            for (let i = 0; i < blacklist.length; i++) {
+              if (new RegExp(blacklist[i]).test(kkontent)) {
+                console.log('SpamHider debug: #no' +el.data('msgid')+ ' is blacklisted by regex: ' +blacklist[i]);
+                return true;
+              }
+            }
+          }
+
+          // and then go full strpos if we're still here
+          for (let i = 0; i < blacklist.length; i++) {
+            if (kkontent.indexOf(blacklist[i]) !== -1) {
+              console.log('SpamHider debug: #no' +el.data('msgid')+ ' is blacklisted by word: ' +blacklist[i]);
+              return true;
+            }
           }
         }
       }
