@@ -5,7 +5,7 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/7ca6c42677a4a203e82493c51a071891eeee7184/script-toggler/runsafely.user.js
 // @grant none
 // @description Duplikaattipostausten piilotus, sekä paljon toistoa sisältävien viestien piilotus.
-// @version 0.3
+// @version 0.4
 // ==/UserScript==
 
 runSafely(() => {
@@ -93,6 +93,10 @@ runSafely(() => {
     const duplicateThreads = localStorage.getItem('hideDuplicateThreadsStorage') || false;
     const duplicateAnswers = localStorage.getItem('hideDuplicateAnswersStorage') || false;
     const threshold = JSON.parse(localStorage.getItem('hideAnswersByRatioStorage') || '"0"') / 100;
+    const dupeCountThresold = JSON.parse(localStorage.getItem('hideDuplicateCountThresold') || '"3"');
+
+    // Always false if dupeCountThresold couldn't be cast to a number
+    const repetitionRegex = dupeCountThresold > 0 ? new RegExp('/(.+)(?=\\' +dupeCountThresold+ '+)/') : false;
 
     // Tag posters
     const allowedTags = JSON.parse(localStorage.getItem('hideTagPostTagList')) || [
@@ -105,13 +109,16 @@ runSafely(() => {
 
     // Word blacklist
     const blacklist = JSON.parse(localStorage.getItem('wordBlackListList') || '[]');
-    const caseless = JSON.parse(localStorage.getItem('wordBlackListCaseless') || 'false');
-    const regex = JSON.parse(localStorage.getItem('wordBlackListRegex') || 'false');
+    const caseless = (localStorage.getItem('wordBlackListCaseless') || 'false') === 'true';
+    const regex = (localStorage.getItem('wordBlackListRegex') || 'false') === 'true';
 
-    function shouldBeHidden(div) {
-      let el = $(div);
-      let kkontent = el.find('.postcontent').text();
+    if (caseless) {
+      for (var i = 0; i < blacklist.length; i++) {
+        blacklist[i] = blacklist[i].toLowerCase();
+      };
+    }
 
+    function shouldBeHidden(el, kkontent) {
       // Once a post is processed, there is no coming back
       if (processedPosts.includes(el.data('msgid'))) {
         console.log('SpamHider debug: #no' +el.data('msgid')+ ' has been already decided');
@@ -163,10 +170,7 @@ runSafely(() => {
         // Don't test there is only a reflink/no post
         if (words.length !== 0) {
           // If there is another post with same kkontent
-          if (postMap[kkontent] === undefined) {
-            postMap[kkontent] = 1;
-          } else {
-            postMap[kkontent]++;
+          if (postMap[kkontent] >= dupeCountThresold) {
             console.log('SpamHider debug: #no' +el.data('msgid')+ ' is a duplicate post: "' +kkontent.substr(0,20)+ '..."');
             return true;
           }
@@ -181,7 +185,7 @@ runSafely(() => {
           }
 
           // Then check for pattern repetition without spaces
-          if (/(.+)(?=\4+)/.test(kkontent)) {
+          if (repetitionRegex && repetitionRegex.test(kkontent)) {
             console.log('SpamHider debug: #no' +el.data('msgid')+ ' is repetitive: "' +kkontent.substr(0,20)+ '..."');
             return true;
           }
@@ -231,23 +235,45 @@ runSafely(() => {
       return false;
     }
 
+    function postMapper(kkontent) {
+      if (postMap[kkontent] === undefined) {
+        postMap[kkontent] = 1;
+      } else {
+        postMap[kkontent]++;
+      }
+    }
+
     function hide(isThreadPage = true) {
       let query = processedPosts.length > 0 ?
         $('#no' + processedPosts[processedPosts.length-1]).nextAll() :
         $('#right div.' + (isThreadPage ? 'answer' : 'op_post'));
 
-      query.each((i, el) => {
-        if (shouldBeHidden(el)) {
+      let posts = query.map((i, e) => {
+        el = $(e);
+        return [[el, el.find('.postcontent').text()]];
+      });
+
+      // Map the posts first so we know what should be hidden
+      posts.each((i, e) => {
+        postMapper(e[1]);
+      });
+
+      // Then process hides
+      posts.each((i, e) => {
+        let el = e[0];
+        let kkontent = e[1];
+
+        if (shouldBeHidden(el, kkontent)) {
           // Let's check what we haz to do
           if (hideActions.includes('hide')) {
-            (isThreadPage ? hidePost : hideThread)(el.dataset.msgid, 1);
+            (isThreadPage ? hidePost : hideThread)(el.data('msgid'), 1);
           }
 
           if (hideActions.includes('invisible')) {
-            el.hidden = true;
+            el.attr('hidden', true);
 
             if (!isThreadPage) {
-              el.parentElement.style.display = 'none';
+              el.parent().css('display', 'none');
             }
           }
 
@@ -259,7 +285,7 @@ runSafely(() => {
     }
 
     function hideReflinks(el) {
-      $('#right .replies .reflink[data-msgid="' +el.dataset.msgid+ '"]').each((i, ref) => {
+      $('#right .reflink[data-msgid="' +el.data('msgid')+ '"]').each((i, ref) => {
         if (hideActions.includes('grayrefs')) {
           ref.style.opacity = '0.3';
         }
