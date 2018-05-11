@@ -5,7 +5,7 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/7ca6c42677a4a203e82493c51a071891eeee7184/script-toggler/runsafely.user.js
 // @grant none
 // @description Duplikaattipostausten piilotus, sekä paljon toistoa sisältävien viestien piilotus.
-// @version 0.4
+// @version 0.5
 // ==/UserScript==
 
 runSafely(() => {
@@ -168,7 +168,7 @@ runSafely(() => {
         );
 
         // Don't test there is only a reflink/no post
-        if (words.length !== 0) {
+        if (words.length > 1) {
           // If there is another post with same kkontent
           if (postMap[kkontent] >= dupeCountThresold) {
             console.log('SpamHider debug: #no' +el.data('msgid')+ ' is a duplicate post: "' +kkontent.substr(0,20)+ '..."');
@@ -243,6 +243,32 @@ runSafely(() => {
       }
     }
 
+    function unhide(id) {
+      let el = $('#no' + id);
+      let isThreadPage = !!$('#right.thread').length;
+
+      // Reverse hide actions
+      if (hideActions.includes('hide')) {
+        (isThreadPage ? restorePost : restoreThread)(el.data('msgid'));
+      }
+
+      if (hideActions.includes('invisible')) {
+        el.attr('hidden', false);
+
+        if (!isThreadPage) {
+          el.parent().css('display', '');
+        }
+      }
+
+      // Remove hide style from reflinks
+      $('#right .reflink[style][data-msgid="' +el.data('msgid')+ '"]').each((i, ref) => {
+        ref.attributes.removeNamedItem('style');
+      });
+
+      // Return true to allow hash change
+      return true;
+    }
+
     function hide(isThreadPage = true) {
       let query = processedPosts.length > 0 ?
         $('#no' + processedPosts[processedPosts.length-1]).nextAll() :
@@ -293,6 +319,8 @@ runSafely(() => {
         if (hideActions.includes('invisiblerefs')) {
           ref.style.display = 'none';
         }
+        
+        ref.onclick = () => unhide(el.data('msgid'));
       });
     }
 
