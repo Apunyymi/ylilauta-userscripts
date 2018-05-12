@@ -28,7 +28,7 @@ runSafely(() => {
 
 		function onButtonClick (eve) {
 			let el = $(eve.target);
-			el.prev().removeClass('shortened-post');
+			el.prev().removeClass('shortened-post').css({height: '', maxHeight: ''});
 			el.remove();
 		}
 
@@ -45,7 +45,7 @@ runSafely(() => {
 				kkontent.addClass('shortened-post');
 
 				post.append(
-					$('<button class="linkbutton shortenbutton">Tätä postausta on lyhennetty. Paina tästä niin näet koko viestin.</button>')
+					$('<button class="linkbutton shortenbutton">Tätä postausta on lyhennetty, paina tästä niin näet koko viestin.</button>')
 						.click(onButtonClick)
 				);
 			}
