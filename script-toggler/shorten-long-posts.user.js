@@ -17,6 +17,8 @@ runSafely(() => {
 .shortened-post {
 	max-height: ${shownRows}em;
 	border-bottom: 1px solid #d9bfb7;
+	overflow: hidden;
+	resize: vertical;
 }
 .shortenbutton {
 	background-color: #d9bfb7;
