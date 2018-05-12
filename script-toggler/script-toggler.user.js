@@ -27,7 +27,7 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/bb2e85a91f71db1255b2acbdaca696fd9af09681/script-toggler/delete-all-posts.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/78ce567952c5811f8d5e4ae9caf39753001b0825/script-toggler/spamhider.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/39d3703cfe89e6cd2e9f5672c4e1b1ff13583bb8/script-toggler/show-404-delete-reason.user.js
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/d70778615d51eb43ae6bd1fd9266303e72411942/script-toggler/shorten-long-posts.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/c38055113a2541ee421d289c58b776f67560ae46/script-toggler/shorten-long-posts.user.js
 // @resource highlightCSS https://gitcdn.xyz/repo/isagalaev/highlight.js/cf4b46e5b7acfe2626a07914e1d0d4ef269aed4a/src/styles/darcula.css
 // @grant GM_addStyle
 // @grant GM_getResourceText
@@ -88,8 +88,8 @@ const moreSettings = {
     'postnumber quotelink',
     'posttime'
   ],
-  shortenLongPostsThresold: 10,
-  shortenLongPostsShownRows: 8
+  shortenLongPostsThresold: 20,
+  shortenLongPostsShownRows: 15
 };
 
 function isToggled(name) {
@@ -121,8 +121,14 @@ function getNumber(start, end, description, propertyName) {
   const input = document.createElement('input');
   input.value = JSON.parse(localStorage.getItem(propertyName)) || 0;
   input.type = 'number';
-  input.min = start;
-  input.max = end;
+
+  if (start !== null) {
+    input.min = start;
+  }
+
+  if (end !== null) {
+    input.max = end;
+  }
 
   input.onclick = (e) => {
     if (!e.target.value) return;
@@ -461,6 +467,12 @@ runSafely(() => {
 
       scriptDiv.append(getContainer(elems));
     }
+
+    [
+      '<h3>Viestien lyhennysasetukset</h3>',
+      getNumber(1, null, 'riviä, että lyhennys tehdään', 'shortenLongPostsThresold'),
+      getNumber(1, null, 'riviä jätetään näytille', 'shortenLongPostsShownRows')
+    ].forEach(e => scriptDiv.append(e));
 
     // Custom-asetukset päättyvät
 
