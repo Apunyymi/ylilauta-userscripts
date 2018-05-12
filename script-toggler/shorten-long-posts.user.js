@@ -15,7 +15,7 @@ runSafely(() => {
 
 		GM_addStyle(`
 .shortened-post {
-	max-height: ${shownRows}em;
+	height: ${shownRows}em;
 	border-bottom: 1px solid #d9bfb7;
 	overflow: hidden;
 	resize: vertical;
@@ -37,9 +37,11 @@ runSafely(() => {
 			let post = root.find('.post');
 			let kkontent = post.find('.postcontent');
 
-			let fontSize = parseFloat(getComputedStyle(kkontent[0]).fontSize);
+			let styles = getComputedStyle(kkontent[0]);
+			let fontSize = parseFloat(styles.fontSize);
 
 			if ((kkontent[0].clientHeight / fontSize) > thresold) {
+				kkontent.css('max-height', styles.height)
 				kkontent.addClass('shortened-post');
 
 				post.append(
