@@ -5,7 +5,7 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/7ca6c42677a4a203e82493c51a071891eeee7184/script-toggler/runsafely.user.js
 // @grant addStyle
 // @description Lyhentää pitkät postaukset
-// @version 0.1
+// @version 0.2
 // ==/UserScript==
 
 runSafely(() => {
@@ -13,11 +13,18 @@ runSafely(() => {
 		const thresold = JSON.parse(localStorage.getItem('shortenLongPostsThresold') || '10');
 		const shownRows = JSON.parse(localStorage.getItem('shortenLongPostsShownRows') || '8');
 
+		let query = '';
+		if ($('#right.thread').length) {
+			query = '#right .answer';
+		} else if ($('#right.board>div,#right.customboard>div').filter('.threads.style-replies').length) {
+			query = '#right .thread .op_post, #right .answer';
+		}
+
 		let postSubjectTest = $('#right .postsubject:first-of-type');
 
 		// No need to run if we don't match
-		if (postSubjectTest.length) {
-			let buttonBackground = getComputedStyle($('#right .postsubject:first-of-type')[0]).backgroundColor;
+		if (postSubjectTest.length && query) {
+			let buttonBackground = getComputedStyle(postSubjectTest[0]).backgroundColor;
 			let shortenedBorder = getComputedStyle($('.linkbutton:first-of-type')[0]).borderBottomColor;
 
 			GM_addStyle(`
@@ -31,7 +38,7 @@ runSafely(() => {
 	background-color: ${buttonBackground};
 	margin: 5px;
 }
-	`);
+`);
 
 			function onButtonClick (eve) {
 				let el = $(eve.target);
@@ -58,18 +65,9 @@ runSafely(() => {
 				}
 			}
 
-			let query = '';
-			if ($('#right.thread').length) {
-				query = '#right .answer';
-			} else if ($('#right.board,#right.customboard').length) {
-				query = '#right .thread';
-			}
-
-			if (query) {
-				$(query).each((i, el) => {
-					shorten(el);
-				});
-			}
+			$(query).each((i, el) => {
+				shorten(el);
+			});
 		}
 	}
 });
