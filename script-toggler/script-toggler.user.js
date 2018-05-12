@@ -2,7 +2,7 @@
 // @name Ylilauta: Script toggler
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @version 1.3.8
+// @version 1.3.9
 // @require https://static.ylilauta.org/js/jquery-3.3.1.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
@@ -27,6 +27,7 @@
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/bb2e85a91f71db1255b2acbdaca696fd9af09681/script-toggler/delete-all-posts.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/78ce567952c5811f8d5e4ae9caf39753001b0825/script-toggler/spamhider.user.js
 // @require https://github.com/Apunyymi/ylilauta-userscripts/raw/39d3703cfe89e6cd2e9f5672c4e1b1ff13583bb8/script-toggler/show-404-delete-reason.user.js
+// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/7f0e2b2f8ef416b1cf459f248ea4808aa8e4af17/script-toggler/shorten-long-posts.user.js
 // @resource highlightCSS https://gitcdn.xyz/repo/isagalaev/highlight.js/cf4b46e5b7acfe2626a07914e1d0d4ef269aed4a/src/styles/darcula.css
 // @grant GM_addStyle
 // @grant GM_getResourceText
@@ -44,6 +45,7 @@ const userScripts = {
   sortBoardListStorage: 'Järjestä lautaluettelo lyhenteen mukaan',
   deleteAllPostsStorage: 'Lisää kaikkien postausten poistonappula <a href="https://ylilauta.org/ownposts.php">ownposts.php</a>-sivulle.',
   show404DeleteReasonStorage: 'Näytä poistuneen langan poistumissyy',
+  shortenLongPostsStorage: 'Lyhennä pitkät postaukset',
   // Sitten erinäisten asioiden piilottelu
   spamHiderStorage: 'Piilota spämmi',
   buttonHiderStorage: 'Postauksen nappien piilotus',
@@ -85,7 +87,9 @@ const moreSettings = {
     'tag text sage',
     'postnumber quotelink',
     'posttime'
-  ]
+  ],
+  shortenLongPostsThresold: 10,
+  shortenLongPostsShownRows: 8
 };
 
 function isToggled(name) {
