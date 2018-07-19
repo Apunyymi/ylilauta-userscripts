@@ -35,7 +35,7 @@ runSafely(function () {
     function newRepliesListener(callback) {
       const observer = new MutationObserver(callback);
       
-      observer.observe($('.answers')[0], { childList: true });
+      observer.observe(document.querySelector('div.answers'), { childList: true });
     }
 
     var scroll = false;

@@ -47,11 +47,11 @@ runSafely(function () {
     function newRepliesListener(callback) {
       const observer = new MutationObserver(callback);
       
-      observer.observe($('.answers')[0], { childList: true });
+      observer.observe(document.querySelector('.answers'), { childList: true });
     }
 
     addSearchButtons();
-    if ($('.answers').length > 0) {
+    if (document.querySelector('.answers')) {
       newRepliesListener(() => addSearchButtons());
     }
   }

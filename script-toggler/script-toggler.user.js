@@ -243,29 +243,29 @@ runSafely(() => {
     tab.innerHTML = 'Userscript-hallinta';
 
     tab.onclick = () => {
-      $("#right.preferences #tabchooser li").removeClass("cur");
-      $("#right.preferences #tabchooser li[data-tabid='skripta']").addClass("cur");
-      $("#right.preferences div.tab").hide();
-      $("#right.preferences div.tab#skripta").show();
+      [...document.querySelectorAll("#right.preferences #tabchooser li")].map(li => li.classList.remove("cur"));
+      document.querySelector("#right.preferences #tabchooser li[data-tabid='skripta']").classList.add("cur");
+      [...document.querySelectorAll("#right.preferences div.tab")].map(tab => tab.style.display = "none");
+      document.querySelector("#right.preferences div.tab#skripta").style.display = "";
     };
-
-    $('li.tab[data-tabid="sessions"]').after(tab);
+    
+    const sessions = document.querySelector("#right.preferences #tabchooser li[data-tabid='sessions']")
+    document.querySelector("#right.preferences #tabchooser").insertBefore(tab, sessions)
 
     let div = document.createElement('div');
     div.id = 'skripta';
     div.classList.add('tab');
     div.style.display = 'none';
 
-    $('#sessions').after(div);
+    const sessionsDiv = document.querySelector("div#sessions.tab")
+    document.querySelector("#right.preferences").insertBefore(div, sessionsDiv)
 
-    const scriptDiv = $('#skripta');
-
-    scriptDiv.append(getBlock('Käytössä on versio <b>' + (GM_info.script.version || '???') + '</b>'));
-scriptDiv.append(getBlock('<a href="https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/64e3859524210c693fbc13adca01edc6acf42c80/script-toggler.user.js">Tarkista päivitykset</a>'));
-    scriptDiv.append('<h3>Päällä olevat skriptit</h3>');
+    div.appendChild(getBlock('Käytössä on versio <b>' + (GM_info.script.version || '???') + '</b>'));
+    div.appendChild(getBlock('<a href="https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/64e3859524210c693fbc13adca01edc6acf42c80/script-toggler.user.js">Tarkista päivitykset</a>'));
+    div.insertAdjacentHTML('beforeend', '<h3>Päällä olevat skriptit</h3>');
 
     for (let key in userScripts) {
-      scriptDiv.append(getInput(key, userScripts[key]));
+      div.appendChild(getInput(key, userScripts[key]));
     }
 
     // Lisää tähän omat tyylitietueesi skriptejä varten. Nämä ovat käytössä vain asetussivulla.
@@ -340,10 +340,12 @@ scriptDiv.append(getBlock('<a href="https://github.com/AnonyymiHerrasmies/ylilau
 
       '<h4>Tiettyjen maiden postauksien piilotus (/coco/)</h4>',
       getInput('countryPostHiderStorage', 'Käytä maalaisten piilotusta')
-    ].forEach(e => scriptDiv.append(e));
+    ].forEach(e => {
+      (typeof e === 'string') ? div.insertAdjacentHTML('beforeend', e) : div.appendChild(e);
+    });
 
     if (allCountries.length === 0) {
-      scriptDiv.append(getBlock('Käy ensin esimerkiksi <a href="/matkailu/">/coco/</a>ssa, niin skripti löytää piilotettavat maat'));
+      div.appendChild(getBlock('Käy ensin esimerkiksi <a href="/matkailu/">/coco/</a>ssa, niin skripti löytää piilotettavat maat'));
 
     } else {
       let elems = [];
@@ -388,10 +390,10 @@ scriptDiv.append(getBlock('<a href="https://github.com/AnonyymiHerrasmies/ylilau
         ]));
       };
 
-      scriptDiv.append(getContainer(elems));
+      div.appendChild(getContainer(elems));
     }
 
-    scriptDiv.append('<h4>Mitä tehdään kun viesti pitää hidettää</h4>');
+    div.insertAdjacentHTML('beforeend', '<h4>Mitä tehdään kun viesti pitää hidettää</h4>');
 
     for (let i in allSpamHiderActions) {
       let input = document.createElement('input');
@@ -418,13 +420,13 @@ scriptDiv.append(getBlock('<a href="https://github.com/AnonyymiHerrasmies/ylilau
 
       let spacer = document.createTextNode(' ');
 
-      scriptDiv.append(getBlock([input, spacer, label]));
+      div.appendChild(getBlock([input, spacer, label]));
     };
 
-    scriptDiv.append('<h3>Postausnappien piilotus</h3>');
+    div.insertAdjacentHTML('beforeend', '<h3>Postausnappien piilotus</h3>');
 
     if (allButtons.length === 0) {
-      scriptDiv.append(getBlock('Käy ensin jollain lautasivulla, niin skripti löytää piilotettavat napit'));
+      div.appendChild(getBlock('Käy ensin jollain lautasivulla, niin skripti löytää piilotettavat napit'));
 
     } else {
       let elems = [];
@@ -472,25 +474,24 @@ scriptDiv.append(getBlock('<a href="https://github.com/AnonyymiHerrasmies/ylilau
         ]));
       };
 
-      scriptDiv.append(getContainer(elems));
+      div.appendChild(getContainer(elems));
     }
 
     [
       '<h3>Viestien lyhennysasetukset</h3>',
       getNumber(1, null, 'riviä, että lyhennys tehdään', 'shortenLongPostsThresold'),
       getNumber(1, null, 'riviä jätetään näytille', 'shortenLongPostsShownRows')
-    ].forEach(e => scriptDiv.append(e));
+    ].forEach(e => {
+      (typeof e === 'string') ? div.insertAdjacentHTML('beforeend', e) : div.appendChild(e);
+    });
 
     // Custom-asetukset päättyvät
 
 
     // Tähän väliin voit lisätä custom-asetusten testejä/automaattitäydennyksiä tms.
-
-    $('#userscript-nameFagHiderList').attr('disabled', $('#userscript-hideEveryNameFag')[0].checked);
-
-    $('#userscript-hideEveryNameFag').change((e) => {
-      $('#userscript-nameFagHiderList').attr('disabled', e.target.checked);
-    });
+    // 
+    document.querySelector('#userscript-nameFagHiderList').disabled = document.querySelector('#userscript-hideEveryNameFag').checked;
+    document.querySelector('#userscript-hideEveryNameFag').onchange(e => document.querySelector('#userscript-nameFagHiderList').disabled = e.target.checked);
 
     // Testit yms. päättyvät
 
