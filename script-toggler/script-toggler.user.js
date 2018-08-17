@@ -2,24 +2,24 @@
 // @name Ylilauta: Script toggler
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @version 2.3
+// @version 2.4
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/runsafely.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/autoscroll-button.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/codehighlight.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/ippostcounter.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/lastownpost-button.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/quoteallfromip-button.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/reverse-image-search-button.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/colorize-poster-ids.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/button-hider.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/remove-ads.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/runsafely.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/autoscroll-button.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/codehighlight.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/ippostcounter.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/lastownpost-button.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/quoteallfromip-button.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/reverse-image-search-button.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/colorize-poster-ids.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/button-hider.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/remove-ads.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/a07d1aa3eedb0c5b3e212b96c084fecdaf2f68c0/script-toggler/hide-sharebutton.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/sort-boardlist.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/delete-all-posts.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/spamhider.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/show-404-delete-reason.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/sort-boardlist.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/delete-all-posts.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/spamhider.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/show-404-delete-reason.user.js
 // @resource highlightCSS https://gitcdn.xyz/repo/isagalaev/highlight.js/cf4b46e5b7acfe2626a07914e1d0d4ef269aed4a/src/styles/darcula.css
 // @grant GM_addStyle
 // @grant GM_getResourceText
@@ -246,7 +246,7 @@ runSafely(() => {
     document.querySelector("#right.preferences").insertBefore(div, sessionsDiv)
 
     div.appendChild(getBlock(`Käytössä on versio <b>${GM_info.script.version || '???'}</b>`));
-    div.appendChild(getBlock('<a href="https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/script-toggler.user.js">Tarkista päivitykset</a>'));
+div.appendChild(getBlock('<a href="https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/script-toggler.user.js">Tarkista päivitykset</a>'));
     div.insertAdjacentHTML('beforeend', '<h3>Päällä olevat skriptit</h3>');
 
     for (let key in userScripts) {
