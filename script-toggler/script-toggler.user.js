@@ -2,7 +2,7 @@
 // @name Ylilauta: Script toggler
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @version 2.4
+// @version 2.5
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/runsafely.user.js
@@ -17,7 +17,7 @@
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/remove-ads.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/sort-boardlist.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/delete-all-posts.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/spamhider.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/d5be5ee77191a28ad37a5cd7679ee4c1ee44d694/script-toggler/spamhider.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/show-404-delete-reason.user.js
 // @resource highlightCSS https://gitcdn.xyz/repo/isagalaev/highlight.js/cf4b46e5b7acfe2626a07914e1d0d4ef269aed4a/src/styles/darcula.css
 // @grant GM_addStyle
