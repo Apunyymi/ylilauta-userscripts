@@ -4,9 +4,8 @@
 // @version      1.2
 // @description  Extract from YlisToolchain, colorizes poster ids
 // @locale       en
-// @author       Apunyymi
 // @match        *://ylilauta.org/*
-// @require      https://github.com/Apunyymi/ylilauta-userscripts/raw/7ca6c42677a4a203e82493c51a071891eeee7184/script-toggler/runsafely.user.js
+// @require      https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/64e3859524210c693fbc13adca01edc6acf42c80/script-toggler/runsafely.user.js
 // @grant        GM_addStyle
 // ==/UserScript==
 
@@ -14,40 +13,32 @@ runSafely(function() {
   // Don't even run any code if this module is not enabled
   // Another thing: requires poster ids (gold account thing)
   // Third thing: requires posts
-  if (localStorage.getItem('colorizePosterIdsStorage') === 'true' 
-    && $('.postuid:first').length > 0
-    && $('.answers').length > 0) {
+  if (localStorage.getItem('colorizePosterIdsStorage') === 'true'
+    && document.querySelectorAll('.postuids').length > 0
+    && document.querySelectorAll('.answers').length > 0) {
 
     // Simply return a numeric hash of string
     // Adapted from https://stackoverflow.com/questions/7616461#15710692
-    function hash(s) {
-      return s.split("")
-        .reduce(
-          function(a, b) {
-            a = ((a<<5)-a) + b.charCodeAt(0);
-            return a & a;
-          },
-        0);
-    }
+    const hash = (s) => s.split("").reduce((a, b) => {
+      a = ((a<<5)-a) + b.charCodeAt(0);
+      return a & a;
+    }, 0);
 
     // Return a hex color from given poster id (using the hash() function)
-    function color(id) {
-      return '#' + hash(id).toString(16).substr(-6);
-    }
+    const color = (id) => `#${hash(id).toString(16).substr(-6)}`
 
-    // Add color() for each poster id with no attached styling already, this is run every time page height changes
+    // Add color() for each poster id, this is run every time page height changes
     // Essentially this colorizes every same poster id with a same color
-    function colorize() {
-      $('#right .threads .thread .postuid:not([style])').each(function () {
-        $(this).css({backgroundColor: color($(this).text())});
-      });
-    }
+    const colorize = () => [...document.querySelectorAll('.postuids')]
+      .filter(e => e.style.backgroundColor !== '#1c1c1c')
+      .forEach(e => {
+        e.style.backgroundColor = color(e.innerText)
+        e.style.color = '#000000'
+      })
 
-    function newRepliesListener(callback) {
-      const observer = new MutationObserver(callback);
-      
-      observer.observe($('.answers')[0], { childList: true });
-    }
+    const newRepliesListener = (callback) => new MutationObserver(callback).observe(
+      document.querySelector('div.answers'), { childList: true }
+    )
 
     // Add some styling to poster ids
     GM_addStyle('#right .threads .thread .postuid {text-shadow: white 0px 0px 5px;}');

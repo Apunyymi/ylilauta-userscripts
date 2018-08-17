@@ -5,44 +5,40 @@
 // @description  Piilottaa halutut napit viesteistä
 // @locale       en
 // @match        *://ylilauta.org/*
-// @require      https://github.com/Apunyymi/ylilauta-userscripts/raw/7ca6c42677a4a203e82493c51a071891eeee7184/script-toggler/runsafely.user.js
+// @require      https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/64e3859524210c693fbc13adca01edc6acf42c80/script-toggler/runsafely.user.js
 // @grant        GM_addStyle
 // ==/UserScript==
 
 runSafely(function() {
-	if (localStorage.getItem('buttonHiderStorage') === 'true') {
+  if (localStorage.getItem('buttonHiderStorage') === 'true') {
 
-		// These are used to get info about what buttons even are here
-		const allButtons = [];
-		const allDescriptions = [];
-		$('.thread:has("figure") .messageoptions a[title]').each((i, e) => {
-			let button = [...($(e)[0].classList.values())].filter((x) => x.startsWith('icon-'))[0];
+    // These are used to get info about what buttons even are here
+    const allButtons = [];
 
-			if (!allButtons.includes(button)) {
-				allButtons.push(button);
-				allDescriptions.push($(e).attr('title'));
-			}
-		});
+    const allDescriptions = [];
 
-		const before = JSON.parse(localStorage.getItem('buttonHiderAllButtons') || '[]');
+    [...document.querySelectorAll('.thread .messageoptions button[title]')].map(e => {
+      const button = e.className.split(" ").filter(x => x !== 'icon-button' && x.startsWith('icon'))[0]
+      if (!allButtons.includes(button)) {
+        allButtons.push(button);
+        allDescriptions.push(e.title);
+      }
+    })
 
-		// If there are somehow more buttons added, let's update the possible settings
-		if (before.length < allButtons.length) {
-			localStorage.setItem('buttonHiderAllButtons', JSON.stringify(allButtons));
-			localStorage.setItem('buttonHiderAllDescriptions', JSON.stringify(allDescriptions));
-		}
+    const before = JSON.parse(localStorage.getItem('buttonHiderAllButtons') || '[]');
 
-		// And then the main code :D
-		const toHide = JSON.parse(localStorage.getItem('buttonHiderList') || '[]');
+    // If there are somehow more buttons added, let's update the possible settings
+    if (before.length < allButtons.length) {
+      localStorage.setItem('buttonHiderAllButtons', JSON.stringify(allButtons));
+      localStorage.setItem('buttonHiderAllDescriptions', JSON.stringify(allDescriptions));
+    }
 
-		if (toHide.length > 0)  {
-			let elems = [];
+    // And then the main code :D
+    const toHide = JSON.parse(localStorage.getItem('buttonHiderList') || '[]');
 
-			for (let i = toHide.length - 1; i >= 0; i--) {
-				elems.push('#right .postinfo .messageoptions>.' + toHide[i]);
-			};
-
-			GM_addStyle(elems.join(',') + '{display: none;}')
-		}
-	}
+    if (toHide.length > 0)  {
+      const elems = toHide.map(e => `#right .postinfo .messageoptions>.${e}`)
+      GM_addStyle(elems.join(',') + '{display: none;}')
+    }
+  }
 });
