@@ -11,16 +11,15 @@
 // @description Värittää [code]koodinpätkät[/code]
 // ==/UserScript==
 
-runSafely(function () {
+runSafely(() => {
   if (localStorage.getItem('codeHighlighterStorage') === 'true') {
-    function newRepliesListener(callback) {
-      const observer = new MutationObserver(callback);
-      observer.observe(document.querySelector('.answers'), { childList: true });
-    }
+    const newRepliesListener = (callback) => new MutationObserver(callback).observe(
+      document.querySelector('div.answers'), { childList: true }
+    )
 
-    function highlightCode() {
-      [...document.querySelectorAll('pre.code-block')].map(block => hljs.highlightBlock(block));
-    }
+    const highlightCode = () => [...document.querySelectorAll('pre.code-block')].map(
+      block => hljs.highlightBlock(block)
+    )
 
     const highlightCSS = GM_getResourceText('highlightCSS');
     GM_addStyle(highlightCSS);

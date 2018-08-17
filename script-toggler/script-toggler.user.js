@@ -2,31 +2,24 @@
 // @name Ylilauta: Script toggler
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @version 2.2
+// @version 2.3
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/runsafely.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/runsafely.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/autoscroll-button.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/codehighlight.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/downloadall-button.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/ippostcounter.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/lastownpost-button.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/quoteallfromip-button.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/reverse-image-search-button.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/show-most-answered.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/taa-bot.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/colorize-poster-ids.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/update-onhover-newestid-activitypoint.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/button-hider.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/remove-ads.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/notification-x.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/show-notificationbar.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/codehighlight.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/ippostcounter.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/lastownpost-button.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/quoteallfromip-button.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/reverse-image-search-button.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/colorize-poster-ids.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/button-hider.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/remove-ads.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/a07d1aa3eedb0c5b3e212b96c084fecdaf2f68c0/script-toggler/hide-sharebutton.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/sort-boardlist.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/delete-all-posts.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/spamhider.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/show-404-delete-reason.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler/shorten-long-posts.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/sort-boardlist.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/delete-all-posts.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/spamhider.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/944d7d0e072192e6b65c1329135b14be86ae739a/script-toggler/show-404-delete-reason.user.js
 // @resource highlightCSS https://gitcdn.xyz/repo/isagalaev/highlight.js/cf4b46e5b7acfe2626a07914e1d0d4ef269aed4a/src/styles/darcula.css
 // @grant GM_addStyle
 // @grant GM_getResourceText
@@ -35,28 +28,22 @@
 // Lisää skriptisi LocalStorage-nimi sekä kuvaus tänne
 const userScripts = {
   // Ensin erilliset ominaisuudet
-  taaBotStorage: 'Tää :D -botti',
   codeHighlighterStorage: '[code]-blokkien väritys',
   colorizePosterIdsStorage: 'Postaajaväritin',
-  updateOnhoverStorage: 'Newestid- ja aktiivisuuspistepäivitin',
   ipPostCounterStorage: 'Näytä käyttäjän postausten määrä (vain kultatilillä)',
-  showNotificationBarStorage: 'Näytä ilmoituspalkki lankaa selattaessa',
   sortBoardListStorage: 'Järjestä lautaluettelo lyhenteen mukaan',
   deleteAllPostsStorage: 'Lisää kaikkien postausten poistonappula <a href="https://ylilauta.org/ownposts.php">ownposts.php</a>-sivulle.',
   show404DeleteReasonStorage: 'Näytä poistuneen langan poistumissyy',
-  shortenLongPostsStorage: 'Lyhennä pitkät postaukset',
   // Sitten erinäisten asioiden piilottelu
   spamHiderStorage: 'Piilota spämmi',
   buttonHiderStorage: 'Postauksen nappien piilotus',
   removeAdsStorage: 'Piilota (((mainokset)))',
   // Sitten napit
   autoscrollStorage: 'Autoscroll-nappi',
-  downloadAllStorage: 'Lataa kaikki -nappi',
+//  downloadAllStorage: 'Lataa kaikki -nappi',
   lastOwnPostStorage: 'Viimeisin oma postaus -nappi',
   quoteAllFromIpStorage: 'Vastaa kaikkiin käyttäjän postauksiin -nappi',
-  showMostAnsweredStorage: 'Näytä vastatuimmat -nappi',
-  reverseImageSearchStorage: 'Käänteinen kuvahaku -nappi',
-  notificationXStorage: 'Lisää luettu-ruksi ilmoituksiin'
+  reverseImageSearchStorage: 'Käänteinen kuvahaku -nappi'
 };
 
 // Laita tänne default-arvoja asioille jotka sellaisia tarvitsevat (eli joita ei muualla aseteta)
@@ -87,9 +74,7 @@ const moreSettings = {
     'tag text sage',
     'postnumber quotelink',
     'posttime'
-  ],
-  shortenLongPostsThresold: 20,
-  shortenLongPostsShownRows: 15
+  ]
 };
 
 function isToggled(name) {
@@ -248,7 +233,7 @@ runSafely(() => {
       [...document.querySelectorAll("#right.preferences div.tab")].map(tab => tab.style.display = "none");
       document.querySelector("#right.preferences div.tab#skripta").style.display = "";
     };
-    
+
     const sessions = document.querySelector("#right.preferences #tabchooser li[data-tabid='sessions']")
     document.querySelector("#right.preferences #tabchooser").insertBefore(tab, sessions)
 
@@ -260,8 +245,8 @@ runSafely(() => {
     const sessionsDiv = document.querySelector("div#sessions.tab")
     document.querySelector("#right.preferences").insertBefore(div, sessionsDiv)
 
-    div.appendChild(getBlock('Käytössä on versio <b>' + (GM_info.script.version || '???') + '</b>'));
-div.appendChild(getBlock('<a href="https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/1cc243558d4c797298ff6cde91dd764e4339defe/script-toggler.user.js">Tarkista päivitykset</a>'));
+    div.appendChild(getBlock(`Käytössä on versio <b>${GM_info.script.version || '???'}</b>`));
+    div.appendChild(getBlock('<a href="https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/script-toggler.user.js">Tarkista päivitykset</a>'));
     div.insertAdjacentHTML('beforeend', '<h3>Päällä olevat skriptit</h3>');
 
     for (let key in userScripts) {
@@ -292,7 +277,6 @@ div.appendChild(getBlock('<a href="https://github.com/AnonyymiHerrasmies/ylilaut
     const allButtons = JSON.parse(localStorage.getItem('buttonHiderAllButtons') || '[]');
     const allDescriptions = JSON.parse(localStorage.getItem('buttonHiderAllDescriptions') || '[]');
     const hiddenButtonsList = JSON.parse(localStorage.getItem('buttonHiderList') || '[]');
-
     const allCountries = JSON.parse(localStorage.getItem('countryPostHiderAllCountries') || '[]');
     const hiddenCountries = JSON.parse(localStorage.getItem('countryPostHiderList') || '[]');
 
@@ -303,14 +287,6 @@ div.appendChild(getBlock('<a href="https://github.com/AnonyymiHerrasmies/ylilaut
       grayrefs: 'Erota piilottujen viestien viittaukset heikompina',
       invisiblerefs: 'Piilota piilotettujen viestien viittaukset'
     };
-
-    const allowedTags = JSON.parse(localStorage.getItem('hideTagPostTagList')) || [
-      'postername',
-      'tag text postedbyop',
-      'tag text sage',
-      'postnumber quotelink',
-      'posttime'
-    ];
 
     [
       '<h3>Antispämmiasetukset</h3>',
@@ -388,7 +364,7 @@ div.appendChild(getBlock('<a href="https://github.com/AnonyymiHerrasmies/ylilaut
           document.createTextNode(' '),
           label
         ]));
-      };
+      }
 
       div.appendChild(getContainer(elems));
     }
@@ -421,13 +397,12 @@ div.appendChild(getBlock('<a href="https://github.com/AnonyymiHerrasmies/ylilaut
       let spacer = document.createTextNode(' ');
 
       div.appendChild(getBlock([input, spacer, label]));
-    };
+    }
 
     div.insertAdjacentHTML('beforeend', '<h3>Postausnappien piilotus</h3>');
 
     if (allButtons.length === 0) {
       div.appendChild(getBlock('Käy ensin jollain lautasivulla, niin skripti löytää piilotettavat napit'));
-
     } else {
       let elems = [];
 
@@ -464,7 +439,6 @@ div.appendChild(getBlock('<a href="https://github.com/AnonyymiHerrasmies/ylilaut
         let span = document.createElement('span');
         span.classList.add('block');
 
-
         elems.push(getBlock([
           input,
           document.createTextNode(' '),
@@ -472,18 +446,10 @@ div.appendChild(getBlock('<a href="https://github.com/AnonyymiHerrasmies/ylilaut
           document.createTextNode(' '),
           label
         ]));
-      };
-
+      }
       div.appendChild(getContainer(elems));
     }
 
-    [
-      '<h3>Viestien lyhennysasetukset</h3>',
-      getNumber(1, null, 'riviä, että lyhennys tehdään', 'shortenLongPostsThresold'),
-      getNumber(1, null, 'riviä jätetään näytille', 'shortenLongPostsShownRows')
-    ].forEach(e => {
-      (typeof e === 'string') ? div.insertAdjacentHTML('beforeend', e) : div.appendChild(e);
-    });
 
     // Custom-asetukset päättyvät
 

@@ -9,7 +9,7 @@
 // @description Skrollaa automaattisesti uusimpaan postaukseen.
 // ==/UserScript==
 
-runSafely(function () {
+runSafely(() => {
   // Sopsy is homo :D Removing elements we stand on
   if (!document.querySelector('.buttons_right')) {
     let buttons = document.querySelector('.threadbuttons');
@@ -26,22 +26,16 @@ runSafely(function () {
   if (localStorage.getItem('autoscrollStorage') === 'true'
     && buttonsRight) {
 
-    function scrollToButton() {
-      if (scroll) {
-        btn.scrollIntoView(false);
-      }
-    }
+    const scrollToButton = () => scroll && btn.scrollIntoView(false);
 
-    function newRepliesListener(callback) {
-      const observer = new MutationObserver(callback);
-      
-      observer.observe(document.querySelector('div.answers'), { childList: true });
-    }
+    const newRepliesListener = (callback) => new MutationObserver(callback).observe(
+      document.querySelector('div.answers'), { childList: true }
+    )
 
-    var scroll = false;
+    let scroll = false;
 
     const btn = document.createElement('button');
-    btn.innerText = 'Autoscroll';
+    btn.innerText = 'Autovieritys';
     btn.className = 'linkbutton';
     btn.disabled = scroll;
     btn.onclick = () => {

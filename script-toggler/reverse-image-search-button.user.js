@@ -2,7 +2,7 @@
 // @name Ylilauta.fi: Käänteinen kuvahaku
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @require https://github.com/Apunyymi/ylilauta-userscripts/raw/7ca6c42677a4a203e82493c51a071891eeee7184/script-toggler/runsafely.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/64e3859524210c693fbc13adca01edc6acf42c80/script-toggler/runsafely.user.js
 // @grant none
 // @version 0.8
 // @locale en
@@ -12,47 +12,47 @@
 runSafely(function () {
   if (localStorage.getItem('reverseImageSearchStorage') === 'true') {
     function addSearchButtons() {
-      Array.from(document.querySelectorAll('div.op_post, div.answer'))
-        .map(div => {
-          const post = Array.from(div.childNodes).find(n => n.className === 'post');
-          if (post === undefined) return;
+      [...document.querySelectorAll('div.op_post, div.answer')].map(div => {
+        const post = [...div.childNodes].find(n => n.className === 'message')
+        if (post === undefined) return
 
-          const filecontainer = Array.from(post.childNodes).find(
-            n => n.className && n.className.indexOf('filecontainer thumbnail file') !== -1
-          );
-          if (filecontainer === undefined) return;
+        const figure = [...post.childNodes].find(
+          n => n.className && n.className.indexOf('post-file') !== -1
+        )
+        if (figure === undefined) return
+        const href = figure.firstChild.firstChild.href
+        if (href === undefined) return
 
-          const expandlink = Array.from(filecontainer.childNodes).find(n => n.className === 'expandlink');
-          if (expandlink === undefined) return;
+        const postinfo = [...div.childNodes].find(n => n.className === 'postinfo')
+        const right = [...postinfo.childNodes].find(n => n.className === 'right')
+        const messageoptions = [...right.childNodes].find(n => n.className === 'messageoptions')
+        const magnifier = [...messageoptions.childNodes].find(n => n.className === 'icon-button icon-magnifier')
 
-          const href = expandlink.href;
-          if (href === undefined) return;
-
-          const postinfo = Array.from(div.childNodes).find(n => n.className === 'postinfo');
-          const messageoptions = Array.from(postinfo.childNodes).find(n => n.className === 'messageoptions');
-          const magnifier = Array.from(messageoptions.childNodes).find(n => n.className === 'icon-magnifier');
-          
-          if (magnifier === undefined) {
-            const link = document.createElement('a');
-            link.className = 'icon-magnifier';
-            link.href = 'https://images.google.com/searchbyimage?image_url=' + href;
-            link.title = 'Käänteinen kuvahaku';
-            link.target = '_blank';
-
-            messageoptions.insertBefore(link, messageoptions.children[1]);
+        if (magnifier === undefined) {
+          const link = document.createElement('button')
+          link.className = 'icon-button icon-magnifier'
+          link.title = 'Käänteinen kuvahaku'
+          link.onclick = () => {
+            const link = document.createElement('a')
+            link.href = 'https://images.google.com/searchbyimage?image_url=' + href
+            link.target = '_blank'
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
           }
-        });
+
+          messageoptions.insertBefore(link, messageoptions.children[1])
+        }
+      })
     }
 
-    function newRepliesListener(callback) {
-      const observer = new MutationObserver(callback);
-      
-      observer.observe(document.querySelector('.answers'), { childList: true });
-    }
+    const newRepliesListener = (callback) => new MutationObserver(callback).observe(
+      document.querySelector('div.answers'), { childList: true }
+    )
 
-    addSearchButtons();
+    addSearchButtons()
     if (document.querySelector('.answers')) {
-      newRepliesListener(() => addSearchButtons());
+      newRepliesListener(() => addSearchButtons())
     }
   }
-});
+})
