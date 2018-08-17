@@ -245,7 +245,7 @@ runSafely(() => {
     document.querySelector("#right.preferences").insertBefore(div, sessionsDiv)
 
     div.appendChild(getBlock(`Käytössä on versio <b>${GM_info.script.version || '???'}</b>`));
-    div.appendChild(getBlock('<a href="https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/script-toggler.user.js">Tarkista päivitykset</a>'));
+    div.appendChild(getBlock('<a href="https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/master/script-toggler/script-toggler.user.js">Tarkista päivitykset</a>'));
     div.insertAdjacentHTML('beforeend', '<h3>Päällä olevat skriptit</h3>');
 
     for (let key in userScripts) {
