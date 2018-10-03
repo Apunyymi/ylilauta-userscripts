@@ -2,12 +2,13 @@
 // @name Ylilauta: Script toggler
 // @namespace Violentmonkey Scripts
 // @match *://ylilauta.org/*
-// @version 2.5
+// @version 2.6
 // @require https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/runsafely.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/autoscroll-button.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/codehighlight.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/downloadall-button.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/ippostcounter.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/lastownpost-button.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/quoteallfromip-button.user.js
@@ -22,6 +23,11 @@
 // @resource highlightCSS https://gitcdn.xyz/repo/isagalaev/highlight.js/cf4b46e5b7acfe2626a07914e1d0d4ef269aed4a/src/styles/darcula.css
 // @grant GM_addStyle
 // @grant GM_getResourceText
+// @grant GM_xmlhttpRequest
+// @connect ylilauta.org
+// @connect i.ylilauta.org
+// @connect t.ylilauta.org
+// @connect static.ylilauta.org
 // ==/UserScript==
 
 // Lisää skriptisi LocalStorage-nimi sekä kuvaus tänne
@@ -39,7 +45,7 @@ const userScripts = {
   removeAdsStorage: 'Piilota (((mainokset)))',
   // Sitten napit
   autoscrollStorage: 'Autoscroll-nappi',
-//  downloadAllStorage: 'Lataa kaikki -nappi',
+  downloadAllStorage: 'Lataa kaikki -nappi',
   lastOwnPostStorage: 'Viimeisin oma postaus -nappi',
   quoteAllFromIpStorage: 'Vastaa kaikkiin käyttäjän postauksiin -nappi',
   reverseImageSearchStorage: 'Käänteinen kuvahaku -nappi'
@@ -273,11 +279,11 @@ runSafely(() => {
 
     // Tähän väliin voit lisätä omien skriptien custom-asetuksia
 
-    const allButtons = JSON.parse(localStorage.getItem('buttonHiderAllButtons') || '[]');
-    const allDescriptions = JSON.parse(localStorage.getItem('buttonHiderAllDescriptions') || '[]');
-    const hiddenButtonsList = JSON.parse(localStorage.getItem('buttonHiderList') || '[]');
+    const allButtons = JSON.parse(localStorage.getItem('buttonHiderAllButtons') || '[]');
+    const allDescriptions = JSON.parse(localStorage.getItem('buttonHiderAllDescriptions') || '[]');
+    const hiddenButtonsList = JSON.parse(localStorage.getItem('buttonHiderList') || '[]');
     const allCountries = JSON.parse(localStorage.getItem('countryPostHiderAllCountries') || '[]');
-    const hiddenCountries = JSON.parse(localStorage.getItem('countryPostHiderList') || '[]');
+    const hiddenCountries = JSON.parse(localStorage.getItem('countryPostHiderList') || '[]');
 
     const spamHiderActions = JSON.parse(localStorage.getItem('spamHiderActions') || '[]');
     const allSpamHiderActions = {
@@ -288,6 +294,9 @@ runSafely(() => {
     };
 
     [
+      '<h3>Mainostenestohuomautus</h3>',
+      getBlock('Jos jotkin kuvat laudalla (/ad/-hakemistossa olevat) eivät näy, se johtuu käytännössä mainostenesto-ohjelmastasi. Etsi sille ohjeet unblockata domainit i.ylilauta.org ja t.ylilauta.org. Ublock Originilla tämä onnistuu asettamalla valintaruudun "advanced user", menemällä lautasivulle, painamalla yläpalkista lisäosan nappia, sieltä tekstiä "requests blocked" ja vasemmalle avautuvasta taulukosta vihreää kenttää edellämainittujen domain-rivien kohdalla keskimmäisestä sarakkeesta. Sen jälkeen paina lukon kuvaa vasemmassa yläkulmassa.'),
+
       '<h3>Antispämmiasetukset</h3>',
       getInput('spamHiderDebug', 'Tulosta postausten piilotussyyt konsoliin'),
 

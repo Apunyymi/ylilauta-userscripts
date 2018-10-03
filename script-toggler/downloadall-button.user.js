@@ -4,8 +4,12 @@
 // @match *://ylilauta.org/*
 // @require https://gitcdn.xyz/repo/Stuk/jszip/9fb481ac2a294f9c894226ea2992919d9d6a70aa/dist/jszip.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/64e3859524210c693fbc13adca01edc6acf42c80/script-toggler/runsafely.user.js
-// @grant none
-// @version 1.0
+// @grant GM_xmlhttpRequest
+// @connect ylilauta.org
+// @connect i.ylilauta.org
+// @connect t.ylilauta.org
+// @connect static.ylilauta.org
+// @version 2.0
 // @description Lataa kaikki mediatiedostot langasta
 // ==/UserScript==
 
@@ -30,6 +34,18 @@ runSafely(() => {
       link.click()
       document.body.removeChild(link)
       window.URL.revokeObjectURL(href)
+    }
+
+    function urlToBlob(url) {
+      return new Promise((resolve, reject) => {
+        const r = GM_xmlhttpRequest({
+            method: 'GET',
+            url: url,
+            responseType: 'blob',
+            onload: resolve,
+            onerror: reject
+        });
+      });
     }
 
     async function downloadAll(event) {
@@ -57,19 +73,14 @@ runSafely(() => {
           try {
             downloads.alreadySaved.push(uri)
 
-            /*
-                This causes a CORS-error, which I have yet to fix.
-             */
-            const response = await fetch(uri)
+            const response = await urlToBlob(uri)
 
-            const blob = await response.blob()
-            console.log(response)
-            const filename = afterLastSlash(response.url)
-            console.log(filename)
-            zip.file(filename, blob)
-            console.log(blob)
+            const filename = afterLastSlash(uri)
+
+            zip.file(filename, response.response)
           } catch (ex) {
             console.log('Zip-loader: ' + ex.toString().match(/(\w+(Error|Exception))/g).pop() + ' @ ' + uri)
+            console.log(ex)
             ex_count++
           }
         }
@@ -103,5 +114,9 @@ runSafely(() => {
       timesDone: 0
     }
     buttonsRight.insertBefore(downloadAllButton, buttonsRight.firstChild)
+
+    // A way to hack everything from normal JS context, expose this only for testing
+    // When hacking, add also this to beginning of this file and its master file: // @grant unsafeWindow
+    //unsafeWindow.GM_request = urlToBlob
   }
 })
