@@ -8,7 +8,7 @@
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/runsafely.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/autoscroll-button.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/codehighlight.user.js
-// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/downloadall-button.user.js
+// @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/c7a674bf4330a0ed2d1216241c6f02d726c25686/script-toggler/downloadall-button.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/ippostcounter.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/lastownpost-button.user.js
 // @require https://github.com/AnonyymiHerrasmies/ylilauta-userscripts/raw/2b7357398bb4e4686cd36a804963174311296557/script-toggler/quoteallfromip-button.user.js
